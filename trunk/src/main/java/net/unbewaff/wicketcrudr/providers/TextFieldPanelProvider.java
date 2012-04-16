@@ -50,6 +50,7 @@ public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 		public TextFieldPanel(String id) {
 			super(id);
 			setOutputMarkupPlaceholderTag(true);
+			setOutputMarkupId(true);
 			setVisible(false);
 		}
 
