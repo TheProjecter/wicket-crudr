@@ -21,22 +21,26 @@ public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 
 	public WebMarkupContainer show(AjaxRequestTarget target, WebMarkupContainer container) {
 		if (container == null) {
-			throw new IllegalStateException("Can't set a non existing Container visible.");
+			throw new IllegalArgumentException("Can't set a non existing Container visible.");
 		}
 		if (!container.isVisible()) {
 			container.setVisible(true);
-			target.add(container);
+			if (target != null) {
+                target.add(container);
+            }
 		}
 		return container;
 	}
 
 	public WebMarkupContainer hide(AjaxRequestTarget target, WebMarkupContainer container) {
 		if (container == null) {
-			throw new IllegalStateException("Can't set a non existing Container invisible.");
+			throw new IllegalArgumentException("Can't set a non existing Container invisible.");
 		}
 		if (container.isVisible()) {
 			container.setVisible(false);
-			target.add(container);
+            if (target != null) {
+                target.add(container);
+            }
 		}
 		return container;
 	}
