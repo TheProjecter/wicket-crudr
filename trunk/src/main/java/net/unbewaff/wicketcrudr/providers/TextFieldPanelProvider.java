@@ -1,16 +1,14 @@
 package net.unbewaff.wicketcrudr.providers;
 
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 
 public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 
+	private static final long serialVersionUID = -4861783108809481116L;
 
-	public WebMarkupContainer newSurroundingPanel(MarkupContainer parent,
-			String componentId) {
-		
+	public WebMarkupContainer newSurroundingContainer(String componentId) {
 		return new TextFieldPanel(componentId);
 	}
 
@@ -35,7 +33,7 @@ public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 		}
 		return container;
 	}
-	
+
 	private class TextFieldPanel extends Panel {
 
 		public TextFieldPanel(String id) {
@@ -43,8 +41,6 @@ public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 			setOutputMarkupPlaceholderTag(true);
 			setVisible(false);
 		}
-		
+
 	}
-
-
 }
