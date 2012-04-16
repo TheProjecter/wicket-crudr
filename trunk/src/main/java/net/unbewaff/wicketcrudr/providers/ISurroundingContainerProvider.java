@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.components;
+package net.unbewaff.wicketcrudr.providers;
 
 import java.io.Serializable;
 

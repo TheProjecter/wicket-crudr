@@ -5,6 +5,10 @@ package net.unbewaff.wicketcrudr.components;
 
 import java.io.Serializable;
 
+import net.unbewaff.wicketcrudr.providers.IEditorProvider;
+import net.unbewaff.wicketcrudr.providers.ILabelProvider;
+import net.unbewaff.wicketcrudr.providers.ISurroundingContainerProvider;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;

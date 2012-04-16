@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.components;
+package net.unbewaff.wicketcrudr.providers;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
