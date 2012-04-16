@@ -6,7 +6,6 @@ package net.unbewaff.wicketcrudr.providers;
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -15,6 +14,6 @@ import org.apache.wicket.model.IModel;
  */
 public interface ILabelProvider<T> extends Serializable {
 	
-	public Component newLabel(MarkupContainer parent, String componentId, IModel<T> model);
+	public Component newLabel(String componentId, IModel<T> model);
 
 }
