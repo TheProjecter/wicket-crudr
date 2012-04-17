@@ -15,6 +15,7 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -73,8 +74,10 @@ public class AjaxEditableLabelContainer<T> extends Panel {
      * @return A component that will be used as the display-variant of the
      *         in-place-editor
      */
-    protected Component newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
-        return new LabelWrapper<T>(labelProvider.newLabel(componentId, new PropertyModel(model, propertyExpression)), this);
+    protected WebComponent newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
+        WebComponent newLabel = labelProvider.newLabel(componentId, new PropertyModel(model, propertyExpression));
+        newLabel.add(new LabelAjaxBehavior(getLabelAjaxEvent()));
+        return newLabel;
     }
 
     /**
@@ -449,5 +452,29 @@ public class AjaxEditableLabelContainer<T> extends Panel {
     @Override
     protected void onModelChanging() {
         super.onModelChanging();
+    }
+
+    protected class LabelAjaxBehavior extends AjaxEventBehavior
+    {
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Construct.
+         *
+         * @param event
+         */
+        public LabelAjaxBehavior(final String event)
+        {
+            super(event);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void onEvent(final AjaxRequestTarget target)
+        {
+            onEdit(target);
+        }
     }
 }
