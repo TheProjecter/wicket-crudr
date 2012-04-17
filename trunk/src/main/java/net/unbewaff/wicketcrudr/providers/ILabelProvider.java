@@ -5,7 +5,7 @@ package net.unbewaff.wicketcrudr.providers;
 
 import java.io.Serializable;
 
-import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -21,6 +21,6 @@ public interface ILabelProvider<T> extends Serializable {
      * @param model the data to display
      * @return The displaying Component
      */
-public Component newLabel(String componentId, IModel<T> model);
+public WebComponent newLabel(String componentId, IModel<T> model);
 
 }

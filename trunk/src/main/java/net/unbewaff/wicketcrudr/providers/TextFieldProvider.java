@@ -16,8 +16,7 @@ public class TextFieldProvider<T> implements IEditorProvider<T> {
 
 	private static final long serialVersionUID = -7231019074574082991L;
 
-	public FormComponent<T> newEditor(String componentId,
-			IModel<T> model) {
+	public FormComponent<T> newEditor(String componentId, IModel<T> model) {
 		return new TextField<T>(componentId, model);
 	}
 

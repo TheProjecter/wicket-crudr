@@ -74,9 +74,7 @@ public class AjaxEditableLabelContainer<T> extends Panel {
      *         in-place-editor
      */
     protected Component newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
-        Component newLabel = labelProvider.newLabel(componentId, new PropertyModel(model, propertyExpression));
-        newLabel.add(new LabelAjaxBehavior(getLabelAjaxEvent()));
-        return newLabel;
+        return new LabelWrapper<T>(labelProvider.newLabel(componentId, new PropertyModel(model, propertyExpression)), this);
     }
 
     /**
@@ -170,26 +168,6 @@ public class AjaxEditableLabelContainer<T> extends Panel {
         }
     }
 
-    protected class LabelAjaxBehavior extends AjaxEventBehavior {
-        private static final long serialVersionUID = 1L;
-
-        /**
-         * Construct.
-         *
-         * @param event
-         */
-        public LabelAjaxBehavior(final String event) {
-            super(event);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void onEvent(final AjaxRequestTarget target) {
-            onEdit(target);
-        }
-    }
 
     /**
      * Adds a validator to this form component. A model must be available for
