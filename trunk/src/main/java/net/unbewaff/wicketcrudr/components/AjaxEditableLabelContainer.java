@@ -96,6 +96,8 @@ public class AjaxEditableLabelContainer<T> extends Panel {
      */
     protected FormComponent<T> newEditor(MarkupContainer parent, String componentId, IModel<T> model) {
         FormComponent<T> newEditor = editorProvider.newEditor(componentId, new PropertyModel(model, propertyExpression));
+        newEditor.setOutputMarkupId(true);
+        newEditor.add(new EditorAjaxBehavior());
         return newEditor;
     }
 

@@ -5,11 +5,13 @@
 	<artifactId>wicket-crudr</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<!-- TODO project name  -->
+	<!-- TODO project name -->
 	<name>quickstart</name>
 	<description></description>
-		<organization> <name>Nicktar</name> <url>http://wicket-game.gwassist.de</url>
-		</organization>
+	<organization>
+		<name>Nicktar</name>
+		<url>http://wicket-game.gwassist.de</url>
+	</organization>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -22,7 +24,7 @@
 		<jetty.version>7.5.0.v20110901</jetty.version>
 	</properties>
 	<dependencies>
-		<!--  WICKET DEPENDENCIES -->
+		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
@@ -46,7 +48,7 @@
 			<version>1.2.16</version>
 		</dependency>
 
-		<!--  JUNIT DEPENDENCY FOR TESTING -->
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -54,7 +56,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--  JETTY DEPENDENCIES FOR TESTING  -->
+		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
@@ -134,7 +136,7 @@
 				<version>2.8</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
+					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -153,4 +155,4 @@
 		</repository>
 	</repositories>
 
-	</project>
+</project>
