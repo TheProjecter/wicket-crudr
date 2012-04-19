@@ -31,7 +31,7 @@ import org.apache.wicket.validation.IValidator;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class AjaxEditableLabelContainer<T> extends Panel {
+public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade, IEditorFacade {
 
     private final ILabelProvider<T> labelProvider;
     private final IEditorProvider<T> editorProvider;
@@ -75,7 +75,7 @@ public class AjaxEditableLabelContainer<T> extends Panel {
      *         in-place-editor
      */
     protected WebComponent newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
-        WebComponent newLabel = labelProvider.newLabel(componentId, new PropertyModel(model, propertyExpression));
+        WebComponent newLabel = labelProvider.newLabel(this, componentId, new PropertyModel(model, propertyExpression));
         newLabel.add(new LabelAjaxBehavior(getLabelAjaxEvent()));
         return newLabel;
     }
@@ -95,7 +95,7 @@ public class AjaxEditableLabelContainer<T> extends Panel {
      *         newSurroundingPanel
      */
     protected FormComponent<T> newEditor(MarkupContainer parent, String componentId, IModel<T> model) {
-        FormComponent<T> newEditor = editorProvider.newEditor(componentId, new PropertyModel(model, propertyExpression));
+        FormComponent<T> newEditor = editorProvider.newEditor(this, componentId, new PropertyModel(model, propertyExpression));
         newEditor.setOutputMarkupId(true);
         newEditor.add(new EditorAjaxBehavior());
         return newEditor;
@@ -190,13 +190,11 @@ public class AjaxEditableLabelContainer<T> extends Panel {
         return this;
     }
 
-    /**
-     * Implementation that returns null by default (panels don't typically need
-     * converters anyway). This is used by the embedded default instances of
-     * label and form field to determine whether they should use a converter
-     * like they normally would (when this method returns null), or whether they
-     * should use a custom converter (when this method is overridden and returns
-     * not null).
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.components.ILabelFacade#getConverter(java.lang.Class)
+     */
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.components.IEditorFacade#getConverter(java.lang.Class)
      */
     @Override
     public <C> IConverter<C> getConverter(final Class<C> type) {
@@ -429,30 +427,27 @@ public class AjaxEditableLabelContainer<T> extends Panel {
         return m;
     }
 
-    /**
-     * Override this to display a different value when the model object is null.
-     * Default is <code>...</code>
-     *
-     * @return The string which should be displayed when the model object is
-     *         null.
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.components.ILabelFacade#defaultNullLabel()
      */
-    protected String defaultNullLabel() {
+    @Override
+    public String defaultNullLabel() {
         return "...";
     }
 
-    /**
-     * Dummy override to fix WICKET-1239
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.components.IEditorFacade#onModelChanged()
      */
     @Override
-    protected void onModelChanged() {
+    public void onModelChanged() {
         super.onModelChanged();
     }
 
-    /**
-     * Dummy override to fix WICKET-1239
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.components.IEditorFacade#onModelChanging()
      */
     @Override
-    protected void onModelChanging() {
+    public void onModelChanging() {
         super.onModelChanging();
     }
 
@@ -479,4 +474,5 @@ public class AjaxEditableLabelContainer<T> extends Panel {
             onEdit(target);
         }
     }
+
 }
