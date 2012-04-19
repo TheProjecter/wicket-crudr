@@ -17,7 +17,6 @@ import net.unbewaff.wicketcrudr.providers.TextFieldProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
@@ -33,7 +32,12 @@ import org.junit.Test;
 public class TestFlexibleEditableColumn {
 
     private WicketTester tester;
-    private List<StringHolder> data = new ArrayList<StringHolder>() {{
+    private List<StringHolder> data = new ArrayList<StringHolder>() {/**
+         *
+         */
+        private static final long serialVersionUID = 8397804885542314329L;
+
+    {
         add(new StringHolder("Apple"));
         add(new StringHolder("Banana"));
         add(new StringHolder("Cherry"));
@@ -97,16 +101,19 @@ public class TestFlexibleEditableColumn {
 
     private static class StringHolder implements Serializable {
 
+        private static final long serialVersionUID = 8070868717307881900L;
         private String data;
 
         public StringHolder(String data) {
             this.data = data;
         }
 
+        @SuppressWarnings("unused")
         public String getData() {
             return data;
         }
 
+        @SuppressWarnings("unused")
         public void setData(String data) {
             this.data = data;
         }
