@@ -44,15 +44,4 @@ public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 		}
 		return container;
 	}
-
-	private class TextFieldPanel extends Panel {
-
-		public TextFieldPanel(String id) {
-			super(id);
-			setOutputMarkupPlaceholderTag(true);
-			setOutputMarkupId(true);
-			setVisible(false);
-		}
-
-	}
 }
