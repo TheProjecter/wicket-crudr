@@ -2,7 +2,6 @@ package net.unbewaff.wicketcrudr.providers;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 
-import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;

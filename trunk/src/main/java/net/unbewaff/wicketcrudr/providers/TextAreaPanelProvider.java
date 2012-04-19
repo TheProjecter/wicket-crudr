@@ -5,8 +5,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * A simple implementation returning a {@link Panel} with Markup to accept a {@link TextArea}. USed together
- * with a {@link SimpleLabelProvider} and a {@link TextAreaProvider} this mimics the behavior of a {@link AjaxEditableLink}
+ * A simple implementation returning a {@link Panel} with Markup to accept a {@link TextArea}. 
  *
  * @author David Hendrix (Nicktarix)
  *

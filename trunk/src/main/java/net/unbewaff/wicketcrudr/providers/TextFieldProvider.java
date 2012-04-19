@@ -1,9 +1,7 @@
 package net.unbewaff.wicketcrudr.providers;
 
-import net.unbewaff.wicketcrudr.components.AjaxEditableLabelContainer;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
-import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;

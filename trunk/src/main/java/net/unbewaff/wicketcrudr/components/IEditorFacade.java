@@ -2,10 +2,19 @@ package net.unbewaff.wicketcrudr.components;
 
 import org.apache.wicket.util.convert.IConverter;
 
+/**
+ * A facade decoupling {@link IEditorProvider}s from {@link AjaxEditableLabelContainer}s
+ * 
+ * @author David Hendrix (Nicktarix)
+ *
+ */
 public interface IEditorFacade {
 
-    /* (non-Javadoc)
-     * @see net.unbewaff.wicketcrudr.components.ILabelFacade#getConverter(java.lang.Class)
+    /**
+     * @see WebComponent
+     * @param <C>
+     * @param type
+     * @return
      */
     public abstract <C> IConverter<C> getConverter(final Class<C> type);
 

@@ -2,6 +2,12 @@ package net.unbewaff.wicketcrudr.components;
 
 import org.apache.wicket.util.convert.IConverter;
 
+/**
+ * A facade decoupling {@link ILabelProvider}s from {@link AjaxEditableLabelContainr}s
+ * 
+ * @author David Hendrix (Nicktarix)
+ *
+ */
 public interface ILabelFacade {
 
     /**

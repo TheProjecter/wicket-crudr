@@ -4,6 +4,14 @@ import net.unbewaff.wicketcrudr.providers.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.ISurroundingContainerProvider;
 
+/**
+ * Convenience Parameter Object to encapsulate the providers needed by
+ * FlexibleColumns into a single parameter
+ * 
+ * @author David Hendrix (Nicktarix)
+ *
+ * @param <T>
+ */
 public class ContainerConfiguration<T> {
 
     private final ILabelProvider<T> labelProvider;
@@ -12,8 +20,6 @@ public class ContainerConfiguration<T> {
     private final String propertyExpression;
 
     /**
-     * Convenience Parameter Object to encapsulate the providers needed by
-     * FlexibleColumns into a single parameter
      *
      * @param labelProvider
      *            The ILabelProvider
