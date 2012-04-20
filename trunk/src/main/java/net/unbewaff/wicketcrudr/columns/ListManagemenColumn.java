@@ -4,9 +4,12 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import net.unbewaff.wicketcrudr.dataproviders.IManageableDataProvider;
+import net.unbewaff.wicketcrudr.events.AjaxEventPayload;
+import net.unbewaff.wicketcrudr.events.ListChangedEventPayLoad;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -57,8 +60,31 @@ public class ListManagemenColumn<T> extends AbstractColumn<T> {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         provider.delete(getModelObject());
+                        send(getPage(), Broadcast.DEPTH, new ListChangedEventPayLoad<T>(target, provider));
                     }
                 });
+                add(new AjaxFallbackLink<T>("first", rowModel) {
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        provider.first(getModelObject());
+                        send(getPage(), Broadcast.DEPTH, new ListChangedEventPayLoad<T>(target, provider));
+                    }
+                });
+                add(new AjaxFallbackLink<T>("up", rowModel) {
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        provider.up(getModelObject());
+                        send(getPage(), Broadcast.DEPTH, new ListChangedEventPayLoad<T>(target, provider));
+                    }
+                });
+                add(new AjaxFallbackLink<T>("down", rowModel) {
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        provider.down(getModelObject());
+                        send(getPage(), Broadcast.DEPTH, new ListChangedEventPayLoad<T>(target, provider));
+                    }
+                });
+
                 super.onInitialize();
             }
         });
