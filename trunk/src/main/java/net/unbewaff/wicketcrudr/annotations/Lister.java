@@ -11,7 +11,7 @@ import net.unbewaff.wicketcrudr.providers.ILabelProvider;
 @Target(ElementType.METHOD)
 public @interface Lister {
 	int position() default -1;
-	String displayAs() default "";
+	String headerKey() default "";
 	boolean editInPlace() default false;
 	boolean displayHtml() default false;
 	@SuppressWarnings("rawtypes")

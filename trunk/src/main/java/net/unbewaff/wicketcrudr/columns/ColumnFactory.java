@@ -26,8 +26,12 @@ public class ColumnFactory implements Serializable {
     public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz) {
         String cleanProperty = getCleanPropertyName(property);
         IColumn<T> col = null;
+        String display = clazz.getSimpleName() + "." + cleanProperty;
+        if (!"".equals(l.headerKey())) {
+        	display = l.headerKey();
+        }
         if (!l.editInPlace()) {
-            col = new PropertyColumn<T>(new StringResourceModel(clazz.getSimpleName() + "." + cleanProperty, Model.of(""), cleanProperty), cleanProperty);
+			col = new PropertyColumn<T>(new StringResourceModel(display, Model.of(""), cleanProperty), cleanProperty);
         }
         return col;
     }
