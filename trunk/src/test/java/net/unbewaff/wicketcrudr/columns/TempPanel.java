@@ -10,6 +10,8 @@ import org.apache.wicket.markup.html.panel.Panel;
  */
 public class TempPanel extends Panel {
 
+    private static final long serialVersionUID = -8797466715560140738L;
+
     public TempPanel(String id) {
         super(id);
     }
