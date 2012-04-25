@@ -56,8 +56,6 @@ public class ColumnFactory implements Serializable {
         String clean = property;
         if (clean.startsWith("get")) {
             clean = clean.substring(3);
-        } else if (clean.startsWith("has")) {
-            clean = clean.substring(3);
         } else if (clean.startsWith("is")) {
             clean = clean.substring(2);
         }
