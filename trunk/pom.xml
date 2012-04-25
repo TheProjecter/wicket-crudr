@@ -5,9 +5,8 @@
 	<artifactId>wicket-crudr</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<!-- TODO project name -->
-	<name>quickstart</name>
-	<description></description>
+	<name>Wicket CRUDr</name>
+	<description>A (not so) lightweight collection of components to do basic CRUD operations with Apache Wicket. An ajax-centric, model-driven approach... </description>
 	<organization>
 		<name>Nicktar</name>
 		<url>http://wicket-game.gwassist.de</url>
@@ -29,11 +28,13 @@
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
 			<version>${wicket.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
