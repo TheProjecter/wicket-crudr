@@ -18,7 +18,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class ListManagemenColumn<T> extends AbstractColumn<T> {
+class ListManagemenColumn<T> extends AbstractColumn<T> {
 
     IManageableDataProvider<T> provider;
 

@@ -1,21 +1,26 @@
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.editorpanel;
+
+import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
+import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * A simple implementation returning a {@link Panel} with Markup to accept a {@link CheckBox}. 
+ * A simple implementation returning a {@link Panel} with Markup to accept a {@link TextField}. USed together
+ * with a {@link SimpleLabelProvider} and a {@link TextFieldProvider} this mimics the behavior of a {@link AjaxEditableLink}
  *
  * @author David Hendrix (Nicktarix)
  *
  */
-public class CheckBoxPanelProvider implements ISurroundingContainerProvider {
+public class TextFieldPanelProvider implements ISurroundingContainerProvider {
 
 	private static final long serialVersionUID = -4861783108809481116L;
 
 	public WebMarkupContainer newSurroundingContainer(String componentId) {
-		return new CheckBoxPanel(componentId);
+		return new TextFieldPanel(componentId);
 	}
 
 	public WebMarkupContainer show(AjaxRequestTarget target, WebMarkupContainer container) {

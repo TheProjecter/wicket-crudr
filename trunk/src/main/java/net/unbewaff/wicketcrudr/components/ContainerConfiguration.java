@@ -1,8 +1,8 @@
 package net.unbewaff.wicketcrudr.components;
 
-import net.unbewaff.wicketcrudr.providers.IEditorProvider;
-import net.unbewaff.wicketcrudr.providers.ILabelProvider;
-import net.unbewaff.wicketcrudr.providers.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
+import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 /**
  * Convenience Parameter Object to encapsulate the providers needed by

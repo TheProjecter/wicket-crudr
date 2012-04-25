@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class FlexibleEditableColumn<T> extends AbstractColumn<T> {
+class FlexibleEditableColumn<T> extends AbstractColumn<T> {
 
 	private static final long serialVersionUID = -5616560586558642852L;
 	private final ContainerConfiguration<T> configuration;

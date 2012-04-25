@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.label;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 
@@ -43,6 +43,11 @@ public class SimpleLabelProvider<T> implements ILabelProvider<T> {
         };
 
         return label;
+    }
+
+    @Override
+    public IModel<T> newLabelModel(IModel<T> model) {
+        return model;
     }
 
 }

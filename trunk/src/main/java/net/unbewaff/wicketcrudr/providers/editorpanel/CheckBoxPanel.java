@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import org.apache.wicket.markup.html.panel.Panel;
 

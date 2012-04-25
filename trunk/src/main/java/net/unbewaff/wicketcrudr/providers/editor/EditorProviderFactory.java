@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.editor;
 
 /**
  * A Factory to create 

@@ -34,11 +34,8 @@ import org.junit.Test;
 public class ColumnFactoryTest {
 
     private WicketTester tester;
-    private List<StringHolder> data = new ArrayList<StringHolder>() {/**
-         *
-         */
+    private List<StringHolder> data = new ArrayList<StringHolder>() {
         private static final long serialVersionUID = 8397804885542314329L;
-
     {
         add(new StringHolder("Apple"));
         add(new StringHolder("Banana"));

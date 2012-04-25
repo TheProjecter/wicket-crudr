@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.editor;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 

@@ -1,7 +1,7 @@
 /**
  *
  */
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.label;
 
 import java.lang.reflect.Method;
 

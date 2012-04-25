@@ -1,11 +1,12 @@
 /**
  *
  */
-package net.unbewaff.wicketcrudr.providers;
+package net.unbewaff.wicketcrudr.providers.label;
 
 import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
@@ -14,7 +15,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public interface ILabelProvider<T> extends Serializable {
+public interface ILabelProvider<T> extends Serializable, ILabelModelProvider<T> {
 
     /**
      * Create the display component for displaying certain Model objects in BrixxLists. The easiest implementation
@@ -42,6 +43,7 @@ public interface ILabelProvider<T> extends Serializable {
      * @param model the data to display
      * @return The displaying Component
      */
-public WebComponent newLabel(ILabelFacade parent, String componentId, IModel<T> model);
+    public abstract WebComponent newLabel(ILabelFacade parent, String componentId, IModel<T> model);
+
 
 }

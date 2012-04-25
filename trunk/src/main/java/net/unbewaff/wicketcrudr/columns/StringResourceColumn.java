@@ -14,7 +14,7 @@ import org.apache.wicket.model.StringResourceModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class StringResourceColumn<T> extends PropertyColumn<T> {
+class StringResourceColumn<T> extends PropertyColumn<T> {
 
     private static final long serialVersionUID = 740826471748724758L;
     private final String resourceKey;

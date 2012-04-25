@@ -5,9 +5,9 @@ package net.unbewaff.wicketcrudr.components;
 
 import java.io.Serializable;
 
-import net.unbewaff.wicketcrudr.providers.IEditorProvider;
-import net.unbewaff.wicketcrudr.providers.ILabelProvider;
-import net.unbewaff.wicketcrudr.providers.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
+import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
