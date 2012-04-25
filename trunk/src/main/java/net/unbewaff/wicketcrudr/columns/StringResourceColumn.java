@@ -17,10 +17,11 @@ import org.apache.wicket.model.StringResourceModel;
 public class StringResourceColumn<T> extends PropertyColumn<T> {
 
     private static final long serialVersionUID = 740826471748724758L;
-    private  String resourceKey;
+    private final String resourceKey;
 
     public StringResourceColumn(IModel<String> displayModel, String sortProperty, String propertyExpression, String resourceKey) {
         super(displayModel, sortProperty, propertyExpression);
+        this.resourceKey = resourceKey;
     }
 
     public StringResourceColumn(IModel<String> displayModel, String propertyExpression, String resourceKey) {
