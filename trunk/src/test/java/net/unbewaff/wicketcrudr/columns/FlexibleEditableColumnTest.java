@@ -15,6 +15,8 @@ import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.TextFieldPanelProvider;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.PropertyModelProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -53,7 +55,8 @@ public class FlexibleEditableColumnTest {
     public void testDisplay() {
 
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>();
+        ILabelModelProvider<StringHolder> labelModelProvider = new PropertyModelProvider<StringHolder>("data");
+        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>(labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
@@ -78,7 +81,8 @@ public class FlexibleEditableColumnTest {
     @Test
     public void testDisplayEditor() {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>();
+        ILabelModelProvider<StringHolder> labelModelProvider = new PropertyModelProvider<StringHolder>("data");
+        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>(labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");

@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.providers.label;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -20,8 +21,17 @@ public class SimpleLabelProvider<T> implements ILabelProvider<T> {
 
     private static final long serialVersionUID = -7292107981087842284L;
 
+    private ILabelModelProvider<T> labelModelProvider;
+
+    /**
+     * @param labelModelProvider
+     */
+    public SimpleLabelProvider(ILabelModelProvider<T> labelModelProvider) {
+        this.labelModelProvider = labelModelProvider;
+    }
+
     public WebComponent newLabel(final ILabelFacade parent, String componentId, IModel<T> model) {
-        Label label = new Label(componentId, model) {
+        Label label = new Label(componentId, newLabelModel(model)) {
 
             private static final long serialVersionUID = 7754015393510391867L;
 
@@ -46,8 +56,8 @@ public class SimpleLabelProvider<T> implements ILabelProvider<T> {
     }
 
     @Override
-    public IModel<T> newLabelModel(IModel<T> model) {
-        return model;
+    public IModel<?> newLabelModel(IModel<T> model) {
+        return labelModelProvider.newLabelModel(model);
     }
 
 }

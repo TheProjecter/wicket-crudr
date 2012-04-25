@@ -36,4 +36,8 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
         return null;
     }
 
+    public ILabelProvider<T> getLabelProvider() {
+        return labelProvider;
+    }
+
 }

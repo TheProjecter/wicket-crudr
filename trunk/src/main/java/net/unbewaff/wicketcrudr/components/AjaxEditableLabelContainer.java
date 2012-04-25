@@ -191,9 +191,6 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
     }
 
     /* (non-Javadoc)
-     * @see net.unbewaff.wicketcrudr.components.ILabelFacade#getConverter(java.lang.Class)
-     */
-    /* (non-Javadoc)
      * @see net.unbewaff.wicketcrudr.components.IEditorFacade#getConverter(java.lang.Class)
      */
     @Override

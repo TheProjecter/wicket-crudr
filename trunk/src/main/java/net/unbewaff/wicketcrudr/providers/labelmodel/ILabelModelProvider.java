@@ -13,5 +13,5 @@ import org.apache.wicket.model.IModel;
  */
 public interface ILabelModelProvider<T> extends Serializable {
 
-    public abstract IModel<T> newLabelModel(IModel<T> model);
+    public abstract IModel<?> newLabelModel(IModel<T> model);
 }

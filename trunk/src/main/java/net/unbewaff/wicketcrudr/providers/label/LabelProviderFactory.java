@@ -6,6 +6,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.providers.labelmodel.PropertyModelProvider;
 
 /**
  * Factory to create ILabelProviderObjects based on Metadata
@@ -33,7 +34,7 @@ public class LabelProviderFactory {
             }
         }
         if (provider == null) {
-            new SimpleLabelProvider<T>();
+            new SimpleLabelProvider<T>(new PropertyModelProvider<T>(""));
         }
 
         return provider;
