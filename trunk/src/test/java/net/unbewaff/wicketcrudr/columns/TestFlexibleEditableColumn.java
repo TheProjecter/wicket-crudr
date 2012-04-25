@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.providers.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.ILabelProvider;

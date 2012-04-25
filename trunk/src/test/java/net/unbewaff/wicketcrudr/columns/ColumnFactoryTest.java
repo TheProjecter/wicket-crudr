@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 
@@ -73,7 +74,7 @@ public class ColumnFactoryTest {
     }
 
     @Test
-    public void testCustomDisplay() throws SecurityException, NoSuchMethodException {
+    public void testCustomHeader() throws SecurityException, NoSuchMethodException {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         Method method = StringHolder.class.getMethod("getData2");
         IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), method.getName(), StringHolder.class);
@@ -88,15 +89,16 @@ public class ColumnFactoryTest {
 		table.addTopToolbar(toolbar);
         panel.add(table);
         tester.startComponentInPage(panel);
-        
+
         tester.assertLabel(toolbar.getPath().substring(2) + ":headers:1:header:label", "Dummdidumm");
         tester.assertLabel("test:table:body:rows:3:cells:1:cell", "Cherry");
         tester.assertLabel("test:table:body:rows:2:cells:1:cell", "Banana");
         tester.assertLabel("test:table:body:rows:1:cells:1:cell", "Apple");
-        
+
     }
 
 
+    @SuppressWarnings("unused")
     private static class StringHolder implements Serializable {
 
         private static final long serialVersionUID = 8070868717307881900L;
@@ -106,13 +108,11 @@ public class ColumnFactoryTest {
             this.data = data;
         }
 
-        @SuppressWarnings("unused")
         @Lister
         public String getData() {
             return data;
         }
 
-        @SuppressWarnings("unused")
         public void setData(String data) {
             this.data = data;
         }

@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.columns;
+package net.unbewaff;
 
 import org.apache.wicket.markup.html.panel.Panel;
 
