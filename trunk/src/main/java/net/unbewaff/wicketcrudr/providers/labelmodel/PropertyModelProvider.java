@@ -12,7 +12,7 @@ import org.apache.wicket.model.PropertyModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class PropertyModelProvider<T> implements ILabelModelProvider<T> {
+class PropertyModelProvider<T> implements ILabelModelProvider<T> {
 
     private static final long serialVersionUID = -8029254068315046595L;
     private final String propertyExpression;

@@ -3,7 +3,7 @@
  */
 package net.unbewaff.wicketcrudr.columns;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -13,12 +13,10 @@ import java.util.List;
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.tester.WicketTester;
@@ -56,8 +54,6 @@ public class ColumnFactoryTest {
         assertTrue(column instanceof FlexibleNonEditableColumn);
         FlexibleNonEditableColumn<StringHolder> pc = (FlexibleNonEditableColumn<ColumnFactoryTest.StringHolder>)column;
         assertTrue(pc.getDisplayModel() instanceof StringResourceModel);
-        assertTrue(pc.getLabelProvider() instanceof SimpleLabelProvider);
-        //assertEquals("Data", pc.getPropertyExpression());
         cols.add(column);
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
         TempPanel panel = new TempPanel("test");

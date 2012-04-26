@@ -8,13 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
-import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
-import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
-import net.unbewaff.wicketcrudr.providers.editorpanel.TextFieldPanelProvider;
-import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;

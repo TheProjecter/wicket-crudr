@@ -2,10 +2,10 @@ package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**

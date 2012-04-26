@@ -2,7 +2,6 @@ package net.unbewaff.wicketcrudr.providers.editor;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 import net.unbewaff.wicketcrudr.providers.editorpanel.TextFieldPanelProvider;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;

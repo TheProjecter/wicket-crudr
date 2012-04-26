@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.TextFieldPanelProvider;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
+import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
-import net.unbewaff.wicketcrudr.providers.labelmodel.PropertyModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -55,8 +56,8 @@ public class FlexibleEditableColumnTest {
     public void testDisplay() {
 
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelModelProvider<StringHolder> labelModelProvider = new PropertyModelProvider<StringHolder>("data");
-        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>(labelModelProvider);
+        ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", "");
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(new TestLister(), labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
@@ -81,8 +82,8 @@ public class FlexibleEditableColumnTest {
     @Test
     public void testDisplayEditor() {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelModelProvider<StringHolder> labelModelProvider = new PropertyModelProvider<StringHolder>("data");
-        ILabelProvider<StringHolder> labelProvider = new SimpleLabelProvider<StringHolder>(labelModelProvider);
+        ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", "");
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(new TestLister(), labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
@@ -121,6 +122,45 @@ public class FlexibleEditableColumnTest {
         @SuppressWarnings("unused")
         public void setData(String data) {
             this.data = data;
+        }
+
+    }
+
+    private class TestLister implements net.unbewaff.wicketcrudr.annotations.Lister, Annotation {
+
+        @Override
+        public Class<? extends Annotation> annotationType() {
+            return null;
+        }
+
+        @Override
+        public int position() {
+            return 0;
+        }
+
+        @Override
+        public String headerKey() {
+            return "";
+        }
+
+        @Override
+        public String displayKey() {
+            return "";
+        }
+
+        @Override
+        public boolean editInPlace() {
+            return false;
+        }
+
+        @Override
+        public boolean escapeModelString() {
+            return false;
+        }
+
+        @Override
+        public Class<? extends ILabelProvider> customLabelProvider() {
+            return ILabelProvider.class;
         }
 
     }

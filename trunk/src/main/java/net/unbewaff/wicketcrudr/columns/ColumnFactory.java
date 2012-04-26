@@ -8,12 +8,11 @@ import java.io.Serializable;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
+import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
-import net.unbewaff.wicketcrudr.providers.labelmodel.PropertyModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
@@ -32,21 +31,12 @@ public class ColumnFactory implements Serializable {
         String cleanProperty = getCleanPropertyName(property);
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(l.headerKey(), clazz.getSimpleName(), cleanProperty);
-        ILabelModelProvider<T> labelModelProvider = getLabelModelProvider(cleanProperty);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(cleanProperty, l.displayKey());
         if (!l.editInPlace()) {
-            ILabelProvider<T> labelProvider = new SimpleLabelProvider<T>(labelModelProvider);
+            ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
             col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
         }
         return col;
-    }
-
-    /**
-     * @param <T>
-     * @param cleanProperty
-     * @return
-     */
-    private static <T> PropertyModelProvider<T> getLabelModelProvider(String cleanProperty) {
-        return new PropertyModelProvider<T>(cleanProperty);
     }
 
     /**

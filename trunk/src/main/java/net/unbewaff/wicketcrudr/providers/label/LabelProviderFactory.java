@@ -3,10 +3,8 @@
  */
 package net.unbewaff.wicketcrudr.providers.label;
 
-import java.lang.reflect.Method;
-
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.providers.labelmodel.PropertyModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 /**
  * Factory to create ILabelProviderObjects based on Metadata
@@ -21,7 +19,7 @@ public class LabelProviderFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> ILabelProvider<T> getLabelProvider(Lister l) {
+    public static <T> ILabelProvider<T> getLabelProvider(Lister l, ILabelModelProvider<T> labelModelProvider) {
         ILabelProvider<T> provider = null;
         Class<? extends ILabelProvider<T>> lpc = (Class<? extends ILabelProvider<T>>) l.customLabelProvider();
         if (!ILabelProvider.class.equals(lpc)) {
@@ -34,7 +32,7 @@ public class LabelProviderFactory {
             }
         }
         if (provider == null) {
-            new SimpleLabelProvider<T>(new PropertyModelProvider<T>(""));
+            provider = new SimpleLabelProvider<T>(labelModelProvider);
         }
 
         return provider;

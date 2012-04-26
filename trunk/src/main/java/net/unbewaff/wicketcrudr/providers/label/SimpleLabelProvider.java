@@ -17,7 +17,7 @@ import org.apache.wicket.util.convert.IConverter;
  *
  * @param <T>
  */
-public class SimpleLabelProvider<T> implements ILabelProvider<T> {
+class SimpleLabelProvider<T> implements ILabelProvider<T> {
 
     private static final long serialVersionUID = -7292107981087842284L;
 
