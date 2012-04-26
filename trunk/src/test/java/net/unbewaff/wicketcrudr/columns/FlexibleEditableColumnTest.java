@@ -4,11 +4,11 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
+import net.unbewaff.wicketcrudr.annotations.TestLister;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
@@ -122,45 +122,6 @@ public class FlexibleEditableColumnTest {
         @SuppressWarnings("unused")
         public void setData(String data) {
             this.data = data;
-        }
-
-    }
-
-    private class TestLister implements net.unbewaff.wicketcrudr.annotations.Lister, Annotation {
-
-        @Override
-        public Class<? extends Annotation> annotationType() {
-            return null;
-        }
-
-        @Override
-        public int position() {
-            return 0;
-        }
-
-        @Override
-        public String headerKey() {
-            return "";
-        }
-
-        @Override
-        public String displayKey() {
-            return "";
-        }
-
-        @Override
-        public boolean editInPlace() {
-            return false;
-        }
-
-        @Override
-        public boolean escapeModelString() {
-            return false;
-        }
-
-        @Override
-        public Class<? extends ILabelProvider> customLabelProvider() {
-            return ILabelProvider.class;
         }
 
     }
