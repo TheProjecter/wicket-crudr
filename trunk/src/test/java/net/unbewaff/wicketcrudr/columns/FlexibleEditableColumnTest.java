@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.TestLister;
+import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
@@ -24,7 +24,10 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -36,9 +39,9 @@ import org.junit.Test;
 public class FlexibleEditableColumnTest {
 
     private WicketTester tester;
-    private List<StringHolder> data = new ArrayList<StringHolder>() {/**
-         *
-         */
+    private Mockery mockery;
+    private List<StringHolder> data = new ArrayList<StringHolder>() {
+
         private static final long serialVersionUID = 8397804885542314329L;
 
     {
@@ -46,18 +49,24 @@ public class FlexibleEditableColumnTest {
         add(new StringHolder("Banana"));
         add(new StringHolder("Cherry"));
     }};
+    
 
     @Before
     public void setUp() {
             tester = new WicketTester();
+        	mockery = new Mockery();
     }
 
     @Test
     public void testDisplay() {
 
+    	final Lister l = mockery.mock(Lister.class);
+    	mockery.checking(new Expectations() {{
+    		oneOf(l).customLabelProvider(); will(returnValue(ILabelProvider.class));
+    	}});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", "");
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(new TestLister(), labelModelProvider);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
@@ -77,13 +86,18 @@ public class FlexibleEditableColumnTest {
         tester.assertLabel("test:table:body:rows:1:cells:1:cell:label", "Apple");
         tester.assertLabel("test:table:body:rows:2:cells:1:cell:label", "Banana");
         tester.assertLabel("test:table:body:rows:3:cells:1:cell:label", "Cherry");
+        mockery.assertIsSatisfied();
     }
 
     @Test
     public void testDisplayEditor() {
+    	final Lister l = mockery.mock(Lister.class);
+    	mockery.checking(new Expectations() {{
+    		oneOf(l).customLabelProvider(); will(returnValue(ILabelProvider.class));
+    	}});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", "");
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(new TestLister(), labelModelProvider);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = new TextFieldProvider<StringHolder>();
         ISurroundingContainerProvider containerProvider = new TextFieldPanelProvider();
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
