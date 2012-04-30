@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -27,6 +28,17 @@ public class ColumnFactory implements Serializable {
         // static use only
     }
 
+    public static <T> IColumn<T> getColumn(Method m, String property, Class<T> clazz) {
+    	return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), property, clazz);
+    }
+    /**
+     * @param <T>
+     * @param l
+     * @param e
+     * @param property
+     * @param clazz
+     * @return
+     */
     public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz) {
         String cleanProperty = getCleanPropertyName(property);
         IColumn<T> col = null;

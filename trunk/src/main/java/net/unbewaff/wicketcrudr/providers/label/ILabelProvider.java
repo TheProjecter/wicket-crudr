@@ -8,7 +8,7 @@ import java.io.Serializable;
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
-import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -43,7 +43,7 @@ public interface ILabelProvider<T> extends Serializable, ILabelModelProvider<T> 
      * @param model the data to display
      * @return The displaying Component
      */
-    public abstract WebComponent newLabel(ILabelFacade parent, String componentId, IModel<T> model);
+    public abstract Component newLabel(ILabelFacade parent, String componentId, IModel<T> model);
 
 
 }

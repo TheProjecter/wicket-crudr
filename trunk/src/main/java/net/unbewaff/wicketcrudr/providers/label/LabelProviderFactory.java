@@ -3,6 +3,8 @@
  */
 package net.unbewaff.wicketcrudr.providers.label;
 
+import java.lang.reflect.Method;
+
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
@@ -16,6 +18,10 @@ public class LabelProviderFactory {
 
     private LabelProviderFactory() {
         // static use only
+    }
+    
+    public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider) {
+    	return getLabelProvider(m.getAnnotation(Lister.class), labelModelProvider);
     }
 
     @SuppressWarnings("unchecked")
