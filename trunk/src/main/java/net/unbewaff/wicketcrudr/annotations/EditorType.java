@@ -1,10 +1,21 @@
+/**
+ *
+ */
 package net.unbewaff.wicketcrudr.annotations;
 
-public enum EditorType {
+/**
+ * @author davidh
+ *
+ */
+public @interface EditorType {
 
-	TextField,
-	CheckBox,
-	EnumDropDown,
-	EnumListChoice
+    public enum Type {
+        TextField,
+        CheckBox,
+        DropDown;
+    }
+
+    Type type() default Type.TextField;
+
 
 }
