@@ -74,8 +74,8 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      * @return A component that will be used as the display-variant of the
      *         in-place-editor
      */
-    protected WebComponent newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
-        WebComponent newLabel = (WebComponent) labelProvider.newLabel(this, componentId, model);
+    protected Component newLabel(MarkupContainer parent, String componentId, IModel<T> model) {
+        Component newLabel = (Component) labelProvider.newLabel(this, componentId, model);
         newLabel.add(new LabelAjaxBehavior(getLabelAjaxEvent()));
         return newLabel;
     }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.unbewaff.wicketcrudr.providers.label;
 
@@ -13,13 +13,12 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.tester.Result;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 
 /**
  * @author nicktar
- * 
+ *
  */
 public class DisabeledCheckboxLabelProviderTest {
 

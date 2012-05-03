@@ -109,7 +109,7 @@ public class ColumnFactoryTest {
             this.data = data;
         }
 
-        @Lister(headerKey="tralala")
+        @Lister(resourcePrefix="tralala")
         public String getData2() {
             return data;
         }

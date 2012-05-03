@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.unbewaff.wicketcrudr.providers.label;
 
@@ -17,7 +17,7 @@ import org.apache.wicket.model.IModel;
  *
  */
 public class DisabeledCheckboxLabelProvider implements ILabelProvider<Boolean> {
-	
+
 	private static final long serialVersionUID = -4633487166850598332L;
 	private ILabelModelProvider<Boolean> labelModelProvider;
 	private final CheckBoxPanelProvider cbpp;
@@ -45,10 +45,10 @@ public class DisabeledCheckboxLabelProvider implements ILabelProvider<Boolean> {
 	public Component newLabel(ILabelFacade parent, String componentId, IModel<Boolean> model) {
 		WebMarkupContainer retValue = cbpp.newSurroundingContainer(componentId);
 		retValue.setVisible(true);
-		CheckBox checkBox = new CheckBox("editor", model);
+		CheckBox checkBox = new CheckBox("editor", (IModel<Boolean>) newLabelModel(model));
 		checkBox.setEnabled(false);
 		retValue.add(checkBox);
-		
+
 		return retValue;
 	}
 

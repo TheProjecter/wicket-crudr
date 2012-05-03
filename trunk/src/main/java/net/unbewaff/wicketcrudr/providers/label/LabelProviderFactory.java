@@ -6,6 +6,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 /**
@@ -19,11 +20,11 @@ public class LabelProviderFactory {
     private LabelProviderFactory() {
         // static use only
     }
-    
+
     /**
-     * Wrapper to {@link net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory.getLabelProvider(Lister, ILabelModelProvider<T>)} 
+     * Wrapper to {@link net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory.getLabelProvider(Lister, ILabelModelProvider<T>)}
      * to simplify API usage by providing a Method instead of multiple Annotations
-     * 
+     *
      * @param <T>
      * @param m The annotated Method
      * @param labelModelProvider The {@link net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider<T>}
@@ -43,15 +44,14 @@ public class LabelProviderFactory {
     @SuppressWarnings("unchecked")
     public static <T> ILabelProvider<T> getLabelProvider(Lister l, ILabelModelProvider<T> labelModelProvider) {
         ILabelProvider<T> provider = null;
-        Class<? extends ILabelProvider<T>> lpc = (Class<? extends ILabelProvider<T>>) l.customLabelProvider();
-        if (!ILabelProvider.class.equals(lpc)) {
-            try {
-                provider = lpc.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        Display d = l.displayAs();
+        switch (d) {
+            case DEFAULT:
+            case RESOURCE:
+                provider = new SimpleLabelProvider<T>(labelModelProvider);
+                break;
+            case CHECKBOX:
+                provider = (ILabelProvider<T>) new DisabeledCheckboxLabelProvider((ILabelModelProvider<Boolean>) labelModelProvider);
         }
         if (provider == null) {
             provider = new SimpleLabelProvider<T>(labelModelProvider);

@@ -42,8 +42,8 @@ public class ColumnFactory implements Serializable {
     public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz) {
         String cleanProperty = getCleanPropertyName(property);
         IColumn<T> col = null;
-        IModel<String> displayModel = getHeaderModel(l.headerKey(), clazz.getSimpleName(), cleanProperty);
-        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(cleanProperty, l.displayKey());
+        IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), cleanProperty);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(cleanProperty, l);
         if (!l.editInPlace()) {
             ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
             col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
@@ -60,7 +60,7 @@ public class ColumnFactory implements Serializable {
     private static IModel<String> getHeaderModel(String headerKey, String clazzName, String cleanProperty) {
         String display;
         if (!"".equals(headerKey)) {
-        	display = headerKey;
+        	display = headerKey + "." + cleanProperty;
         } else {
             display = clazzName + "." + cleanProperty;
         }

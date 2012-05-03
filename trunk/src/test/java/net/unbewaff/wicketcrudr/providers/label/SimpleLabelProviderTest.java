@@ -1,7 +1,6 @@
 package net.unbewaff.wicketcrudr.providers.label;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
-import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 import org.apache.wicket.markup.html.basic.Label;

@@ -3,6 +3,9 @@
  */
 package net.unbewaff.wicketcrudr.providers.labelmodel;
 
+import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -17,15 +20,15 @@ public class LabelModelProviderFactory {
     /**
      * @param <T>
      * @param cleanProperty
-     * @param displayKey
+     * @param l TODO
      * @return
      */
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, String displayKey) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, Lister l) {
         ILabelModelProvider<T> provider;
-        if ("".equals(displayKey)) {
-            provider = new PropertyModelProvider<T>(cleanProperty);
+        if (l.displayAs().equals(Display.RESOURCE)) {
+            provider = new StringResourceModelProvider<T>(cleanProperty, l.resourcePrefix());
         } else {
-            provider = new StringResourceModelProvider<T>(cleanProperty, displayKey);
+            provider = new PropertyModelProvider<T>(cleanProperty);
         }
         return provider;
     }
