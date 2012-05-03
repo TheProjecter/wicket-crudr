@@ -19,6 +19,7 @@ import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -29,6 +30,8 @@ import org.apache.wicket.model.StringResourceModel;
  *
  */
 public class ColumnFactory implements Serializable {
+
+    private static transient final Logger logger = Logger.getLogger(ColumnFactory.class);
 
     private ColumnFactory() {
         // static use only
@@ -42,6 +45,7 @@ public class ColumnFactory implements Serializable {
     public static <T> IColumn<T> getColumn(Field f, String property, Class<T> clazz) {
         return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), property, clazz);
     }
+
     /**
      * @param <T>
      * @param l The Lister Annotation
@@ -55,13 +59,18 @@ public class ColumnFactory implements Serializable {
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
-        if (!l.editInPlace()) {
-            col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
-        } else {
+        boolean editInPlace = l.editInPlace();
+        if (editInPlace && e == null) {
+            logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");
+            editInPlace = false;
+        }
+        if (editInPlace) {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);
+        } else {
+            col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
         }
         return col;
     }
