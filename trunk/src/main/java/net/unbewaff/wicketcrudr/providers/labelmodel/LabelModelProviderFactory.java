@@ -20,7 +20,7 @@ public class LabelModelProviderFactory {
     /**
      * @param <T>
      * @param cleanProperty
-     * @param l TODO
+     * @param l The Lister Annotation defining the Metadata
      * @return
      */
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, Lister l) {

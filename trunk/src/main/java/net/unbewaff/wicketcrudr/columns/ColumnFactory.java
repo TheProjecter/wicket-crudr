@@ -4,10 +4,16 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
+import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
+import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
+import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
@@ -29,24 +35,33 @@ public class ColumnFactory implements Serializable {
     }
 
     public static <T> IColumn<T> getColumn(Method m, String property, Class<T> clazz) {
-    	return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), property, clazz);
+        String cleanProperty = getCleanPropertyName(property);
+        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), cleanProperty, clazz);
+    }
+
+    public static <T> IColumn<T> getColumn(Field f, String property, Class<T> clazz) {
+        return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), property, clazz);
     }
     /**
      * @param <T>
-     * @param l
-     * @param e
-     * @param property
-     * @param clazz
-     * @return
+     * @param l The Lister Annotation
+     * @param e The Editor Annotation
+     * @param property The property name
+     * @param clazz the Class T
+     * @return a Column to display and maybe edit the data from the annotated method or field
      */
     public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz) {
-        String cleanProperty = getCleanPropertyName(property);
         IColumn<T> col = null;
-        IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), cleanProperty);
-        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(cleanProperty, l);
+        IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
+        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         if (!l.editInPlace()) {
-            ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
             col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
+        } else {
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
+            col = new FlexibleEditableColumn<T>(displayModel, conf);
         }
         return col;
     }
@@ -60,7 +75,7 @@ public class ColumnFactory implements Serializable {
     private static IModel<String> getHeaderModel(String headerKey, String clazzName, String cleanProperty) {
         String display;
         if (!"".equals(headerKey)) {
-        	display = headerKey + "." + cleanProperty;
+            display = headerKey + "." + cleanProperty;
         } else {
             display = clazzName + "." + cleanProperty;
         }

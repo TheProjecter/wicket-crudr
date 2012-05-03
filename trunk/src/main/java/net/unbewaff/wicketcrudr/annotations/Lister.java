@@ -20,7 +20,7 @@ import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Lister {
     /**
      * Type of Display in a List.

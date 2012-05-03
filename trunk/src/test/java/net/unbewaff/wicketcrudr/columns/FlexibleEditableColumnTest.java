@@ -151,12 +151,14 @@ public class FlexibleEditableColumnTest {
         tester.assertComponent("test:table:body:rows:2:cells:1:cell:label:editor", CheckBox.class);
         tester.assertComponent("test:table:body:rows:3:cells:1:cell:label:editor", CheckBox.class);
         CheckBox cb1 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:label:editor");
-        Boolean modelObject = cb1.getModelObject();
-        assertTrue(modelObject);
+        assertTrue(cb1.getModelObject());
         CheckBox cb2 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:label:editor");
         assertFalse(cb2.getModelObject());
         CheckBox cb3 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:label:editor");
         assertFalse(cb3.getModelObject());
+        tester.assertDisabled("test:table:body:rows:1:cells:1:cell:label:editor");
+        tester.assertDisabled("test:table:body:rows:2:cells:1:cell:label:editor");
+        tester.assertDisabled("test:table:body:rows:3:cells:1:cell:label:editor");
         mockery.assertIsSatisfied();
     }
 

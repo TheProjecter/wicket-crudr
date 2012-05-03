@@ -11,7 +11,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * Base Implementation to create a simple {@link Label} to display the data.
+ * Base Implementation to create a simple {@link org.apache.wicket.markup.html.basic.Label} to display the data.
  *
  * @author David Hendrix (Nicktarix)
  *
