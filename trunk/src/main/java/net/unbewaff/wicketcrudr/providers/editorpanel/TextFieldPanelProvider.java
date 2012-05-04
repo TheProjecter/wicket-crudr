@@ -1,8 +1,5 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
-import net.unbewaff.wicketcrudr.providers.editor.TextFieldProvider;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.TextField;
@@ -15,7 +12,7 @@ import org.apache.wicket.markup.html.panel.Panel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class TextFieldPanelProvider implements ISurroundingContainerProvider {
+class TextFieldPanelProvider implements ISurroundingContainerProvider {
 
 	private static final long serialVersionUID = -4861783108809481116L;
 

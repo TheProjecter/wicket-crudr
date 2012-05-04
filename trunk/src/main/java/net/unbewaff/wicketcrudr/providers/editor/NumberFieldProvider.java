@@ -1,29 +1,46 @@
+/**
+ *
+ */
 package net.unbewaff.wicketcrudr.providers.editor;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * A simple implementation creating a TextField (In combination with a
- * {@link SimpleLabelProvider} and a {@link TextFieldPanelProvider} this mimicks
- * the behaviour of a basic {@link AjaxEditableLink}.
- *
  * @author David Hendrix (Nicktarix)
  *
- * @param <T>
  */
-class TextFieldProvider<T> implements IEditorProvider<T> {
+public class NumberFieldProvider<T extends Number & Comparable<T>> implements IEditorProvider<T> {
 
-    private static final long serialVersionUID = -7231019074574082991L;
+    private final Class<T> clazz;
 
+    /**
+     * @param clazz The returnType
+     */
+    public NumberFieldProvider(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
+    public static NumberFieldProvider newInstance(Class<?> clazz) {
+        return new NumberFieldProvider(clazz);
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * net.unbewaff.wicketcrudr.providers.editor.IEditorProvider#newEditor(net
+     * .unbewaff.wicketcrudr.components.IEditorFacade, java.lang.String,
+     * org.apache.wicket.model.IModel)
+     */
+    @Override
     public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model) {
-        return new TextField<T>(componentId, model) {
-            private static final long serialVersionUID = 1L;
-
+        NumberTextField<T> numberTextField = new NumberTextField<T>(componentId, model) {
             @Override
             public <C> IConverter<C> getConverter(final Class<C> type) {
                 IConverter<C> c = parent.getConverter(type);
@@ -42,6 +59,8 @@ class TextFieldProvider<T> implements IEditorProvider<T> {
                 parent.onModelChanging();
             }
         };
+        numberTextField.setType(clazz);
+        return numberTextField;
     }
 
 }

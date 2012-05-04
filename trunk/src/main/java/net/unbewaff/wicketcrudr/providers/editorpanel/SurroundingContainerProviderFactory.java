@@ -4,7 +4,6 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -13,7 +12,23 @@ import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 public class SurroundingContainerProviderFactory {
 
     public static  ISurroundingContainerProvider getContainerProvider(Editor e) {
-        return null;
+        ISurroundingContainerProvider scp = null;
+        switch (e.editAs()) {
+            case CHECKBOX:
+                scp = new CheckBoxPanelProvider();
+                break;
+            case AJAXLINK:
+                throw new UnsupportedOperationException("Not implemented yet.");
+            case TEXTAREA:
+                scp = new TextAreaPanelProvider();
+                break;
+            case TEXTFIELD:
+                scp = new TextFieldPanelProvider();
+                break;
+            default:
+                scp = new TextFieldPanelProvider();
+        }
+        return scp;
     }
 
 }

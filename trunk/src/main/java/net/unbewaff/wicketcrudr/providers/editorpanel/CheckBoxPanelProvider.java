@@ -1,13 +1,12 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * A simple implementation returning a {@link Panel} with Markup to accept a {@link CheckBox}. 
+ * A simple implementation returning a {@link Panel} with Markup to accept a {@link CheckBox}.
  *
  * @author David Hendrix (Nicktarix)
  *

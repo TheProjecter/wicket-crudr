@@ -8,13 +8,13 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * A simple implementation creating a TextField. 
+ * A simple implementation creating a TextField.
  *
  * @author David Hendrix (Nicktarix)
  *
  * @param <T>
  */
-public class TextAreaProvider<T> implements IEditorProvider<T> {
+class TextAreaProvider<T> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = -7231019074574082991L;
 

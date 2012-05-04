@@ -1,7 +1,7 @@
 package net.unbewaff.wicketcrudr.components;
 
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 /**

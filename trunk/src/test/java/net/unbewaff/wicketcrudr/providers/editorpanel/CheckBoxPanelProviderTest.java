@@ -1,6 +1,5 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.CheckBoxPanelProvider;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;

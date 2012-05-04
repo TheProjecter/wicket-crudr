@@ -1,6 +1,8 @@
-package net.unbewaff.wicketcrudr.providers.editor;
+package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import java.io.Serializable;
+
+import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;

@@ -6,7 +6,7 @@ package net.unbewaff.wicketcrudr.components;
 import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
+import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 import org.apache.wicket.Component;

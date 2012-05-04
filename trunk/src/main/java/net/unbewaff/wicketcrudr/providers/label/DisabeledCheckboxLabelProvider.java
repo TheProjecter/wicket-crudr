@@ -5,6 +5,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.editorpanel.CheckBoxPanelProvider;
+import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
 import org.apache.wicket.Component;
@@ -20,7 +21,7 @@ public class DisabeledCheckboxLabelProvider implements ILabelProvider<Boolean> {
 
 	private static final long serialVersionUID = -4633487166850598332L;
 	private ILabelModelProvider<Boolean> labelModelProvider;
-	private final CheckBoxPanelProvider cbpp;
+	private final ISurroundingContainerProvider cbpp;
 
 	/**
 	 * @param labelModelProvider

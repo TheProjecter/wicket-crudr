@@ -1,18 +1,17 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
-import net.unbewaff.wicketcrudr.providers.editor.ISurroundingContainerProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * A simple implementation returning a {@link Panel} with Markup to accept a {@link TextArea}. 
+ * A simple implementation returning a {@link Panel} with Markup to accept a {@link TextArea}.
  *
  * @author David Hendrix (Nicktarix)
  *
  */
-public class TextAreaPanelProvider implements ISurroundingContainerProvider {
+class TextAreaPanelProvider implements ISurroundingContainerProvider {
 
 	private static final long serialVersionUID = -4861783108809481116L;
 
