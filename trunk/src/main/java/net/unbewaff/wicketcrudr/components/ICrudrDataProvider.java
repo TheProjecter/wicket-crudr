@@ -16,4 +16,6 @@ public interface ICrudrDataProvider<T> extends Serializable {
 
     public abstract T newInstance();
 
+    public abstract Class<T> getType();
+
 }
