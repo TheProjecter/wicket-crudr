@@ -40,7 +40,7 @@ public class CheckBoxPanelProviderTest {
 	}
 
 	@Test
-	public void testTextAreaPanelproviderShowThenHide() {
+	public void testCheckBoxPanelProviderShowThenHide() {
 		ISurroundingContainerProvider provider = new CheckBoxPanelProvider();
 		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
 		component.add(new CheckBox("editor", Model.of(true)));
