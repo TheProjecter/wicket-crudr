@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
+import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
@@ -66,7 +67,11 @@ public class ColumnFactory implements Serializable {
             editInPlace = false;
         }
         if (editInPlace) {
-            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, returnType);
+            ICrudrDataProvider<T> dataProvider = null;
+            if (ICrudrDataProvider.class.isAssignableFrom(returnType)) {
+                dataProvider = 
+            }
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, returnType, null);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);

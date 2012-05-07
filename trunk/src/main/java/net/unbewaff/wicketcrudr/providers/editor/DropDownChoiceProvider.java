@@ -3,7 +3,8 @@
  */
 package net.unbewaff.wicketcrudr.providers.editor;
 
-import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import java.util.List;
+
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -17,21 +18,14 @@ import org.apache.wicket.model.IModel;
 public class DropDownChoiceProvider<T> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = 5116591719887727709L;
-    private final ICrudrDataProvider<T> dataProvider;
 
-    /**
-     * @param dataProvider
-     */
-    public DropDownChoiceProvider(ICrudrDataProvider<T> dataProvider) {
-        this.dataProvider = dataProvider;
-    }
 
     /* (non-Javadoc)
      * @see net.unbewaff.wicketcrudr.providers.editor.IEditorProvider#newEditor(net.unbewaff.wicketcrudr.components.IEditorFacade, java.lang.String, org.apache.wicket.model.IModel)
      */
     @Override
-    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model) {
-        return new DropDownChoice<T>(componentId, model, dataProvider.getList()) {
+    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, List<T> choices) {
+        return new DropDownChoice<T>(componentId, model, choices) {
 
             private static final long serialVersionUID = -3549287926576880455L;
 

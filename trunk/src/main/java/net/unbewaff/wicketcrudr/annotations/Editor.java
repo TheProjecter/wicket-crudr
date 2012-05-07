@@ -7,6 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
@@ -26,13 +28,17 @@ public @interface Editor {
          */
         TEXTAREA,
         /**
-         * Edit by CheckBox (only for Boolean properties)
+         * Edit by CheckBox (only for {@link Boolean} properties)
          */
         CHECKBOX,
         /**
-         * Edit by AjaxLink (only for Boolean properties)
+         * Edit by AjaxLink (only for {@link Boolean} properties)
          */
-        AJAXLINK
+        AJAXLINK,
+        /**
+         * Edit by DropDownChoice (only for properties of any types implementing {@link ICrudrDataProvider}
+         */
+        DROPDOWNCHOICE
     }
 
     EditorType editAs() default EditorType.DEFAULT;

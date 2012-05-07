@@ -44,14 +44,14 @@ public class DummyEditorProvider<T> implements IEditorProvider<T> {
      * @see net.unbewaff.wicketcrudr.providers.editor.IEditorProvider#newEditor(net.unbewaff.wicketcrudr.components.IEditorFacade, java.lang.String, org.apache.wicket.model.IModel)
      */
     @Override
-    public FormComponent<T> newEditor(IEditorFacade parent, String componentId, IModel<T> model) {
+    public FormComponent<T> newEditor(IEditorFacade parent, String componentId, IModel<T> model, List<T> choices) {
         FormComponent<T> retValue;
         switch (editor) {
             case DROPDOWNCHOICE:
                 if (dataProvider == null) {
                     throw new IllegalStateException("Need to set DataProvider before creating a DropDownChoice.");
                 }
-                retValue = new DropDownChoiceProvider<T>(dataProvider).newEditor(parent, componentId, model);
+                retValue = new DropDownChoiceProvider<T>(dataProvider).newEditor(parent, componentId, model, choices);
                 break;
             default:
                 retValue = null;

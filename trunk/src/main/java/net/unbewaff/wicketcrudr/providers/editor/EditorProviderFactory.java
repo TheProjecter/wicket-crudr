@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
+import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 
 /**
  * A Factory to create {@link net.unbewaff.wicketcrudr.providers.editor.IEditorProvider<T>} instances
@@ -12,7 +13,7 @@ import net.unbewaff.wicketcrudr.annotations.Editor;
  */
 public class EditorProviderFactory {
 
-    public static <T> IEditorProvider<T> getEditorProvider(Editor e, Class<?> returnType) {
+    public static <T> IEditorProvider<T> getEditorProvider(Editor e, Class<?> returnType, ICrudrDataProvider<T> dataProvider) {
         IEditorProvider<T> ep = null;
         switch (e.editAs()) {
             case TEXTFIELD:
@@ -26,6 +27,9 @@ public class EditorProviderFactory {
                 break;
             case AJAXLINK:
                 throw new UnsupportedOperationException("AjaxLink isn't implemented yet.");
+            case DROPDOWNCHOICE:
+                ep = new DropDownChoiceProvider<T>();
+                break;
             default:
                 ep = getDefaultEditorProvider(returnType);
         }

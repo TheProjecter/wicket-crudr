@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 import java.io.Serializable;
+import java.util.List;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -41,9 +42,10 @@ public interface IEditorProvider<T> extends Serializable {
      * @param parent the enclosing AjaxEditableContainer Instance
      * @param componentId The ID of the FormComponent. Right now it's always "editor"
      * @param model The Model to be used by the FormComponent
+     * @param choices TODO
      * @return a new FormComponent.
      */
 
-	public FormComponent<T> newEditor(IEditorFacade parent, String componentId, IModel<T> model);
+	public FormComponent<T> newEditor(IEditorFacade parent, String componentId, IModel<T> model, List<T> choices);
 
 }

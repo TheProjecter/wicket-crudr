@@ -25,6 +25,9 @@ public class SurroundingContainerProviderFactory {
             case TEXTFIELD:
                 scp = new TextFieldPanelProvider();
                 break;
+            case DROPDOWNCHOICE:
+                scp = new DropDownChoicePanelProvider();
+                break;
             default:
                 scp = new TextFieldPanelProvider();
         }
