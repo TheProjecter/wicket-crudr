@@ -3,7 +3,6 @@
  */
 package net.unbewaff.wicketcrudr.providers.editor;
 
-import java.util.List;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -41,7 +40,7 @@ public class NumberFieldProvider<T extends Number & Comparable<T>> implements IE
      * org.apache.wicket.model.IModel)
      */
     @Override
-    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, List<T> choices) {
+    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model) {
         NumberTextField<T> numberTextField = new NumberTextField<T>(componentId, model) {
             @Override
             public <C> IConverter<C> getConverter(final Class<C> type) {

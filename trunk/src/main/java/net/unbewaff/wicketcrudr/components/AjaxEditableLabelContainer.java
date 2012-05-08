@@ -95,7 +95,7 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      *         newSurroundingPanel
      */
     protected FormComponent<T> newEditor(MarkupContainer parent, String componentId, IModel<T> model) {
-        FormComponent<T> newEditor = editorProvider.newEditor(this, componentId, new PropertyModel(model, propertyExpression), choices);
+        FormComponent<T> newEditor = editorProvider.newEditor(this, componentId, new PropertyModel(model, propertyExpression));
         newEditor.setOutputMarkupId(true);
         newEditor.add(new EditorAjaxBehavior());
         return newEditor;

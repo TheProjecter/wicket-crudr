@@ -67,11 +67,7 @@ public class ColumnFactory implements Serializable {
             editInPlace = false;
         }
         if (editInPlace) {
-            ICrudrDataProvider<T> dataProvider = null;
-            if (ICrudrDataProvider.class.isAssignableFrom(returnType)) {
-                dataProvider = 
-            }
-            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, returnType, null);
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, returnType);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);

@@ -44,8 +44,7 @@ public class DropDownChoicePanelProviderTest {
         panel = new TempPanel("panel");
         provider = new DropDownChoicePanelProvider();
         component = provider.newSurroundingContainer(panel.getComponentId());
-        ICrudrDataProvider<StringHolder> dataProvider = getDataProvider();
-        component.add(new DummyEditorProvider<StringHolder>(Editor.DROPDOWNCHOICE, dataProvider).newEditor(panel, "editor", Model.of(list.get(0)), choices));
+        component.add(new DummyEditorProvider<StringHolder>(Editor.DROPDOWNCHOICE).newEditor(panel, "editor", Model.of(list.get(0))));
         panel.add(component);
 	}
 
@@ -82,38 +81,7 @@ public class DropDownChoicePanelProviderTest {
 		provider.hide(null, null);
 	}
 
-	/**
-	 * @return
-	 */
-	private ICrudrDataProvider<StringHolder> getDataProvider() {
-	    return new StringHolderProvider();
-	}
-
-	/**
-     * @author David Hendrix (Nicktarix)
-     *
-     */
-    private final class StringHolderProvider implements ICrudrDataProvider<StringHolder> {
-
-        private static final long serialVersionUID = -613696692985748377L;
-
-        @Override
-        public List<StringHolder> getList() {
-            return list;
-        }
-
-        @Override
-        public StringHolder newInstance() {
-            return new StringHolder();
-        }
-
-        @Override
-        public Class<StringHolder> getType() {
-            return StringHolder.class;
-        }
-    }
-
-    private static class StringHolder implements Serializable{
+	private class StringHolder implements Serializable, ICrudrDataProvider<StringHolder>{
 
         private String data;
 
@@ -123,6 +91,30 @@ public class DropDownChoicePanelProviderTest {
 
         public void setData(String data) {
             this.data = data;
+        }
+
+        /* (non-Javadoc)
+         * @see net.unbewaff.wicketcrudr.components.ICrudrDataProvider#getList()
+         */
+        @Override
+        public List<StringHolder> getList() {
+            return list;
+        }
+
+        /* (non-Javadoc)
+         * @see net.unbewaff.wicketcrudr.components.ICrudrDataProvider#newInstance()
+         */
+        @Override
+        public StringHolder newInstance() {
+            return new StringHolder();
+        }
+
+        /* (non-Javadoc)
+         * @see net.unbewaff.wicketcrudr.components.ICrudrDataProvider#getType()
+         */
+        @Override
+        public Class<StringHolder> getType() {
+            return StringHolder.class;
         }
 
 	}

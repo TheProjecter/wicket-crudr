@@ -1,6 +1,5 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
-import java.util.List;
 
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -22,7 +21,7 @@ class TextFieldProvider<T> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = -7231019074574082991L;
 
-    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, List<T> choices) {
+    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model) {
         return new TextField<T>(componentId, model) {
             private static final long serialVersionUID = 1L;
 
