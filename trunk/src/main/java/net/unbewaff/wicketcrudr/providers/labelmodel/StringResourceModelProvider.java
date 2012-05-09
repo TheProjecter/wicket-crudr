@@ -27,7 +27,7 @@ class StringResourceModelProvider<T> implements ILabelModelProvider<T> {
 
     @Override
     public IModel<?> newLabelModel(IModel<T> model) {
-        return new StringResourceModel(resourceKey, new PropertyModel<Object>(model, propertyExpression));
+        return new StringResourceModel(resourceKey + ".${" + propertyExpression + "}", model);
     }
 
 }
