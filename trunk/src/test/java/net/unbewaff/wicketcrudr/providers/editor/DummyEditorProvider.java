@@ -46,7 +46,7 @@ public class DummyEditorProvider<T extends ICrudrDataProvider<T>> implements IEd
         FormComponent<T> retValue;
         switch (editor) {
             case DROPDOWNCHOICE:
-                retValue = new DropDownChoiceProvider<T>().newEditor(parent, componentId, model);
+                retValue = new DropDownChoiceProvider<T>(null).newEditor(parent, componentId, model);
                 break;
             default:
                 retValue = null;

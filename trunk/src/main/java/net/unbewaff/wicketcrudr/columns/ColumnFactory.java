@@ -67,7 +67,7 @@ public class ColumnFactory implements Serializable {
             editInPlace = false;
         }
         if (editInPlace) {
-            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, returnType);
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, l, returnType, property);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);
