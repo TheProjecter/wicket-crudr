@@ -39,7 +39,8 @@ import org.junit.Test;
  */
 public class DropDownChoiceProviderTest {
 
-    private static final int COUNT = 5;
+	private static Integer counter = 0;
+	private static final int COUNT = 5;
     private static WicketTester tester;
     private List<StringHolder> list;
     private WebMarkupContainer component;
@@ -148,8 +149,17 @@ public class DropDownChoiceProviderTest {
     private class StringHolder implements Serializable, ICrudrDataProvider<StringHolder>{
 
         private String data;
+        private Integer id = counter++;
 
-        public String getData() {
+        public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+		public String getData() {
             return data;
         }
 

@@ -26,7 +26,7 @@ public class PaletteProvider<V extends List<? extends T>, T> implements IEditorP
     public FormComponent<V> newEditor(final IEditorFacade parent, String componentId, IModel<V> model) {
         Palette palette = (Palette)parent;
         palette.getChoices().addAll(dataProvider.getList());
-        palette.set
+        
         palette.setDefaultModel(model);
         return palette.getRecorderComponent();
     }
