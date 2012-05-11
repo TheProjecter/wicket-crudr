@@ -38,7 +38,11 @@ public @interface Editor {
         /**
          * Edit by DropDownChoice (only for properties of any types implementing {@link ICrudrDataProvider}
          */
-        DROPDOWNCHOICE
+        DROPDOWNCHOICE,
+        /**
+         * Edit by Palette (for Collection-type members)
+         */
+        PALETTE
     }
 
     EditorType editAs() default EditorType.DEFAULT;

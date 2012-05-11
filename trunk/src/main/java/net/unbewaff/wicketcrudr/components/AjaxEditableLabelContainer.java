@@ -360,9 +360,9 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      *            The model for the label and editor
      */
     private void initLabelAndEditor(final IModel<T> model) {
-        editor = newEditor(this, "editor", model);
         label = newLabel(this, "label", model);
         container = newSurroundingContainer(this, "editor");
+        editor = newEditor(this, "editor", model);
         add(label);
         container.add(editor);
         add(container);

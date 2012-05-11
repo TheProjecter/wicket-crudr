@@ -18,4 +18,6 @@ public interface ICrudrDataProvider<T> extends Serializable {
 
     public abstract Class<T> getType();
 
+    public abstract Serializable getId();
+
 }

@@ -28,6 +28,9 @@ public class SurroundingContainerProviderFactory {
             case DROPDOWNCHOICE:
                 scp = new DropDownChoicePanelProvider();
                 break;
+            case PALETTE:
+                scp = new PalettePanelProvider();
+                break;
             default:
                 scp = new TextFieldPanelProvider();
         }
