@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -19,7 +20,7 @@ class TextAreaProvider<T> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = -7231019074574082991L;
 
-    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model) {
+    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, ICrudrListProvider<T> listProvider) {
         return new TextArea<T>(componentId, model) {
             private static final long serialVersionUID = 1L;
 

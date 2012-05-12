@@ -15,7 +15,7 @@ public class TextFieldPanelProviderTest {
         @Test
         public void testTextFieldPanelprovider() {
                 TextFieldPanelProvider provider = new TextFieldPanelProvider();
-                WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+                WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
                 component.add(new TextField<String>("editor", Model.of("editor")));
                 tester.startComponentInPage(component);
                 tester.assertInvisible("componentId");
@@ -29,7 +29,7 @@ public class TextFieldPanelProviderTest {
         @Test
         public void testTextFieldPanelproviderShow() {
                 TextFieldPanelProvider provider = new TextFieldPanelProvider();
-                WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+                WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
                 component.add(new TextField<String>("editor", Model.of("editor")));
                 provider.show(null, component);
                 tester.startComponentInPage(component);
@@ -40,7 +40,7 @@ public class TextFieldPanelProviderTest {
         @Test
         public void testTextFieldPanelproviderShowThenHide() {
                 TextFieldPanelProvider provider = new TextFieldPanelProvider();
-                WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+                WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
                 component.add(new TextField<String>("editor", Model.of("editor")));
                 provider.show(null, component);
                 provider.hide(null, component);

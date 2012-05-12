@@ -1,12 +1,13 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
-import java.util.List;
+import java.util.Collection;
 
-import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
+import net.unbewaff.wicketcrudr.providers.editorpanel.PalettePanel;
 
-import org.apache.wicket.extensions.markup.html.form.palette.Palette;
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
@@ -17,18 +18,36 @@ import org.apache.wicket.model.IModel;
  *
  * @param <T>
  */
-public class PaletteProvider<V extends List<? extends T>, T> implements IEditorProvider<V> {
+public class PaletteProvider<T> implements IEditorProvider<T> {
 
-    private ICrudrDataProvider<T> dataProvider;
+    private ChoiceRendererProvider<T> rendererProvider;
 
 
-    @Override
-    public FormComponent<V> newEditor(final IEditorFacade parent, String componentId, IModel<V> model) {
-        Palette palette = (Palette)parent;
-        palette.getChoices().addAll(dataProvider.getList());
-        
-        palette.setDefaultModel(model);
-        return palette.getRecorderComponent();
+    /**
+	 * @param renderer
+	 */
+	public PaletteProvider(ChoiceRendererProvider<T> renderer) {
+		this.rendererProvider = renderer;
+	}
+
+
+	@Override
+    @SuppressWarnings("unchecked")
+    public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, ICrudrListProvider<T> listProvider) {
+        PalettePanel<T> palettePanel = (PalettePanel<T>)parent;
+        ((Collection<T>) palettePanel.getChoices()).addAll(listProvider.getList());
+        Component parentComponent;
+        Palette<T> palette = new Palette<T>(componentId, palettePanel);
+        if (rendererProvider != null) {
+        	if (parent instanceof Component) {
+        		parentComponent = (Component) parent;
+        	} else {
+        		parentComponent = palette; 
+        	}
+			palettePanel.setChoiceRenderer(rendererProvider.getRenderer(parentComponent));
+        }
+        palettePanel.setDefaultModel(model);
+        return palette;
     }
 
 }

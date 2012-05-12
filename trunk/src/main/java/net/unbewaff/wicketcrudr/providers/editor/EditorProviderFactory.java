@@ -37,19 +37,32 @@ public class EditorProviderFactory {
             case AJAXLINK:
                 throw new UnsupportedOperationException("AjaxLink isn't implemented yet.");
             case DROPDOWNCHOICE:
-                ChoiceRendererProvider renderer = null;
-                if (l != null) {
-                    if (Display.RESOURCE.equals(l.displayAs())) {
-                        renderer = new ChoiceRendererProvider(l.resourcePrefix(), property);
-                    }
-                }
-                ep = new DropDownChoiceProvider(renderer);
+			    ep = new DropDownChoiceProvider(getChoiceRenderer(l, property));
                 break;
+            case PALETTE:
+            	ep = (IEditorProvider<T>) new PaletteProvider<T>(getChoiceRenderer(l, property));
             default:
                 ep = getDefaultEditorProvider(returnType);
         }
         return ep;
     }
+
+
+	/**
+	 * @param l
+	 * @param property
+	 * @return
+	 */
+	private static ChoiceRendererProvider getChoiceRenderer(final Lister l,
+			final String property) {
+		ChoiceRendererProvider renderer = null;
+		if (l != null) {
+		    if (Display.RESOURCE.equals(l.displayAs())) {
+		        renderer = new ChoiceRendererProvider(l.resourcePrefix(), property);
+		    }
+		}
+		return renderer;
+	}
 
 
     private static <T> IEditorProvider<T> getDefaultEditorProvider(Class<?> returnType) {

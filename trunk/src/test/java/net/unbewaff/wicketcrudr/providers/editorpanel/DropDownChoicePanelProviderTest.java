@@ -44,8 +44,8 @@ public class DropDownChoicePanelProviderTest {
 	    }
         panel = new TempPanel("panel");
         provider = new DropDownChoicePanelProvider();
-        component = provider.newSurroundingContainer(panel.getComponentId());
-        component.add(new DummyEditorProvider<StringHolder>(Editor.DROPDOWNCHOICE).newEditor(panel, "editor", Model.of(list.get(0))));
+        component = provider.newSurroundingContainer(panel.getComponentId(), null);
+        component.add(new DummyEditorProvider<StringHolder>(Editor.DROPDOWNCHOICE).newEditor(panel, "editor", Model.of(list.get(0)), null));
         panel.add(component);
 	}
 

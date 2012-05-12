@@ -4,15 +4,12 @@
 package net.unbewaff.wicketcrudr.components;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author David Hendrix (Nicktarix)
  *
  */
-public interface ICrudrDataProvider<T> extends Serializable {
-
-    public abstract List<T> getList();
+public interface ICrudrDataProvider<T> extends Serializable, ICrudrListProvider<T> {
 
     public abstract T newInstance();
 

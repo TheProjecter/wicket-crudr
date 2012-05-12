@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
@@ -16,6 +17,7 @@ import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
@@ -25,7 +27,6 @@ import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -78,7 +79,7 @@ public class FlexibleEditableColumnTest {
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
+        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
 
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
@@ -110,7 +111,7 @@ public class FlexibleEditableColumnTest {
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
+        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
 
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
@@ -142,7 +143,7 @@ public class FlexibleEditableColumnTest {
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, Boolean.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, "data");
+        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
 
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
@@ -170,6 +171,19 @@ public class FlexibleEditableColumnTest {
         mockery.assertIsSatisfied();
     }
 
+	/**
+	 * @return
+	 */
+	private ICrudrListProvider<StringHolder> getListProvider() {
+		return new ICrudrListProvider<StringHolder>() {
+
+			@Override
+			public List<StringHolder> getList() {
+				return Collections.emptyList();
+			}
+		};
+	}
+	
     private static class StringHolder implements Serializable {
 
         private static final long serialVersionUID = 8070868717307881900L;

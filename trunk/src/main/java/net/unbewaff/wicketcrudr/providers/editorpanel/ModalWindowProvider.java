@@ -6,6 +6,7 @@ package net.unbewaff.wicketcrudr.providers.editorpanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.FormComponent;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -29,9 +30,9 @@ public class ModalWindowProvider implements ISurroundingContainerProvider {
      * @see net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider#newSurroundingContainer(java.lang.String)
      */
     @Override
-    public WebMarkupContainer newSurroundingContainer(String componentId) {
+    public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
         window = new ModalWindow(componentId);
-        content = contentProvider.newSurroundingContainer(window.getContentId());
+        content = contentProvider.newSurroundingContainer(window.getContentId(), editor);
         window.setContent(content);
         return window;
     }

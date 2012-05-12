@@ -44,7 +44,7 @@ public class DisabeledCheckboxLabelProvider implements ILabelProvider<Boolean> {
 	 */
 	@Override
 	public Component newLabel(ILabelFacade parent, String componentId, IModel<Boolean> model) {
-		WebMarkupContainer retValue = cbpp.newSurroundingContainer(componentId);
+		WebMarkupContainer retValue = cbpp.newSurroundingContainer(componentId, null);
 		retValue.setVisible(true);
 		CheckBox checkBox = new CheckBox("editor", (IModel<Boolean>) newLabelModel(model));
 		checkBox.setEnabled(false);

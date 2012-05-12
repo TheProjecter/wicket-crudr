@@ -95,7 +95,7 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      *         newSurroundingPanel
      */
     protected FormComponent<T> newEditor(MarkupContainer parent, String componentId, IModel<T> model) {
-        FormComponent<T> newEditor = editorProvider.newEditor(this, componentId, new PropertyModel(model, propertyExpression));
+        FormComponent<T> newEditor = editorProvider.newEditor(this, componentId, new PropertyModel<T>(model, propertyExpression), null);
         newEditor.setOutputMarkupId(true);
         newEditor.add(new EditorAjaxBehavior());
         return newEditor;
@@ -109,12 +109,13 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      *            unused right now. Inherited from AjaxEditableLabel
      * @param componentId
      *            The ID for the component to create
+     * @param editor TODO
      * @return A WebMarkupContainer providing a matching input or select tag
      *         with the wicket:id "editor" to accept the FormComponent provided
      *         by newEditor
      */
-    protected WebMarkupContainer newSurroundingContainer(MarkupContainer parent, String componentId) {
-        return containerProvider.newSurroundingContainer(componentId);
+    protected WebMarkupContainer newSurroundingContainer(MarkupContainer parent, String componentId, FormComponent<T> editor) {
+        return containerProvider.newSurroundingContainer(componentId, editor);
     }
 
     protected class EditorAjaxBehavior extends AbstractDefaultAjaxBehavior {
@@ -361,7 +362,7 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
      */
     private void initLabelAndEditor(final IModel<T> model) {
         label = newLabel(this, "label", model);
-        container = newSurroundingContainer(this, "editor");
+        container = newSurroundingContainer(this, "editor", editor);
         editor = newEditor(this, "editor", model);
         add(label);
         container.add(editor);

@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -19,7 +20,7 @@ public class CheckBoxProvider implements IEditorProvider<Boolean> {
     private static final long serialVersionUID = -7231019074574082991L;
 
     @Override
-    public FormComponent<Boolean> newEditor(final IEditorFacade parent, String componentId, IModel<Boolean> model) {
+    public FormComponent<Boolean> newEditor(final IEditorFacade parent, String componentId, IModel<Boolean> model, ICrudrListProvider<Boolean> listProvider) {
         return new CheckBox(componentId, model) {
             private static final long serialVersionUID = 1L;
 

@@ -18,6 +18,7 @@ public class ContainerConfiguration<T> {
     private final IEditorProvider<T> editorProvider;
     private final ISurroundingContainerProvider containerProvider;
     private final String propertyExpression;
+    private final ICrudrListProvider<T> listProvider;
 
     /**
      *
@@ -27,9 +28,10 @@ public class ContainerConfiguration<T> {
      *            The IEditorProvider
      * @param containerProvider
      *            The ISurroundingContainerProvider
+     * @param listProvider TODO
      */
     public ContainerConfiguration(ILabelProvider<T> labelProvider, IEditorProvider<T> editorProvider,
-            ISurroundingContainerProvider containerProvider, String propertyExpression) {
+            ISurroundingContainerProvider containerProvider, ICrudrListProvider<T> listProvider, String propertyExpression) {
         if (labelProvider == null) {
             throw new IllegalArgumentException("labelProvider may not be null!");
         }
@@ -46,6 +48,7 @@ public class ContainerConfiguration<T> {
             throw new IllegalArgumentException("propertyExpression may not be null!");
         }
         this.propertyExpression = propertyExpression;
+        this.listProvider = listProvider;
     }
 
     /**

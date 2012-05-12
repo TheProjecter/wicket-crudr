@@ -26,7 +26,6 @@ import net.unbewaff.wicketcrudr.providers.editorpanel.components.Choices;
 import net.unbewaff.wicketcrudr.providers.editorpanel.components.Selection;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.extensions.markup.html.form.palette.component.Recorder;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -74,7 +73,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  *            Type of model object
  * 
  */
-public class PalettePanel<T> extends Panel {
+public abstract class PalettePanel<T> extends Panel {
 	private static final String SELECTED_HEADER_ID = "selectedHeader";
 
 	private static final String AVAILABLE_HEADER_ID = "availableHeader";
@@ -88,7 +87,7 @@ public class PalettePanel<T> extends Panel {
 	 * choice render used to render the choices in both available and selected
 	 * collections
 	 */
-	private final IChoiceRenderer<T> choiceRenderer;
+	private IChoiceRenderer<T> choiceRenderer;
 
 	/** number of rows to show in the select boxes */
 	private final int rows;
@@ -137,10 +136,9 @@ public class PalettePanel<T> extends Panel {
 	 *            Allow user to move selections up and down
 	 */
 	public PalettePanel(final String id,
-			final IModel<? extends Collection<? extends T>> choicesModel,
-			final IChoiceRenderer<T> choiceRenderer, final int rows,
+			final IModel<? extends Collection<? extends T>> choicesModel, final int rows,
 			final boolean allowOrder) {
-		this(id, null, choicesModel, choiceRenderer, rows, allowOrder);
+		this(id, null, choicesModel, rows, allowOrder);
 	}
 
 	/**
@@ -161,13 +159,11 @@ public class PalettePanel<T> extends Panel {
 	 */
 	public PalettePanel(final String id,
 			final IModel<? extends List<? extends T>> model,
-			final IModel<? extends Collection<? extends T>> choicesModel,
-			final IChoiceRenderer<T> choiceRenderer, final int rows,
+			final IModel<? extends Collection<? extends T>> choicesModel, final int rows,
 			final boolean allowOrder) {
 		super(id, model);
 
 		this.choicesModel = choicesModel;
-		this.choiceRenderer = choiceRenderer;
 		this.rows = rows;
 		this.allowOrder = allowOrder;
 	}
@@ -186,9 +182,6 @@ public class PalettePanel<T> extends Panel {
 	 * methods form palette's constructor.
 	 */
 	private void initFactories() {
-		recorderComponent = newRecorderComponent();
-		add(recorderComponent);
-
 		choicesComponent = newChoicesComponent();
 		add(choicesComponent);
 
@@ -235,24 +228,6 @@ public class PalettePanel<T> extends Panel {
 	 */
 	public Iterator<T> getUnselectedChoices() {
 		return getRecorderComponent().getUnselectedChoices();
-	}
-
-	/**
-	 * factory method to create the tracker component
-	 * 
-	 * @return tracker component
-	 */
-	protected Palette<T> newRecorderComponent() {
-		// create component that will keep track of selections
-		return new Palette<T>("recorder", this) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void updateModel() {
-				super.updateModel();
-				PalettePanel.this.updateModel();
-			}
-		};
 	}
 
 	/**
@@ -447,8 +422,13 @@ public class PalettePanel<T> extends Panel {
 	 * @return choice renderer
 	 */
 	public IChoiceRenderer<T> getChoiceRenderer() {
+		if (choiceRenderer == null) {
+			choiceRenderer = newChoiceRenderer();
+		}
 		return choiceRenderer;
 	}
+	
+	protected abstract IChoiceRenderer<T> newChoiceRenderer();
 
 	/**
 	 * @return items visible without scrolling
@@ -587,5 +567,13 @@ public class PalettePanel<T> extends Panel {
 		if (css != null) {
 			response.renderCSSReference(css);
 		}
+	}
+
+	public void setRecorderComponent(Palette<T> recorderComponent) {
+		this.recorderComponent = recorderComponent;
+	}
+
+	public void setChoiceRenderer(IChoiceRenderer<T> choiceRenderer) {
+		this.choiceRenderer = choiceRenderer;
 	}
 }

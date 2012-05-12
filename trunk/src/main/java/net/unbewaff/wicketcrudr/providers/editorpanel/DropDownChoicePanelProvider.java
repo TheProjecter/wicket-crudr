@@ -3,6 +3,8 @@ package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
@@ -15,7 +17,7 @@ public class DropDownChoicePanelProvider implements ISurroundingContainerProvide
 
     private static final long serialVersionUID = -1846120701517882100L;
 
-    public WebMarkupContainer newSurroundingContainer(String componentId) {
+    public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
 		return new DropDownChoicePanel(componentId);
 	}
 

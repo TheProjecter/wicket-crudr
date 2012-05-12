@@ -1,15 +1,14 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 
-import java.util.Collection;
+import net.unbewaff.wicketcrudr.providers.editor.Palette;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.markup.html.form.palette.Palette;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 
 /**
  * A simple implementation returning a {@link Panel} with Markup to accept a {@link CheckBox}.
@@ -17,12 +16,21 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class PalettePanelProvider implements ISurroundingContainerProvider {
+public abstract class PalettePanelProvider<T> implements ISurroundingContainerProvider {
 
 	private static final long serialVersionUID = -4861783108809481116L;
 
-	public WebMarkupContainer newSurroundingContainer(String componentId) {
-		return new Palette(componentId, null, null, 5, false);
+	public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
+		PalettePanel palette = new PalettePanel(componentId, null, null, 5, false) {
+
+			@Override
+			protected IChoiceRenderer newChoiceRenderer() {
+				return newChoicesRenderer();
+			}
+			
+		};
+		palette.setRecorderComponent((Palette)editor);
+		return palette;
 	}
 
 	public WebMarkupContainer show(AjaxRequestTarget target, WebMarkupContainer container) {
@@ -50,4 +58,6 @@ public class PalettePanelProvider implements ISurroundingContainerProvider {
 		}
 		return container;
 	}
+	
+	public abstract IChoiceRenderer<T> newChoicesRenderer();
 }

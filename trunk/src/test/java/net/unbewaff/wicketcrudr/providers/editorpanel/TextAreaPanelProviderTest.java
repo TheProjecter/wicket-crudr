@@ -16,7 +16,7 @@ public class TextAreaPanelProviderTest {
 	@Test
 	public void testTextAreaPanelprovider() {
 		TextAreaPanelProvider provider = new TextAreaPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new TextArea<String>("editor", Model.of("editor")));
 		tester.startComponentInPage(component);
 		tester.assertInvisible("componentId");
@@ -30,7 +30,7 @@ public class TextAreaPanelProviderTest {
 	@Test
 	public void testTextAreaPanelproviderShow() {
 		TextAreaPanelProvider provider = new TextAreaPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new TextArea<String>("editor", Model.of("editor")));
 		provider.show(null, component);
 		tester.startComponentInPage(component);
@@ -41,7 +41,7 @@ public class TextAreaPanelProviderTest {
 	@Test
 	public void testTextAreaPanelproviderShowThenHide() {
 		TextAreaPanelProvider provider = new TextAreaPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new TextArea<String>("editor", Model.of("editor")));
 		provider.show(null, component);
 		provider.hide(null, component);

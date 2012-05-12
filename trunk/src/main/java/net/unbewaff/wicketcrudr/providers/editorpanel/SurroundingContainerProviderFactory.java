@@ -5,6 +5,10 @@ package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+
 /**
  * @author David Hendrix (Nicktarix)
  *
@@ -29,7 +33,14 @@ public class SurroundingContainerProviderFactory {
                 scp = new DropDownChoicePanelProvider();
                 break;
             case PALETTE:
-                scp = new PalettePanelProvider();
+                scp = new PalettePanelProvider() {
+
+					@Override
+					public IChoiceRenderer newChoicesRenderer() {
+						return null;
+					}
+                	
+                };
                 break;
             default:
                 scp = new TextFieldPanelProvider();

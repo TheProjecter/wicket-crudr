@@ -67,7 +67,7 @@ public class DropDownChoiceProviderTest {
         provider = new DropDownChoicePanelProvider();
         String componentId = panel.getComponentId();
         logger.debug("Component Id of panel: " + componentId);
-        component = provider.newSurroundingContainer(componentId);
+        component = provider.newSurroundingContainer(componentId, null);
         component.setVisible(true);
         panel.add(component);
     }
@@ -81,7 +81,7 @@ public class DropDownChoiceProviderTest {
             exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, l, StringHolder.class, "data");
-        DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)));
+        DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);
         tester.assertComponent("panel", TempPanel.class);
@@ -118,7 +118,7 @@ public class DropDownChoiceProviderTest {
             exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, l, StringHolder.class, "data");
-        DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)));
+        DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);
         tester.assertComponent("panel", TempPanel.class);

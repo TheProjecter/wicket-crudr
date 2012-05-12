@@ -4,7 +4,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
-import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
 import org.apache.wicket.Component;
@@ -16,7 +16,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class DropDownChoiceProvider<V extends ICrudrDataProvider<V>> implements IEditorProvider<V> {
+public class DropDownChoiceProvider<V extends ICrudrListProvider<V>> implements IEditorProvider<V> {
 
     private static final long serialVersionUID = 5116591719887727709L;
     private final ChoiceRendererProvider<V> rendererProvider;
@@ -34,7 +34,7 @@ public class DropDownChoiceProvider<V extends ICrudrDataProvider<V>> implements 
      * @see net.unbewaff.wicketcrudr.providers.editor.IEditorProvider#newEditor(net.unbewaff.wicketcrudr.components.IEditorFacade, java.lang.String, org.apache.wicket.model.IModel)
      */
     @Override
-    public FormComponent<V> newEditor(final IEditorFacade parent, String componentId, IModel<V> model) {
+    public FormComponent<V> newEditor(final IEditorFacade parent, String componentId, IModel<V> model, ICrudrListProvider<V> listProvider) {
         V dataProvider = model.getObject();
 
         DropDownChoice<V> dropDownChoice = new DropDownChoice<V>(componentId, model, dataProvider.getList()) {

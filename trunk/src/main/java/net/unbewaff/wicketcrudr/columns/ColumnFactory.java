@@ -12,6 +12,7 @@ import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
@@ -39,13 +40,13 @@ public class ColumnFactory implements Serializable {
         // static use only
     }
 
-    public static <T> IColumn<T> getColumn(Method m, String property, Class<T> clazz) {
+    public static <T> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
         String cleanProperty = getCleanPropertyName(property);
-        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), cleanProperty, clazz, m.getReturnType());
+        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), cleanProperty, clazz, m.getReturnType(), listProvider);
     }
 
-    public static <T> IColumn<T> getColumn(Field f, String property, Class<T> clazz) {
-        return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), property, clazz, f.getType());
+    public static <T> IColumn<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
+        return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), property, clazz, f.getType(), listProvider);
     }
 
     /**
@@ -55,9 +56,10 @@ public class ColumnFactory implements Serializable {
      * @param property The property name
      * @param clazz the Class T
      * @param returnType TODO
+     * @param listProvider TODO
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz, Class<?> returnType) {
+    public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
@@ -67,10 +69,10 @@ public class ColumnFactory implements Serializable {
             logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");
             editInPlace = InPlaceEditor.NONE;
         }
-        if (InPlaceEditor.NONE.equals(editInPlace)) {
+        if (!InPlaceEditor.NONE.equals(editInPlace)) {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, l, returnType, property);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-            ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);
+            ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);
         } else {
             col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);

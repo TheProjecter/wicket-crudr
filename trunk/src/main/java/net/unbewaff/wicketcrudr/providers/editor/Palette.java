@@ -43,7 +43,7 @@ import org.apache.wicket.util.string.Strings;
  * @author David Hendrix (Nicktarix)
  * @author Igor Vaynberg (ivaynberg)
  */
-public class Palette<T> extends HiddenField<Object> {
+public class Palette<T> extends HiddenField<T> {
 	private static final long serialVersionUID = 1L;
 
 	private static final String[] EMPTY_IDS = new String[0];

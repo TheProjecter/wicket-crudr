@@ -22,7 +22,7 @@ public class CheckBoxPanelProviderTest {
 	@Test
 	public void testCheckBoxPanelprovider() {
 		ISurroundingContainerProvider provider = new CheckBoxPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new CheckBox("editor", Model.of(true)));
 		tester.startComponentInPage(component);
 		tester.assertInvisible("componentId");
@@ -31,7 +31,7 @@ public class CheckBoxPanelProviderTest {
 	@Test
 	public void testCheckBoxPanelproviderShow() {
 		ISurroundingContainerProvider provider = new CheckBoxPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new CheckBox("editor", Model.of(true)));
 		provider.show(null, component);
 		tester.startComponentInPage(component);
@@ -42,7 +42,7 @@ public class CheckBoxPanelProviderTest {
 	@Test
 	public void testCheckBoxPanelProviderShowThenHide() {
 		ISurroundingContainerProvider provider = new CheckBoxPanelProvider();
-		WebMarkupContainer component = provider.newSurroundingContainer("componentId");
+		WebMarkupContainer component = provider.newSurroundingContainer("componentId", null);
 		component.add(new CheckBox("editor", Model.of(true)));
 		provider.show(null, component);
 		provider.hide(null, component);

@@ -6,6 +6,7 @@ import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.FormComponent;
 
 /**
  * Implementations provide {@link WebMarkupContainer}s that in turn provide the Markup for FormComponents created
@@ -19,9 +20,10 @@ public interface ISurroundingContainerProvider extends Serializable {
         /**
          * Create a Container to provide matching Markup to FormComponents.
          * @param componentId The ID for the container. Currently it's allways "editor"
+         * @param editor TODO
          * @return The container
          */
-        public WebMarkupContainer newSurroundingContainer(String componentId);
+        public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor);
 
         /**
          * Show the container and add it to the AjaxRequestTarget
