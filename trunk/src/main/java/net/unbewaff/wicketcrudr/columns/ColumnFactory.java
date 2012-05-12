@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
@@ -61,12 +62,12 @@ public class ColumnFactory implements Serializable {
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider);
-        boolean editInPlace = l.editInPlace();
-        if (editInPlace && e == null) {
+        InPlaceEditor editInPlace = l.editInPlace();
+        if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
             logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");
-            editInPlace = false;
+            editInPlace = InPlaceEditor.NONE;
         }
-        if (editInPlace) {
+        if (InPlaceEditor.NONE.equals(editInPlace)) {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, l, returnType, property);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, property);

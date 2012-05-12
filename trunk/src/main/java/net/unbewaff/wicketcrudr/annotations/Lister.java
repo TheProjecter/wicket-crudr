@@ -41,6 +41,25 @@ public @interface Lister {
          */
         CHECKBOX;
     }
+    
+    public enum InPlaceEditor implements Serializable {
+    	/**
+    	 * Don't create an in place editor
+    	 */
+    	NONE,
+    	/**
+    	 * Replace label with editor component on click
+    	 */
+    	INPLACE,
+    	/**
+    	 * Open a ModalWindow with the editor component
+    	 */
+    	MODAL,
+    	/**
+    	 * Pop up a floating container with a high z-index 
+    	 */
+    	RAISEDCONTAINER
+    }
     Display displayAs() default Display.DEFAULT;
     /**
      * Defines the order of display. With Java 7 you'll get inconsistent display sequences even between calls if you don't define this.
@@ -56,7 +75,7 @@ public @interface Lister {
 	 * Should an in-place-editor be used to edit this property
 	 * @return
 	 */
-	boolean editInPlace() default false;
+	InPlaceEditor editInPlace() default InPlaceEditor.NONE;
 	/**
 	 * Are there model-strings to escape
 	 * @return
