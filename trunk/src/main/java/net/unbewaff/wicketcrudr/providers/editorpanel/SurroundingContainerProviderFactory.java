@@ -36,10 +36,21 @@ public class SurroundingContainerProviderFactory {
             case PALETTE:
                 scp = new PalettePanelProvider() {
 
-					@Override
-					public IChoiceRenderer newChoicesRenderer() {
-						return null;
-					}
+                    @Override
+                    public IChoiceRenderer newChoicesRenderer() {
+                        return new IChoiceRenderer() {
+
+                            @Override
+                            public Object getDisplayValue(Object object) {
+                                throw new IllegalStateException("PalettePanel has to have a custom IChoicerenderer.");
+                            }
+
+                            @Override
+                            public String getIdValue(Object object, int index) {
+                                throw new IllegalStateException("PalettePanel has to have a custom IChoicerenderer.");
+                            }
+                        };
+                    }
 
                 };
                 break;

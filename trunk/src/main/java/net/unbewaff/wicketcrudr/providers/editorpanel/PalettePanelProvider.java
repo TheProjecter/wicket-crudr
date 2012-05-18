@@ -20,16 +20,17 @@ public abstract class PalettePanelProvider<T> implements ISurroundingContainerPr
 
 	private static final long serialVersionUID = -4861783108809481116L;
 
-	public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+    public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
 		PalettePanel palette = new PalettePanel(componentId, null, null, 5, false) {
 
 			@Override
-			protected IChoiceRenderer newChoiceRenderer() {
+			protected IChoiceRenderer<?> newChoiceRenderer() {
 				return newChoicesRenderer();
 			}
-			
+
 		};
-		palette.setRecorderComponent((Palette)editor);
+		palette.setRecorderComponent((Palette<?>)editor);
 		return palette;
 	}
 
@@ -58,6 +59,6 @@ public abstract class PalettePanelProvider<T> implements ISurroundingContainerPr
 		}
 		return container;
 	}
-	
+
 	public abstract IChoiceRenderer<T> newChoicesRenderer();
 }
