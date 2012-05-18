@@ -5,8 +5,6 @@ package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 
 /**
@@ -53,6 +51,9 @@ public class SurroundingContainerProviderFactory {
                     }
 
                 };
+                break;
+            case PASSWORD:
+                scp = new PasswordPanelProvider();
                 break;
             default:
                 scp = new TextFieldPanelProvider();

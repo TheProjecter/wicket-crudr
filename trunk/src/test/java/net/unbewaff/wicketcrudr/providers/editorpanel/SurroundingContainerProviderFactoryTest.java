@@ -99,5 +99,15 @@ public class SurroundingContainerProviderFactoryTest {
         mockery.assertIsSatisfied();
     }
 
+    @Test
+    public void testForPasswordAnnotation() {
+        final Editor e = mockery.mock(Editor.class);
+        mockery.checking(new Expectations() {{
+            exactly(1).of(e).editAs(); will(returnValue(EditorType.PASSWORD));
+        }});
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        assertTrue(scp instanceof PasswordPanelProvider);
+        mockery.assertIsSatisfied();
+    }
 
 }

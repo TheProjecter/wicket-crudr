@@ -24,7 +24,9 @@ public abstract class PalettePanelProvider<T> implements ISurroundingContainerPr
     public WebMarkupContainer newSurroundingContainer(String componentId, FormComponent<?> editor) {
 		PalettePanel palette = new PalettePanel(componentId, null, null, 5, false) {
 
-			@Override
+            private static final long serialVersionUID = -952266298018564628L;
+
+            @Override
 			protected IChoiceRenderer<?> newChoiceRenderer() {
 				return newChoicesRenderer();
 			}

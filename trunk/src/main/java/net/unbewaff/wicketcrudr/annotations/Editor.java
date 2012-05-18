@@ -46,7 +46,11 @@ public @interface Editor {
         /**
          * Edit by DatePicker
          */
-        DATE
+        DATE,
+        /**
+         * For editing Passwords
+         */
+        PASSWORD
     }
 
     EditorType editAs() default EditorType.DEFAULT;
