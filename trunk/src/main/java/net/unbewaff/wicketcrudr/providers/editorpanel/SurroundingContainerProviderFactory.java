@@ -27,6 +27,7 @@ public class SurroundingContainerProviderFactory {
                 scp = new TextAreaPanelProvider();
                 break;
             case TEXTFIELD:
+            case DATE:
                 scp = new TextFieldPanelProvider();
                 break;
             case DROPDOWNCHOICE:
@@ -39,7 +40,7 @@ public class SurroundingContainerProviderFactory {
 					public IChoiceRenderer newChoicesRenderer() {
 						return null;
 					}
-                	
+
                 };
                 break;
             default:

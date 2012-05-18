@@ -42,7 +42,11 @@ public @interface Editor {
         /**
          * Edit by Palette (for Collection-type members)
          */
-        PALETTE
+        PALETTE,
+        /**
+         * Edit by DatePicker
+         */
+        DATE
     }
 
     EditorType editAs() default EditorType.DEFAULT;

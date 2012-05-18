@@ -42,6 +42,9 @@ public class EditorProviderFactory {
             case PALETTE:
             	ep = (IEditorProvider<T>) new PaletteProvider<T>(getChoiceRenderer(l, property));
             	break;
+            case DATE:
+                ep = (IEditorProvider<T>) new DateEditorProvider();
+                break;
             default:
                 ep = getDefaultEditorProvider(returnType);
         }
