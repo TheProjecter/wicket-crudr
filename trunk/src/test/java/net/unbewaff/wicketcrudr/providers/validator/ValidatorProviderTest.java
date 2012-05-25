@@ -5,7 +5,8 @@ package net.unbewaff.wicketcrudr.providers.validator;
 
 import static org.junit.Assert.assertTrue;
 
-import org.apache.wicket.validation.IValidator;
+import net.unbewaff.wicketcrudr.providers.validator.ValidatorProvider.ValidatorType;
+
 import org.junit.Test;
 
 /**
@@ -15,14 +16,12 @@ import org.junit.Test;
 public class ValidatorProviderTest {
 
     @Test
-    public void testRequiredValidator() {
-        assertTrue(ValidatorProvider.getValidator() instanceof RequiredValidator);
+    public void testRequiredValidatorValidParams() {
+        assertTrue(ValidatorProvider.getValidator(ValidatorType.REQUIRED, null) instanceof RequiredValidator);
     }
 
-    public static class ValidatorProvider {
-
-        public static IValidator getValidator() {
-            return new RequiredValidator();
-        }
+    @Test(expected=IllegalArgumentException.class)
+    public void testRequiredValidatorInvalidParams() {
+        assertTrue(ValidatorProvider.getValidator(ValidatorType.REQUIRED, "1", 2, 3L) instanceof RequiredValidator);
     }
 }
