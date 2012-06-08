@@ -307,6 +307,10 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
     /**
      * Called when the label is clicked and the component is put in edit mode.
      *
+     * The Javascript code from AjaxEditableLabel was changed to reflect the changes made in Wicket 1.5.7 to fix
+     * {@link https://issues.apache.org/jira/browse/WICKET-4529} Issue 4529. This will work in other versions
+     * of wicket without change and will fix the behavior in Firefox 11 and Safari 5.0.5.
+     *
      * @param target
      *            Ajax target
      */
@@ -314,11 +318,7 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
         label.setVisible(false);
         containerProvider.show(target, container);
         target.add(AjaxEditableLabelContainer.this);
-        // put focus on the textfield and stupid explorer hack to move the
-        // caret to the end
-        target.appendJavaScript("{ var el=wicketGet('" + editor.getMarkupId() + "');" + "   if (el.createTextRange) { "
-                + "     var v = el.value; var r = el.createTextRange(); "
-                + "     r.moveStart('character', v.length); r.select(); } }");
+        target.appendJavaScript("{var el=wicketGet('" + editor.getMarkupId() + "'); if (el.select) el.select();}");
         target.focusComponent(editor);
     }
 
