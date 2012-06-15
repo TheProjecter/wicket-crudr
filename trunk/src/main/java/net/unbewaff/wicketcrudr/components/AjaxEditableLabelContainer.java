@@ -334,7 +334,7 @@ public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade
         if (errorMessage != null) {
             target.appendJavaScript("window.status='" + JavaScriptUtils.escapeQuotes(errorMessage.toString()) + "';");
         }
-        target.appendJavaScript("{var el=wicketGet('" + editor.getMarkupId() + "'); el.select(); el.focus();}");
+        target.appendJavaScript("{var el=wicketGet('" + editor.getMarkupId() + "'); if (el.select) el.select(); el.focus();}");
     }
 
     /**
