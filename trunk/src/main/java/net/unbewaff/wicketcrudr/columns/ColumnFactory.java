@@ -55,8 +55,8 @@ public class ColumnFactory implements Serializable {
      * @param e The Editor Annotation
      * @param property The property name
      * @param clazz the Class T
-     * @param returnType TODO
-     * @param listProvider TODO
+     * @param returnType the return type of the
+     * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
     public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
