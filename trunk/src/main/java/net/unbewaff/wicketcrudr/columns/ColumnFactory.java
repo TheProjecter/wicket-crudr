@@ -55,7 +55,7 @@ public class ColumnFactory implements Serializable {
      * @param e The Editor Annotation
      * @param property The property name
      * @param clazz the Class T
-     * @param returnType the return type of the
+     * @param returnType the return type of the method
      * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
