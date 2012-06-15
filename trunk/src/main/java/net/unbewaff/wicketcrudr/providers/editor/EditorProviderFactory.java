@@ -3,16 +3,16 @@
  */
 package net.unbewaff.wicketcrudr.providers.editor;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.util.time.Time;
 
 /**
  * A Factory to create {@link net.unbewaff.wicketcrudr.providers.editor.IEditorProvider<T>} instances
@@ -46,7 +46,7 @@ public class EditorProviderFactory {
                 ep = (IEditorProvider<T>) new DateEditorProvider();
                 break;
             default:
-                ep = getDefaultEditorProvider(returnType);
+                ep = getDefaultEditorProvider(returnType, getChoiceRenderer(l, property));
         }
         return ep;
     }
@@ -57,8 +57,7 @@ public class EditorProviderFactory {
 	 * @param property
 	 * @return
 	 */
-	private static ChoiceRendererProvider getChoiceRenderer(final Lister l,
-			final String property) {
+	private static ChoiceRendererProvider getChoiceRenderer(final Lister l, final String property) {
 		ChoiceRendererProvider renderer = null;
 		if (l != null) {
 		    if (Display.RESOURCE.equals(l.displayAs())) {
@@ -69,7 +68,8 @@ public class EditorProviderFactory {
 	}
 
 
-    private static <T> IEditorProvider<T> getDefaultEditorProvider(Class<?> returnType) {
+    @SuppressWarnings("unchecked")
+    private static <T> IEditorProvider<T> getDefaultEditorProvider(Class<?> returnType, ChoiceRendererProvider<T> renderer) {
         if (returnType == null) {
             throw new IllegalArgumentException("Need to know the returnType. (AKA can't be null)");
         }
@@ -78,10 +78,15 @@ public class EditorProviderFactory {
             ep = (IEditorProvider<T>) new CheckBoxProvider();
         } else if (Number.class.isAssignableFrom(returnType) && Comparable.class.isAssignableFrom(returnType)) {
             ep = (IEditorProvider<T>) NumberFieldProvider.newInstance(returnType);
+        } else if (returnType.isAssignableFrom(ICrudrListProvider.class)) {
+            ep = (IEditorProvider<T>) new DropDownChoiceProvider(renderer);
+        } else if (returnType.isAssignableFrom(Collection.class)) {
+            ep = (IEditorProvider<T>) new PaletteProvider<T>(renderer);
+        } else if (returnType.equals(Date.class) || returnType.equals(Time.class)) {
+            ep = (IEditorProvider<T>) new DateEditorProvider();
+        } else {
+            ep = (IEditorProvider<T>) new TextFieldProvider<T>();
         }
         return ep;
     }
-
-
-
 }
