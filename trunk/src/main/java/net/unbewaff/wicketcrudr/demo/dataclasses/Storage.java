@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.demo.dataclasses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class Storage implements Serializable{
     private Integer id;
     private String cupboard;
     private String board;
-    private List<Book> books;
+    private final List<Book> books = new ArrayList<Book>();
 
     public Storage() {
         //empty
@@ -28,11 +29,10 @@ public class Storage implements Serializable{
      * @param board
      * @param books
      */
-    public Storage(Integer id, String cupboard, String board, List<Book> books) {
+    public Storage(Integer id, String cupboard, String board) {
         this.id = id;
         this.cupboard = cupboard;
         this.board = board;
-        this.books = books;
     }
 
     public Integer getId() {
@@ -63,8 +63,5 @@ public class Storage implements Serializable{
         return books;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
 
 }

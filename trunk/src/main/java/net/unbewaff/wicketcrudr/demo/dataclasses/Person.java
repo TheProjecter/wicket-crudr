@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.demo.dataclasses;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,8 +18,8 @@ public class Person implements Serializable{
     private String firstName;
     private String lastName;
     private String address;
-    private Set<Book> ownedBooks;
-    private Set<Book> borrowedBooks;
+    private final Set<Book> ownedBooks = new HashSet<Book>();
+    private final Set<Book> borrowedBooks = new HashSet<Book>();
 
     public Person() {
         //empty
@@ -29,17 +30,12 @@ public class Person implements Serializable{
      * @param firstName
      * @param lastName
      * @param address
-     * @param ownedBooks
-     * @param borrowedBooks
      */
-    public Person(Integer id, String firstName, String lastName, String address, Set<Book> ownedBooks,
-            Set<Book> borrowedBooks) {
+    public Person(Integer id, String firstName, String lastName, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.ownedBooks = ownedBooks;
-        this.borrowedBooks = borrowedBooks;
     }
 
     public Integer getId() {
@@ -78,15 +74,17 @@ public class Person implements Serializable{
         return ownedBooks;
     }
 
-    public void setOwnedBooks(Set<Book> ownedBooks) {
-        this.ownedBooks = ownedBooks;
-    }
-
     public Set<Book> getBorrowedBooks() {
         return borrowedBooks;
     }
 
-    public void setBorrowedBooks(Set<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Person [id=").append(id).append(", firstName=").append(firstName).append(", lastName=")
+                .append(lastName).append(", address=").append(address).append(", ownedBooks=").append(ownedBooks)
+                .append(", borrowedBooks=").append(borrowedBooks).append("]");
+        return builder.toString();
     }
+
 }
