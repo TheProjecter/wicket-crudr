@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="tralala.Data2">Dummdidumm</entry>
+	<entry key="Food.Apple">Dummdidumm</entry>
+	<entry key="Food.Banana">Dummdidumm</entry>
+	<entry key="Food.Cherry">Dummdidumm</entry>
+	<entry key="ddctest.StringHolder instance No. 0">UniqueText0</entry>
+	<entry key="ddctest.StringHolder instance No. 1">UniqueText1</entry>
+	<entry key="ddctest.StringHolder instance No. 2">UniqueText2</entry>
+	<entry key="ddctest.StringHolder instance No. 3">UniqueText3</entry>
+	<entry key="ddctest.StringHolder instance No. 4">UniqueText4</entry>
+</properties>
