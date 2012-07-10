@@ -10,6 +10,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements ILabelFacade {
+
+    private static final long serialVersionUID = 4158102566457762813L;
     private final ILabelProvider<T> labelProvider;
 
     public FlexibleNonEditableColumn(IModel<String> displayModel, String sortProperty, ILabelProvider<T> labelProvider) {

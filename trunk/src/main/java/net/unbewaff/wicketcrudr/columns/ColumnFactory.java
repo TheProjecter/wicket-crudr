@@ -11,7 +11,6 @@ import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
-import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
@@ -34,6 +33,7 @@ import org.apache.wicket.model.StringResourceModel;
  */
 public class ColumnFactory implements Serializable {
 
+    private static final long serialVersionUID = -3884250993203217609L;
     private static transient final Logger logger = Logger.getLogger(ColumnFactory.class);
 
     private ColumnFactory() {
@@ -79,7 +79,6 @@ public class ColumnFactory implements Serializable {
         }
         return col;
     }
-
     /**
      * @param headerKey
      * @param clazzName
