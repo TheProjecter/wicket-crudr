@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.Test;
-
 /**
  * @author David Hendrix (Nicktarix)
  *
@@ -23,7 +21,6 @@ public class PetClinicDataBaseBuilder {
     private List<Veterinarian> vets = new ArrayList<Veterinarian>();
     private List<Pet> pets = new ArrayList<Pet>();
 
-    @Test
     public void testDataCreation() throws ParseException {
         vets.add(new Veterinarian(1, "James", "Carter"));
         vets.add(new Veterinarian(2, "Helen", "Leary"));
