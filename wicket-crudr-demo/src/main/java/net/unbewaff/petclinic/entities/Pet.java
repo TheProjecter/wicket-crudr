@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.demo.petclinic;
+package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
 import java.text.DateFormat;

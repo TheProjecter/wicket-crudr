@@ -1,7 +1,7 @@
 /**
  *
  */
-package net.unbewaff.wicketcrudr.demo.petclinic;
+package net.unbewaff.petclinic.entities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
