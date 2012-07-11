@@ -1,6 +1,9 @@
 package net.unbewaff.petclinic;
 
+import net.unbewaff.HomePage;
+
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -16,7 +19,7 @@ public class WicketApplication extends WebApplication {
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
-	public Class<HomePage> getHomePage() {
+	public Class<? extends WebPage> getHomePage() {
 		return HomePage.class;
 	}
 

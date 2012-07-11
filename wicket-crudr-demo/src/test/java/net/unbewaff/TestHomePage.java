@@ -1,6 +1,5 @@
 package net.unbewaff;
 
-import net.unbewaff.petclinic.HomePage;
 import net.unbewaff.petclinic.WicketApplication;
 
 import org.apache.wicket.util.tester.WicketTester;
