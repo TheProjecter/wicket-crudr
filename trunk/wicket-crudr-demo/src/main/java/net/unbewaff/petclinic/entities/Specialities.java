@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.demo.petclinic;
+package net.unbewaff.petclinic.entities;
 
 /**
  * @author David Hendrix (Nicktarix)

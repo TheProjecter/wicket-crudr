@@ -1,4 +1,4 @@
-package de.gwassist;
+package net.unbewaff;
 
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.http.ssl.SslContextFactory;
