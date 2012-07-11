@@ -17,7 +17,6 @@ public class ListVetsPage extends WebPage {
 	 *
 	 */
 	public ListVetsPage() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -25,7 +24,6 @@ public class ListVetsPage extends WebPage {
 	 */
 	public ListVetsPage(IModel<?> model) {
 		super(model);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -33,7 +31,6 @@ public class ListVetsPage extends WebPage {
 	 */
 	public ListVetsPage(PageParameters parameters) {
 		super(parameters);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
