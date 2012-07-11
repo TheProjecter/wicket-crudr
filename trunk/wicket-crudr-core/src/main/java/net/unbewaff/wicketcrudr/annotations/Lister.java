@@ -7,8 +7,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
-
 /**
  * Annotation defining if and how a value is displayed in a List.
  * @author David Hendrix (Nicktarix)
@@ -41,7 +39,7 @@ public @interface Lister {
          */
         CHECKBOX;
     }
-    
+
     public enum InPlaceEditor implements Serializable {
     	/**
     	 * Don't create an in place editor
@@ -56,7 +54,7 @@ public @interface Lister {
     	 */
     	MODAL,
     	/**
-    	 * Pop up a floating container with a high z-index 
+    	 * Pop up a floating container with a high z-index
     	 */
     	RAISEDCONTAINER
     }

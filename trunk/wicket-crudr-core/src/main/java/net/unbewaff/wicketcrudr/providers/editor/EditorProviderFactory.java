@@ -53,10 +53,11 @@ public class EditorProviderFactory {
 
 
 	/**
-	 * @param l
-	 * @param property
-	 * @return
+	 * @param l the Lister Annotation
+	 * @param property the property to access the data
+	 * @return a matching ChoiceRendererProvider
 	 */
+	@SuppressWarnings("rawtypes")
 	private static ChoiceRendererProvider getChoiceRenderer(final Lister l, final String property) {
 		ChoiceRendererProvider renderer = null;
 		if (l != null) {
