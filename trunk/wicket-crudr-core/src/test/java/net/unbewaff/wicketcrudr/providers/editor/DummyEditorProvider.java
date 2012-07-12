@@ -3,6 +3,8 @@
  */
 package net.unbewaff.wicketcrudr.providers.editor;
 
+import java.io.Serializable;
+
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -13,7 +15,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class DummyEditorProvider<T extends ICrudrListProvider<T>> implements IEditorProvider<T> {
+public class DummyEditorProvider<T extends ICrudrListProvider<T> & Serializable> implements IEditorProvider<T> {
 
     private final Editor editor;
 
