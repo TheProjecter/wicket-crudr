@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public interface IEditorProvider<T> extends Serializable {
+public interface IEditorProvider<T extends Serializable> extends Serializable {
 
     /**
      * Creates a FormComponent. This FormComponent has to match the Markup of the Container created by ISurroundingContainerProvider.newSurroundingContainer.

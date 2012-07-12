@@ -1,8 +1,9 @@
 /**
- * 
+ *
  */
 package net.unbewaff.wicketcrudr.components;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface ICrudrListProvider<T> {
+public interface ICrudrListProvider<T extends Serializable> {
 
 	public abstract List<T> getList();
 

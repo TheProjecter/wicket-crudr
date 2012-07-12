@@ -3,6 +3,7 @@
  */
 package net.unbewaff.wicketcrudr.providers.editor;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -11,7 +12,6 @@ import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.util.time.Time;
 
 /**
@@ -22,7 +22,7 @@ import org.apache.wicket.util.time.Time;
 public class EditorProviderFactory {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> IEditorProvider<T> getEditorProvider(Editor e, final Lister l, Class<?> returnType, final String property) {
+    public static <T extends Serializable> IEditorProvider<T> getEditorProvider(Editor e, final Lister l, Class<?> returnType, final String property) {
         IEditorProvider<T> ep = null;
         switch (e.editAs()) {
             case TEXTFIELD:
@@ -70,7 +70,7 @@ public class EditorProviderFactory {
 
 
     @SuppressWarnings("unchecked")
-    private static <T> IEditorProvider<T> getDefaultEditorProvider(Class<?> returnType, ChoiceRendererProvider<T> renderer) {
+    private static <T extends Serializable> IEditorProvider<T> getDefaultEditorProvider(Class<?> returnType, ChoiceRendererProvider<T> renderer) {
         if (returnType == null) {
             throw new IllegalArgumentException("Need to know the returnType. (AKA can't be null)");
         }

@@ -40,12 +40,12 @@ public class ColumnFactory implements Serializable {
         // static use only
     }
 
-    public static <T> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
+    public static <T extends Serializable> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
         String cleanProperty = getCleanPropertyName(property);
         return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), cleanProperty, clazz, m.getReturnType(), listProvider);
     }
 
-    public static <T> IColumn<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
+    public static <T extends Serializable> IColumn<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
         return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), property, clazz, f.getType(), listProvider);
     }
 
@@ -59,7 +59,7 @@ public class ColumnFactory implements Serializable {
      * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    public static <T> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
+    public static <T extends Serializable> IColumn<T> getColumn(Lister l, Editor e, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);

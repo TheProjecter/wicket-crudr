@@ -1,6 +1,8 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
+import java.io.Serializable;
+
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -18,7 +20,7 @@ import org.apache.wicket.util.convert.IConverter;
  *
  * @param <T>
  */
-class TextFieldProvider<T> implements IEditorProvider<T> {
+class TextFieldProvider<T extends Serializable> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = -7231019074574082991L;
 

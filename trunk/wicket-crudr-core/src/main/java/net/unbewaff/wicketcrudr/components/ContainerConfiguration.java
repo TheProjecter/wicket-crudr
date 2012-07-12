@@ -1,5 +1,7 @@
 package net.unbewaff.wicketcrudr.components;
 
+import java.io.Serializable;
+
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
@@ -7,12 +9,12 @@ import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 /**
  * Convenience Parameter Object to encapsulate the providers needed by
  * FlexibleColumns into a single parameter
- * 
+ *
  * @author David Hendrix (Nicktarix)
  *
  * @param <T>
  */
-public class ContainerConfiguration<T> {
+public class ContainerConfiguration<T extends Serializable> {
 
     private final ILabelProvider<T> labelProvider;
     private final IEditorProvider<T> editorProvider;

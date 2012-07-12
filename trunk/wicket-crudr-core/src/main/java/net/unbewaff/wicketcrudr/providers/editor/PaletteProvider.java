@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
@@ -18,7 +19,7 @@ import org.apache.wicket.model.IModel;
  *
  * @param <T>
  */
-public class PaletteProvider<T> implements IEditorProvider<T> {
+public class PaletteProvider<T extends Serializable> implements IEditorProvider<T> {
 
     private ChoiceRendererProvider<T> rendererProvider;
 
@@ -42,7 +43,7 @@ public class PaletteProvider<T> implements IEditorProvider<T> {
         	if (parent instanceof Component) {
         		parentComponent = (Component) parent;
         	} else {
-        		parentComponent = palette; 
+        		parentComponent = palette;
         	}
 			palettePanel.setChoiceRenderer(rendererProvider.getRenderer(parentComponent));
         }

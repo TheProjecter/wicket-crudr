@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author David Hendrix (Nicktarix)
  *
  */
-public interface ICrudrDataProvider<T> extends Serializable, ICrudrListProvider<T> {
+public interface ICrudrDataProvider<T extends Serializable> extends Serializable, ICrudrListProvider<T> {
 
     public abstract T newInstance();
 
