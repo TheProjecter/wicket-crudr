@@ -4,6 +4,8 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 
+import java.io.Serializable;
+
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
 
@@ -16,7 +18,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class DropDownChoiceProvider<V extends ICrudrListProvider<V>> implements IEditorProvider<V> {
+public class DropDownChoiceProvider<V extends ICrudrListProvider<V> & Serializable> implements IEditorProvider<V> {
 
     private static final long serialVersionUID = 5116591719887727709L;
     private final ChoiceRendererProvider<V> rendererProvider;

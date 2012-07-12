@@ -31,7 +31,7 @@ import org.apache.wicket.validation.IValidator;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class AjaxEditableLabelContainer<T> extends Panel implements ILabelFacade, IEditorFacade {
+public class AjaxEditableLabelContainer<T extends Serializable> extends Panel implements ILabelFacade, IEditorFacade {
 
     private final ILabelProvider<T> labelProvider;
     private final IEditorProvider<T> editorProvider;

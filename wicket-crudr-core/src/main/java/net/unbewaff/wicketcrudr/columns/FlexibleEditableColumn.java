@@ -3,6 +3,8 @@
  */
 package net.unbewaff.wicketcrudr.columns;
 
+import java.io.Serializable;
+
 import net.unbewaff.wicketcrudr.components.AjaxEditableLabelContainer;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 
@@ -15,7 +17,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-class FlexibleEditableColumn<T> extends AbstractColumn<T> {
+class FlexibleEditableColumn<T extends Serializable> extends AbstractColumn<T> {
 
 	private static final long serialVersionUID = -5616560586558642852L;
 	private final ContainerConfiguration<T> configuration;
