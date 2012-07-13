@@ -6,6 +6,10 @@ package net.unbewaff.wicketcrudr.columns;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -33,7 +37,8 @@ import org.apache.wicket.model.StringResourceModel;
  */
 public class ColumnFactory implements Serializable {
 
-    private static final long serialVersionUID = -3884250993203217609L;
+
+	private static final long serialVersionUID = -3884250993203217609L;
     private static transient final Logger logger = Logger.getLogger(ColumnFactory.class);
 
     private ColumnFactory() {
@@ -77,6 +82,7 @@ public class ColumnFactory implements Serializable {
         } else {
             col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
         }
+
         return col;
     }
     /**
@@ -105,6 +111,45 @@ public class ColumnFactory implements Serializable {
             clean = clean.substring(2);
         }
         return clean;
+    }
+
+    public static <T extends Serializable> List<IColumn<T>> getColumns(Class<T> clazz){
+    	List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
+    	List<Method> methods = new ArrayList<Method>();
+    	for (Method m :clazz.getMethods()) {
+    		Lister lister = m.getAnnotation(Lister.class);
+    		if (lister != null) {
+    			methods.add(m);
+    		}
+    	}
+    	Collections.sort(methods, new PositionComparator());
+
+    	for (Method m: methods) {
+			columns.add(getColumn(m, m.getName(), clazz, null));
+		}
+
+		return columns;
+    }
+
+    /**
+     * @author David Hendrix (Nicktarix)
+     *
+     */
+    private static final class PositionComparator implements Comparator<Method> {
+    	@Override
+    	public int compare(Method o1, Method o2) {
+    		Integer p1 = o1.getAnnotation(Lister.class).position();
+    		Integer p2 = o2.getAnnotation(Lister.class).position();
+    		int retVal;
+    		if (p1 == -1) {
+    			retVal = 1;
+    		} else if (p2 == -1) {
+    			retVal = -1;
+    		} else {
+    			retVal = p1.compareTo(p2);
+    		}
+    		return retVal;
+    	}
     }
 }
 

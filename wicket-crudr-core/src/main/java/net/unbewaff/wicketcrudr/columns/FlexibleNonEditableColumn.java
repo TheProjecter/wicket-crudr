@@ -42,4 +42,20 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
         return labelProvider;
     }
 
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
+	 */
+	@Override
+	public boolean isSortable() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getCssClass()
+	 */
+	@Override
+	public String getCssClass() {
+		return "ui-widget-content";
+	}
+
 }
