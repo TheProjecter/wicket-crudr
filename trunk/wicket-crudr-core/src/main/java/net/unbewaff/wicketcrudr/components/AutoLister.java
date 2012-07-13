@@ -10,7 +10,6 @@ import net.unbewaff.wicketcrudr.columns.ColumnFactory;
 
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
@@ -58,7 +57,7 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 		final IDataProvider<T> dataProvider = new ListDataProvider<T>(listProvider.getList());
 		DataTable<T> dataTable = new DataTable<T>("lister", columns, dataProvider, rowsPerPage);
 		dataTable.add(new AttributeAppender("class", Model.of(getTableCssClass())));
-		HeadersToolbar headerToolbar = new HeadersToolbar(dataTable, null);
+		StyledHeadersToolbar headerToolbar = new StyledHeadersToolbar(dataTable, null);
 		dataTable.addTopToolbar(headerToolbar);
 		add(dataTable);
 		super.onInitialize();
