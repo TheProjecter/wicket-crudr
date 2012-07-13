@@ -1,6 +1,7 @@
 package net.unbewaff.petclinic;
 
 import net.unbewaff.HomePage;
+import net.unbewaff.petclinic.listvets.ListVetsPage;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
@@ -20,7 +21,7 @@ public class WicketApplication extends WebApplication {
 	 */
 	@Override
 	public Class<? extends WebPage> getHomePage() {
-		return HomePage.class;
+		return ListVetsPage.class;
 	}
 
 	/**

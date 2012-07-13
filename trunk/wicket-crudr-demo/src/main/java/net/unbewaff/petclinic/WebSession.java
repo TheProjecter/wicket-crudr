@@ -28,8 +28,8 @@ public class WebSession extends org.apache.wicket.protocol.http.WebSession {
 
     private List<Owner> owners = new ArrayList<Owner>();
     private List<Type> types = new ArrayList<Type>();
-    private List<Veterinarian> vets = new ArrayList<Veterinarian>();
-    private List<Pet> pets = new ArrayList<Pet>();
+    private final List<Veterinarian> veterinarians = new ArrayList<Veterinarian>();
+	private List<Pet> pets = new ArrayList<Pet>();
 
 
     /**
@@ -46,17 +46,17 @@ public class WebSession extends org.apache.wicket.protocol.http.WebSession {
     }
 
     private void init() throws ParseException {
-            vets.add(new Veterinarian(1, "James", "Carter"));
-            vets.add(new Veterinarian(2, "Helen", "Leary"));
-            vets.add(new Veterinarian(3, "Linda", "Douglas"));
-            vets.add(new Veterinarian(4, "Rafael", "Ortega"));
-            vets.add(new Veterinarian(5, "Henry", "Stevens"));
-            vets.add(new Veterinarian(6, "Sharon", "Jenkins"));
-            vets.get(1).getSpecialities().add(Specialities.dentistry);
-            vets.get(2).getSpecialities().add(Specialities.radiology);
-            vets.get(2).getSpecialities().add(Specialities.surgery);
-            vets.get(3).getSpecialities().add(Specialities.radiology);
-            vets.get(4).getSpecialities().add(Specialities.dentistry);
+            veterinarians.add(new Veterinarian(1, "James", "Carter"));
+            veterinarians.add(new Veterinarian(2, "Helen", "Leary"));
+            veterinarians.add(new Veterinarian(3, "Linda", "Douglas"));
+            veterinarians.add(new Veterinarian(4, "Rafael", "Ortega"));
+            veterinarians.add(new Veterinarian(5, "Henry", "Stevens"));
+            veterinarians.add(new Veterinarian(6, "Sharon", "Jenkins"));
+            veterinarians.get(1).getSpecialities().add(Specialities.dentistry);
+            veterinarians.get(2).getSpecialities().add(Specialities.radiology);
+            veterinarians.get(2).getSpecialities().add(Specialities.surgery);
+            veterinarians.get(3).getSpecialities().add(Specialities.radiology);
+            veterinarians.get(4).getSpecialities().add(Specialities.dentistry);
             types.add(new Type(1, "cat"));
             types.add(new Type(2, "dog"));
             types.add(new Type(3, "lizard"));
@@ -87,10 +87,18 @@ public class WebSession extends org.apache.wicket.protocol.http.WebSession {
             pets.add(new Pet(12, "Lucky", "06/24/2000", types.get(1), owners.get(9)));
             pets.add(new Pet(13, "Sly", "06/08/2002", types.get(0), owners.get(9)));
             List<Visit> visits = new ArrayList<Visit>();
-            visits.add(new Visit(1, pets.get(6), vets.get(0), "03/04/1996", "rabies shot"));
-            visits.add(new Visit(2, pets.get(7), vets.get(2), "03/04/1996", "rabies shot"));
-            visits.add(new Visit(3, pets.get(7), vets.get(3), "06/04/1996", "neutered"));
-            visits.add(new Visit(4, pets.get(6), vets.get(3), "09/04/1996", "spayed"));
+            visits.add(new Visit(1, pets.get(6), veterinarians.get(0), "03/04/1996", "rabies shot"));
+            visits.add(new Visit(2, pets.get(7), veterinarians.get(2), "03/04/1996", "rabies shot"));
+            visits.add(new Visit(3, pets.get(7), veterinarians.get(3), "06/04/1996", "neutered"));
+            visits.add(new Visit(4, pets.get(6), veterinarians.get(3), "09/04/1996", "spayed"));
 
     }
+
+    /**
+     * @return the list of Veterinarians
+     */
+    public List<Veterinarian> getVeterinarians() {
+		return veterinarians;
+	}
+
 }
