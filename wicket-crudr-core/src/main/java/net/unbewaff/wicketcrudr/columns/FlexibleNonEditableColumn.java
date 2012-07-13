@@ -9,7 +9,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
-public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements ILabelFacade {
+public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements ILabelFacade, IMultipleStyledColumn<T> {
 
     private static final long serialVersionUID = 4158102566457762813L;
     private final ILabelProvider<T> labelProvider;
@@ -55,6 +55,30 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
 	 */
 	@Override
 	public String getCssClass() {
+		return getCssClassForBody();
+	}
+
+	/* (non-Javadoc)
+	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForHeader()
+	 */
+	@Override
+	public String getCssClassForHeader() {
+		return "ui-widget-header";
+	}
+
+	/* (non-Javadoc)
+	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForBody()
+	 */
+	@Override
+	public String getCssClassForBody() {
+		return "ui-widget-content";
+	}
+
+	/* (non-Javadoc)
+	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForFooter()
+	 */
+	@Override
+	public String getCssClassForFooter() {
 		return "ui-widget-content";
 	}
 
