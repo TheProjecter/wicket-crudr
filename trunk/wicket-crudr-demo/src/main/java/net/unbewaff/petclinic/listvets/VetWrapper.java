@@ -1,11 +1,15 @@
 package net.unbewaff.petclinic.listvets;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 
 public class VetWrapper implements Serializable {
 
@@ -43,12 +47,46 @@ public class VetWrapper implements Serializable {
 	}
 
 	@Lister
-	public Set<Specialities> getSpecialities() {
-		return vet.getSpecialities();
+	public Set<SpecialitiesWrapper> getSpecialities() {
+		Set<SpecialitiesWrapper> list = new HashSet<SpecialitiesWrapper>();
+		for (Specialities speciality : vet.getSpecialities()) {
+			list.add(new SpecialitiesWrapper(speciality));
+		}
+		return list;
 	}
 
 	public String toString() {
 		return vet.toString();
+	}
+
+	public static class SpecialitiesWrapper implements ICrudrDataProvider<Specialities>{
+		private final Specialities speciality;
+
+		public SpecialitiesWrapper(Specialities speciality) {
+			this.speciality = speciality;
+		}
+
+		@Override
+		public List<Specialities> getList() {
+			return Arrays.asList(Specialities.values());
+		}
+
+		@Override
+		public Specialities newInstance() {
+			return null;
+		}
+
+		@Override
+		public Class<Specialities> getType() {
+			return Specialities.class;
+		}
+
+		@Override
+		public Serializable getId() {
+			return speciality;
+		}
+
+
 	}
 
 }
