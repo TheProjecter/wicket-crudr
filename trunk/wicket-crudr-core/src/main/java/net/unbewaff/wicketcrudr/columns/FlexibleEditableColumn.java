@@ -37,4 +37,12 @@ class FlexibleEditableColumn<T extends Serializable> extends AbstractColumn<T> {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
+	 */
+	@Override
+	public boolean isSortable() {
+		return false;
+	}
+
 }
