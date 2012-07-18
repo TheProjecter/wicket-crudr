@@ -9,6 +9,7 @@ import java.util.Set;
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 
 public class VetWrapper implements Serializable {
@@ -46,7 +47,7 @@ public class VetWrapper implements Serializable {
 		vet.setLastName(lastName);
 	}
 
-	@Lister
+	@Lister(innerType=SpecialitiesWrapper.class, innerResourcePrefix="Speciality")
 	public Set<SpecialitiesWrapper> getSpecialities() {
 		Set<SpecialitiesWrapper> list = new HashSet<SpecialitiesWrapper>();
 		for (Specialities speciality : vet.getSpecialities()) {
@@ -84,6 +85,11 @@ public class VetWrapper implements Serializable {
 		@Override
 		public Serializable getId() {
 			return speciality;
+		}
+
+		@ResourceKey
+		public final String name() {
+			return speciality.name();
 		}
 
 

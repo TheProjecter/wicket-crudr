@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="Speciality.radiology">Radiologie</entry>
+    <entry key="Speciality.surgery">Chirurgie</entry>
+    <entry key="Speciality.dentistry">Zahnmedizin</entry>
+</properties>
