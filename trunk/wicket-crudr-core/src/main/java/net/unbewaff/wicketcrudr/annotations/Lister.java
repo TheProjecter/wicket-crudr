@@ -79,4 +79,9 @@ public @interface Lister {
 	 * @return
 	 */
 	boolean escapeModelString() default true;
+
+	Class<?> innerType() default Object.class;
+
+	String innerResourcePrefix() default "";
+
 }
