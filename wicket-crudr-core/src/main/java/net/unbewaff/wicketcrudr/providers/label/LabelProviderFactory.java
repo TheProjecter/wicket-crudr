@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
 /**
  * Factory to create {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}Objects based on Metadata
@@ -31,7 +32,7 @@ public class LabelProviderFactory {
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider) {
-    	return getLabelProvider(m.getAnnotation(Lister.class), labelModelProvider);
+    	return getLabelProvider(m.getAnnotation(Lister.class), labelModelProvider, m.getReturnType());
     }
 
     /**
@@ -39,19 +40,28 @@ public class LabelProviderFactory {
      * @param <T>
      * @param l the {@link net.unbewaff.wicketcrudr.annotations.Lister} from the current method
      * @param labelModelProvider The {@link net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider<T>}
+     * @param type the type of the Object to display
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     @SuppressWarnings("unchecked")
-    public static <T> ILabelProvider<T> getLabelProvider(Lister l, ILabelModelProvider<T> labelModelProvider) {
+    public static <T> ILabelProvider<T> getLabelProvider(Lister l, ILabelModelProvider<T> labelModelProvider, Class<?> type) {
         ILabelProvider<T> provider = null;
-        Display d = l.displayAs();
-        switch (d) {
-            case DEFAULT:
-            case RESOURCE:
-                provider = new SimpleLabelProvider<T>(labelModelProvider);
-                break;
-            case CHECKBOX:
-                provider = (ILabelProvider<T>) new DisabeledCheckboxLabelProvider((ILabelModelProvider<Boolean>) labelModelProvider);
+        if (Iterable.class.isAssignableFrom(type)) {
+        	String prefix = l.innerResourcePrefix();
+        	if (prefix.isEmpty()) {
+        		prefix = type.getName();
+        	}
+        	provider = new IterableLabelProvider(labelModelProvider, LabelModelProviderFactory.getLabelModelProvider(prefix, l.innerType()));
+        } else {
+	        Display d = l.displayAs();
+	        switch (d) {
+	            case DEFAULT:
+	            case RESOURCE:
+	                provider = new SimpleLabelProvider<T>(labelModelProvider);
+	                break;
+	            case CHECKBOX:
+	                provider = (ILabelProvider<T>) new DisabeledCheckboxLabelProvider((ILabelModelProvider<Boolean>) labelModelProvider);
+	        }
         }
         if (provider == null) {
             provider = new SimpleLabelProvider<T>(labelModelProvider);
