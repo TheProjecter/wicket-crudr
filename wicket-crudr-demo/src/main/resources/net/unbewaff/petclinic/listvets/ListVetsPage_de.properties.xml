@@ -4,4 +4,8 @@
 	<entry key="Speciality.radiology">Radiologie</entry>
     <entry key="Speciality.surgery">Chirurgie</entry>
     <entry key="Speciality.dentistry">Zahnmedizin</entry>
+    <entry key="VetWrapper.LastName">Nachname</entry>
+    <entry key="VetWrapper.FirstName">Vorname</entry>
+    <entry key="VetWrapper.Specialities">Fachgebiet(e)</entry>
+
 </properties>

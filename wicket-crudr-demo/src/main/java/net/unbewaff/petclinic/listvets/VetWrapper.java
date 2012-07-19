@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
+import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
@@ -47,7 +48,8 @@ public class VetWrapper implements Serializable {
 		vet.setLastName(lastName);
 	}
 
-	@Lister(innerType=SpecialitiesWrapper.class, innerResourcePrefix="Speciality")
+	@Lister
+	@InnerType(resourcePrefix="Speciality", type=SpecialitiesWrapper.class)
 	public Set<SpecialitiesWrapper> getSpecialities() {
 		Set<SpecialitiesWrapper> list = new HashSet<SpecialitiesWrapper>();
 		for (Specialities speciality : vet.getSpecialities()) {
@@ -61,6 +63,8 @@ public class VetWrapper implements Serializable {
 	}
 
 	public static class SpecialitiesWrapper implements ICrudrDataProvider<Specialities>{
+
+		private static final long serialVersionUID = 1734840726953537324L;
 		private final Specialities speciality;
 
 		public SpecialitiesWrapper(Specialities speciality) {
