@@ -76,7 +76,7 @@ public class FlexibleEditableColumnTest {
     	}});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", l);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -108,7 +108,7 @@ public class FlexibleEditableColumnTest {
         }});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", l);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -140,7 +140,7 @@ public class FlexibleEditableColumnTest {
         }});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", l);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, Boolean.class, "data");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
