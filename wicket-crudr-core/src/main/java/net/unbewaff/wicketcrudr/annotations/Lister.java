@@ -20,7 +20,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Lister {
-    /**
+
+	/**
      * Type of Display in a List.
      * @author David Hendrix (Nicktarix)
      *
@@ -40,6 +41,11 @@ public @interface Lister {
         CHECKBOX;
     }
 
+    /**
+     * Type of inplace editor to use
+     * @author David Hendrix (Nicktarix)
+     *
+     */
     public enum InPlaceEditor implements Serializable {
     	/**
     	 * Don't create an in place editor
@@ -58,6 +64,11 @@ public @interface Lister {
     	 */
     	RAISEDCONTAINER
     }
+
+    /**
+     * defines the way the value is displayed.
+     * @return
+     */
     Display displayAs() default Display.DEFAULT;
     /**
      * Defines the order of display. With Java 7 you'll get inconsistent display sequences even between calls if you don't define this.
@@ -79,9 +90,5 @@ public @interface Lister {
 	 * @return
 	 */
 	boolean escapeModelString() default true;
-
-	Class<?> innerType() default Object.class;
-
-	String innerResourcePrefix() default "";
 
 }

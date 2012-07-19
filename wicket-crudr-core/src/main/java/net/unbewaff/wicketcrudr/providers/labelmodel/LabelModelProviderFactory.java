@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
+import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
@@ -40,8 +41,9 @@ public class LabelModelProviderFactory {
         return provider;
     }
 
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, Class<?> type) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerType innerType) {
     	Method resourceProvider = null;
+    	Class<?> type = innerType.type();
     	for (Method m: type.getMethods()) {
     		if (m.getAnnotation(ResourceKey.class) != null) {
     			logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
@@ -59,7 +61,18 @@ public class LabelModelProviderFactory {
 				logger.error("toString() method of " + type + " can't be found.", e);
 			}
     	}
-		return new StringResourceModelProvider<T>(resourceProvider, resourcePrefix);
+    	ILabelModelProvider<T> labelModelProvider;
+    	switch (innerType.displayAs()) {
+    	case LIST:
+    		labelModelProvider = new StringResourceModelProvider<T>(resourceProvider, resourcePrefix);
+    		break;
+    	case CONCATENATED:
+    	default:
+    		labelModelProvider = new ConcatenatedCollectionLabelModelProvider(resourcePrefix, resourceProvider, innerType.separator());
+    		break;
+    	}
+
+		return labelModelProvider;
     }
 
 }

@@ -25,7 +25,7 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 
 	private final int rowsPerPage;
 	private final Class<T> clazz;
-	private String tableCssClass = "ui-widget";
+	private String tableCssClass = "ui-widget ui-corner-all";
 
 	/**
 	 * @param id

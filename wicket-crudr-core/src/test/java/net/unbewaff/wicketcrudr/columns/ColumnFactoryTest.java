@@ -53,7 +53,7 @@ public class ColumnFactoryTest {
     public void testDefaultLister() throws SecurityException, NoSuchMethodException {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         Method method = StringHolder.class.getMethod("getData");
-        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), "Data", StringHolder.class, null, getListProvider());
+        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), null, "Data", StringHolder.class, null, getListProvider());
         assertTrue(column instanceof FlexibleNonEditableColumn);
         FlexibleNonEditableColumn<StringHolder> pc = (FlexibleNonEditableColumn<ColumnFactoryTest.StringHolder>)column;
         assertTrue(pc.getDisplayModel() instanceof StringResourceModel);
@@ -88,7 +88,7 @@ public class ColumnFactoryTest {
     public void testCustomHeader() throws SecurityException, NoSuchMethodException {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         Method method = StringHolder.class.getMethod("getData2");
-        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), "Data2", StringHolder.class, null, getListProvider());
+        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), null, "Data2", StringHolder.class, null, getListProvider());
         assertTrue(column instanceof FlexibleNonEditableColumn);
         cols.add(column);
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
