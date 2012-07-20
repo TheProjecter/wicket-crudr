@@ -30,7 +30,7 @@ public class VetWrapper implements Serializable {
 		vet.setId(id);
 	}
 
-	@Lister(position=2)
+	@Lister(position=2, resourcePrefix="VetWrapper")
 	public String getFirstName() {
 		return vet.getFirstName();
 	}
@@ -39,7 +39,7 @@ public class VetWrapper implements Serializable {
 		vet.setFirstName(firstName);
 	}
 
-	@Lister(position=1)
+	@Lister(position=1, resourcePrefix="VetWrapper")
 	public String getLastName() {
 		return vet.getLastName();
 	}

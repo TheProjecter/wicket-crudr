@@ -26,7 +26,7 @@ public class VetWrapperVariant extends VetWrapper implements Serializable {
 	}
 
 	@Override
-	@Lister
+	@Lister(resourcePrefix="VetWrapper")
 	@InnerType(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
 	public Set<SpecialitiesWrapper> getSpecialities() {
 		return super.getSpecialities();
