@@ -62,15 +62,7 @@ public class LabelModelProviderFactory {
 			}
     	}
     	ILabelModelProvider<T> labelModelProvider;
-    	switch (innerType.displayAs()) {
-    	case LIST:
-    		labelModelProvider = new StringResourceModelProvider<T>(resourceProvider, resourcePrefix);
-    		break;
-    	case CONCATENATED:
-    	default:
-    		labelModelProvider = new ConcatenatedCollectionLabelModelProvider(resourcePrefix, resourceProvider, innerType.separator());
-    		break;
-    	}
+   		labelModelProvider = new StringResourceModelProvider<T>(resourceProvider, resourcePrefix);
 
 		return labelModelProvider;
     }
