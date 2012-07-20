@@ -6,6 +6,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 import java.io.Serializable;
 import java.util.Collection;
 
+import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
@@ -16,18 +17,20 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class IterableLabelProvider<T extends Collection<V>, V> implements Serializable, ILabelProvider<T> {
+public class IterableLabelProvider<T extends Collection<V>, V extends Serializable> implements Serializable, ILabelProvider<T> {
 
 
     private ILabelModelProvider<T> labelModelProvider;
     private ILabelModelProvider<V> innerLabelModelProvider;
+    private InnerType innerType;
 
     /**
      * @param labelModelProvider
      */
-    public IterableLabelProvider(ILabelModelProvider<T> labelModelProvider, ILabelModelProvider<V> innerLabelModelProvider) {
+    public IterableLabelProvider(ILabelModelProvider<T> labelModelProvider, ILabelModelProvider<V> innerLabelModelProvider, InnerType innerType) {
         this.labelModelProvider = labelModelProvider;
         this.innerLabelModelProvider = innerLabelModelProvider;
+        this.innerType = innerType;
     }
 
     /* (non-Javadoc)
@@ -42,8 +45,9 @@ public class IterableLabelProvider<T extends Collection<V>, V> implements Serial
 	 * @see net.unbewaff.wicketcrudr.providers.label.ILabelProvider#newLabel(net.unbewaff.wicketcrudr.components.ILabelFacade, java.lang.String, org.apache.wicket.model.IModel)
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public Component newLabel(ILabelFacade parent, String componentId, IModel<T> model) {
-		return new IterableLabel(componentId, newLabelModel(model), innerLabelModelProvider);
+		return new IterableLabel<T,V>(componentId, (IModel<T>) newLabelModel(model), innerLabelModelProvider, innerType);
 	}
 
 }

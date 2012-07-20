@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<wicket:panel xmlns:wicket="http://wicket.apache.org"><ul style="margin:0px;"><li wicket:id="list" /></ul></wicket:panel>
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<wicket:container wicket:id="body" />
+
+	<wicket:fragment wicket:id="listStyle">
+		<ul style="margin: 0px;">
+			<li wicket:id="list"><wicket:container wicket:id="text"></wicket:container>
+			</li>
+		</ul>
+	</wicket:fragment>
+	<wicket:fragment wicket:id="concatenatedStyle">
+		<wicket:container wicket:id="list">
+			<wicket:container wicket:id="text"></wicket:container><wicket:container wicket:id="separator"></wicket:container>
+		</wicket:container>
+	</wicket:fragment>
+</wicket:panel>

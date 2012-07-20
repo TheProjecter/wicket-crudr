@@ -53,14 +53,7 @@ public class LabelProviderFactory {
         	if (prefix.isEmpty()) {
         		prefix = type.getName();
         	}
-        	switch (innerType.displayAs()) {
-        	case LIST:
-        		provider = new IterableLabelProvider(labelModelProvider, LabelModelProviderFactory.getLabelModelProvider(prefix, innerType));
-        		break;
-        	case CONCATENATED:
-        		provider = new ConcatenatedLabelprovider(labelModelProvider, LabelModelProviderFactory.getLabelModelProvider(prefix, innerType));
-        		break;
-        	}
+       		provider = new IterableLabelProvider(labelModelProvider, LabelModelProviderFactory.getLabelModelProvider(prefix, innerType), innerType);
 
         } else {
 	        Display d = l.displayAs();

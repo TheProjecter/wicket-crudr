@@ -24,8 +24,18 @@ public @interface InnerType {
 	 *
 	 */
 	public enum DisplayType implements Serializable {
-		CONCATENATED,
-		LIST;
+		CONCATENATED("concatenatedStyle"),
+		LIST("listStyle");
+
+		private final String fragmentId;
+
+		private DisplayType(String fragmentId) {
+			this.fragmentId = fragmentId;
+		}
+
+		public String getFragmentId() {
+			return fragmentId;
+		}
 	}
 
 	String resourcePrefix() default "";
