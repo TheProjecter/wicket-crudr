@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
@@ -20,16 +23,18 @@ import org.apache.wicket.model.ResourceModel;
  */
 class StringResourceModelProvider<T> implements Serializable, ILabelModelProvider<T> {
 
-	private Method propertyProvider;
-	private String resourcePrefix;
+
+
 	private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
+	private String resourcePrefix;
+	private InnerType innerType;
 
     /**
-     * @param propertyProvider
      * @param resourcePrefix
+     * @param propertyProvider
      */
-    public StringResourceModelProvider(Method propertyProvider, String resourcePrefix) {
-        this.propertyProvider = propertyProvider;
+    public StringResourceModelProvider(String resourcePrefix, InnerType innerType) {
+    	this.innerType = innerType;
         this.resourcePrefix = resourcePrefix;
     }
 
@@ -42,9 +47,10 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
 		ResourceModel resourceModel = new ResourceModel(resourcePrefix + ".null");
 		if (model != null  && model.getObject() != null) {
+			Method propertyProvider = findResourceProvider(this.innerType);
 			try {
 				String resource = (String)propertyProvider.invoke(model.getObject(), (Object[]) null);
-				resourceModel = new ResourceModel(resourcePrefix + "." + resource, "default");
+				resourceModel = new ResourceModel(resourcePrefix + "." + resource, propertyProvider.invoke(model.getObject(), new Object[]{}).toString());
 			} catch (IllegalArgumentException e) {
 				logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
 						+ " of class " + model.getObject().getClass() + ".\nMethod-signatures may not "
@@ -60,4 +66,30 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 		return resourceModel;
 	}
 
+	/**
+	 * @param innerType
+	 * @return
+	 */
+	private Method findResourceProvider(InnerType innerType) {
+		Method resourceProvider = null;
+		Class<?> type = innerType.type();
+		for (Method m: type.getMethods()) {
+			if (m.getAnnotation(ResourceKey.class) != null) {
+				logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
+				resourceProvider = m;
+			} else {
+				logger.debug(m.getName() + " - " + m.getAnnotation(ResourceKey.class) + " - " + m.isAccessible());
+			}
+		}
+		if (resourceProvider == null) {
+			try {
+				resourceProvider = type.getMethod("toString", (Class<?>[])null);
+			} catch (SecurityException e) {
+				logger.error("toString() method of " + type + " can't be accessed.", e);
+			} catch (NoSuchMethodException e) {
+				logger.error("toString() method of " + type + " can't be found.", e);
+			}
+		}
+		return resourceProvider;
+	}
 }
