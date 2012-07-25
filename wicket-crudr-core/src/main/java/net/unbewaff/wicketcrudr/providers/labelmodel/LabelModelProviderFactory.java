@@ -5,12 +5,12 @@ package net.unbewaff.wicketcrudr.providers.labelmodel;
 
 import java.lang.reflect.Method;
 
-import org.apache.log4j.Logger;
-
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+
+import org.apache.log4j.Logger;
 
 
 /**
@@ -42,27 +42,8 @@ public class LabelModelProviderFactory {
     }
 
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerType innerType) {
-    	Method resourceProvider = null;
-    	Class<?> type = innerType.type();
-    	for (Method m: type.getMethods()) {
-    		if (m.getAnnotation(ResourceKey.class) != null) {
-    			logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
-    			resourceProvider = m;
-    		} else {
-    			logger.debug(m.getName() + " - " + m.getAnnotation(ResourceKey.class) + " - " + m.isAccessible());
-    		}
-    	}
-    	if (resourceProvider == null) {
-    		try {
-				resourceProvider = type.getMethod("toString", (Class<?>[])null);
-			} catch (SecurityException e) {
-				logger.error("toString() method of " + type + " can't be accessed.", e);
-			} catch (NoSuchMethodException e) {
-				logger.error("toString() method of " + type + " can't be found.", e);
-			}
-    	}
     	ILabelModelProvider<T> labelModelProvider;
-   		labelModelProvider = new StringResourceModelProvider<T>(resourceProvider, resourcePrefix);
+   		labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);
 
 		return labelModelProvider;
     }
