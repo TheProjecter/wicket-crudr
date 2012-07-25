@@ -1,6 +1,5 @@
 package net.unbewaff.petclinic;
 
-import net.unbewaff.HomePage;
 import net.unbewaff.petclinic.listvets.ListVetsPage;
 
 import org.apache.wicket.Session;

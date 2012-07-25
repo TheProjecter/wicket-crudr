@@ -7,6 +7,8 @@ import java.util.List;
 
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Veterinarian;
+import net.unbewaff.sourcecode.SourceCodePanel;
+import net.unbewaff.sourcecode.filesystemtree.FileSystemTreePanel;
 import net.unbewaff.wicketcrudr.components.AutoLister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
@@ -47,6 +49,8 @@ public class ListVetsPage extends WebPage {
 		VetVariantListProvider listProvider2 = new VetVariantListProvider(((WebSession)getSession()).getVeterinarians());
 		add(new AutoLister<VetWrapper>("vetsList", Model.of(listProvider), 5, VetWrapper.class));
 		add(new AutoLister<VetWrapperVariant>("vetsList2", Model.of(listProvider2), 5, VetWrapperVariant.class));
+
+		add(new FileSystemTreePanel("source", this.getClass().getClassLoader().getResource("net/unbewaff/petclinic")));
 		super.onInitialize();
 	}
 
