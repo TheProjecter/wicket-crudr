@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author David Hendrix (Nicktarix)
  *
@@ -13,6 +15,7 @@ import java.util.Locale;
 public class Pet implements Serializable {
 
     private static final transient DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
+    private static final transient Logger logger = Logger.getLogger(Pet.class);
     private static final long serialVersionUID = -2551188438430930513L;
     private Integer id;
     private String name;
@@ -32,10 +35,14 @@ public class Pet implements Serializable {
      * @param owner
      * @throws ParseException
      */
-    public Pet(Integer id, String name, String birthDate, Type type, Owner owner) throws ParseException {
+    public Pet(Integer id, String name, String birthDate, Type type, Owner owner) {
         this.id = id;
         this.name = name;
-        this.birthDate = df.parse(birthDate);
+        try {
+        	this.birthDate = df.parse(birthDate);
+        } catch (ParseException e) {
+        	logger.error("Error parsing Date from: " + birthDate, e);
+        }
         this.type = type;
         this.owner = owner;
     }
