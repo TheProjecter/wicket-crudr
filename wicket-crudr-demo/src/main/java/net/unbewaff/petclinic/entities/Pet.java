@@ -1,12 +1,12 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
 
 import org.apache.log4j.Logger;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -14,7 +14,8 @@ import org.apache.log4j.Logger;
  */
 public class Pet implements Serializable {
 
-    private static final transient DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
+    private static final transient DateTimeFormatter df = DateTimeFormat.forPattern("mm/dd/yyyy");
+
     private static final transient Logger logger = Logger.getLogger(Pet.class);
     private static final long serialVersionUID = -2551188438430930513L;
     private Integer id;
@@ -38,11 +39,7 @@ public class Pet implements Serializable {
     public Pet(Integer id, String name, String birthDate, Type type, Owner owner) {
         this.id = id;
         this.name = name;
-        try {
-        	this.birthDate = df.parse(birthDate);
-        } catch (ParseException e) {
-        	logger.error("Error parsing Date from: " + birthDate, e);
-        }
+        this.birthDate = df.parseLocalDate(birthDate).toDate();
         this.type = type;
         this.owner = owner;
     }

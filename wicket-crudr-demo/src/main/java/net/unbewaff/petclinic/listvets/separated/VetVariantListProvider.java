@@ -1,7 +1,7 @@
 /**
  *
  */
-package net.unbewaff.petclinic.listvets;
+package net.unbewaff.petclinic.listvets.separated;
 
 import java.io.Serializable;
 import java.util.ArrayList;

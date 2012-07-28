@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="introText">
+		Dies ist die Demo-Anwendung für das &lt;a href="http://wicket-game.gwassist.de"&gt;Wicket-CRUDr project&lt;/a&gt;.&lt;br /&gt;
+		Zu Demonstrationeszwecken verwende ich hier die &lt;a href="http://static.springsource.org/docs/petclinic.html"&gt;Spring Petclinic project&lt;/a&gt;,
+		die ich erweitern werde um die wachsenden Features von Wicket-CRUDr demonstrieren zu können. Zur Zeit gibt es nur die originalen
+		Use Cases, die schon sowohl in Wicket-CRUDr, as auch in dieser Anwendung implementiert wurden.
+	</entry>
+	<entry key="showVets">Anzeigen einer Liste der Tierärzte und ihrer Fachgebiete</entry>
+	<entry key="showOwner">Anzeigen von Informationen über einen Tierhalter</entry>
+	<entry key="editOwner">Aktualisieren der Informationen über einen Tierhalter</entry>
+	<entry key="addOwner">Anlegen eines neuen Tierhalters im System</entry>
+	<entry key="showPet">Anzeigen von Informationen bezüglich eines Haustieres</entry>
+	<entry key="editPet">Aktualisieren der Informationen über ein Haustier</entry>
+	<entry key="addPet">Anlegen eines neuen Haustieres im System</entry>
+	<entry key="showVisits">Anzeigen der bisherigen Arztbesuche eines Tieres</entry>
+	<entry key="editVisit">Hinzufügen eines neuen Besuchs in die Besuchshistorie eines Tieres</entry>
+	<entry key="useCases">Use Cases</entry>
+	<entry key="businessRules">Business Rules</entry>
+	<entry key="uniqueNamePerOwner">Ein Halter kann nicht mehrere Tiere mit dem gleichen case-insensitiven Namen im System haben.</entry>
+	<entry key="title">Wicket-CRUDr Demo Anwendung</entry>
+	<entry key="vetList1">Liste mit einer HTML Liste für die Fachgebiete</entry>
+	<entry key="vetList2">Liste mit Komma separierten Fachgebieten</entry>
+</properties>

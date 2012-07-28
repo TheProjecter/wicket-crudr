@@ -1,7 +1,5 @@
 package net.unbewaff.petclinic;
 
-import net.unbewaff.petclinic.listvets.ListVetsPage;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -20,7 +18,7 @@ public class WicketApplication extends WebApplication {
 	 */
 	@Override
 	public Class<? extends WebPage> getHomePage() {
-		return ListVetsPage.class;
+		return HomePage.class;
 	}
 
 	/**
@@ -29,7 +27,7 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
-
+		getMarkupSettings().setStripWicketTags(true);
 		// add your configuration here
 	}
 
