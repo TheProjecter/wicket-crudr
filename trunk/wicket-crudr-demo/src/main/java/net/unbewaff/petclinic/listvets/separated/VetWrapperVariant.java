@@ -1,13 +1,13 @@
 /**
  *
  */
-package net.unbewaff.petclinic.listvets;
+package net.unbewaff.petclinic.listvets.separated;
 
 import java.io.Serializable;
 import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Veterinarian;
-import net.unbewaff.petclinic.listvets.VetWrapper.SpecialitiesWrapper;
+import net.unbewaff.petclinic.listvets.VetWrapper;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;

@@ -1,10 +1,11 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -13,7 +14,7 @@ import java.util.Locale;
 public class Visit implements Serializable {
 
     private static final long serialVersionUID = 1118459259952527439L;
-    private static final transient DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.US);
+    private static final transient DateTimeFormatter df = DateTimeFormat.forPattern("mm/dd/yyyy");
     private Integer id;
     private Pet patient;
     private Veterinarian vet;
@@ -32,7 +33,7 @@ public class Visit implements Serializable {
         this.id = id;
         this.patient = patient;
         this.vet = vet;
-        this.date = df.parse(date);
+        this.date = df.parseLocalDate(date).toDate();
         this.treatment = treatment;
     }
 

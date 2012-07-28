@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="introText">
+		This is the demo application to the &lt;a href="http://wicket-game.gwassist.de"&gt;Wicket-CRUDr project&lt;/a&gt;.&lt;br /&gt;
+		For demonstration, I use the &lt;a href="http://static.springsource.org/docs/petclinic.html"&gt;Spring Petclinic project&lt;/a&gt;,
+		which will be extended to show off the growing features of Wicket-CRUDr. For time being, this will show the original use cases
+		that are already implemented (both in Wicket-CRUDr and the demo application).
+	</entry>
+	<entry key="showVets">View a list of veterinarians and their specialties</entry>
+	<entry key="showOwner">View information pertaining to a pet owner</entry>
+	<entry key="editOwner">Update the information pertaining to a pet owner</entry>
+	<entry key="addOwner">Add a new pet owner to the system</entry>
+	<entry key="showPet">View information pertaining to a pet</entry>
+	<entry key="editPet">Update the information pertaining to a pet</entry>
+	<entry key="addPet">Add a new pet to the system</entry>
+	<entry key="showVisits">View information pertaining to a pet's visitation history</entry>
+	<entry key="editVisit">Add information pertaining to a visit to the pet's visitation history</entry>
+	<entry key="useCases">Use Cases</entry>
+	<entry key="businessRules">Business Rules</entry>
+	<entry key="uniqueNamePerOwner">An owner may not have multiple pets with the same case-insensitive name.</entry>
+	<entry key="title">Wicket-CRUDr Demo Application</entry>
+	<entry key="vetList1">List using an HTML list for specialities</entry>
+</properties>

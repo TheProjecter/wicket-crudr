@@ -3,24 +3,19 @@
 	<head>
 		<meta charset="utf-8" />
 		<wicket:head>
-		<script type="text/javascript" src="/js/syntaxhighlighter/scripts/shCore.js" ></script>
-		<script type="text/javascript" src="/js/syntaxhighlighter/scripts/shBrushJava.js" ></script>
-		<script type="text/javascript" src="/js/syntaxhighlighter/scripts/shBrushXml.js" ></script>
-		<script type="text/javascript" src="/js/syntaxhighlighter/scripts/shBrushCss.js" ></script>
-		<script type="text/javascript" src="/js/syntaxhighlighter/scripts/shBrushJScript.js" ></script>
-		<link type="text/css" rel="stylesheet" href="/js/syntaxhighlighter/css/main.css" />
-		<link type="text/css" rel="stylesheet" href="/js/syntaxhighlighter/styles/shCore.css" />
-		<link type="text/css" rel="stylesheet" href="/js/syntaxhighlighter/styles/shThemeDefault.css" />
+		<script type="text/javascript" src="/js/highlight.pack.js" ></script>
+		<link type="text/css" rel="stylesheet" href="/css/styles/idea.css" />
 		</wicket:head>
 	</head>
 	<body>
 	<wicket:panel>
-<pre wicket:id="container">
-<wicket:container wicket:id="code" />
+<pre>
+<code wicket:id="code"></code>
 </pre>
-	<script type="text/javascript">
-     	SyntaxHighlighter.all()
-	</script>
+<script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+</script>
 	</wicket:panel>
 	</body>
 </html>
