@@ -16,7 +16,6 @@ import net.unbewaff.petclinic.listvets.VetWrapper;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Search;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 /**
@@ -39,7 +38,7 @@ public class VetWrapperVariant extends VetWrapper implements Serializable, ICrud
 		return super.getSpecialities();
 	}
 
-	@Search
+	
 	public Map<Integer, String> getSearchMap() {
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		for (VetWrapperVariant vWv : getList()) {
