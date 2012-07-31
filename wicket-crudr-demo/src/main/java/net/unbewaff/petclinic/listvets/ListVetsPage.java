@@ -4,7 +4,7 @@
 package net.unbewaff.petclinic.listvets;
 
 import net.unbewaff.petclinic.WebSession;
-import net.unbewaff.wicketcrudr.components.AutoLister;
+import net.unbewaff.wicketcrudr.AutoLister;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;

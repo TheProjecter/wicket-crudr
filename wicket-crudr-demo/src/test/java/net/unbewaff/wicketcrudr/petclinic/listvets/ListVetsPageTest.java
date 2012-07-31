@@ -5,7 +5,7 @@ package net.unbewaff.wicketcrudr.petclinic.listvets;
 
 import net.unbewaff.petclinic.WicketApplication;
 import net.unbewaff.petclinic.listvets.ListVetsPage;
-import net.unbewaff.wicketcrudr.components.AutoLister;
+import net.unbewaff.wicketcrudr.AutoLister;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;

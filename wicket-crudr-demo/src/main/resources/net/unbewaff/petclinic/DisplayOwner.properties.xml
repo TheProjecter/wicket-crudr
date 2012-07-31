@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectOwner">Please select the owner to display</entry>
+	<entry key="owner">Pet Owner</entry>
+	<entry key="title">View information pertaining to a pet owner</entry>
+	<entry key="showOwner1">Simple scaffolded entity-display</entry>
+</properties>
