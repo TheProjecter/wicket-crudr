@@ -21,4 +21,5 @@
 	<entry key="uniqueNamePerOwner">An owner may not have multiple pets with the same case-insensitive name.</entry>
 	<entry key="title">Wicket-CRUDr Demo Application</entry>
 	<entry key="vetList1">List using an HTML list for specialities</entry>
+	<entry key="showOwner1">Simple scaffolded entity-display</entry>
 </properties>

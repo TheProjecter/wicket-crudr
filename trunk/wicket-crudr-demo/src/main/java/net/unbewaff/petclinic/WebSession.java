@@ -101,4 +101,8 @@ public class WebSession extends org.apache.wicket.protocol.http.WebSession {
 		return veterinarians;
 	}
 
+    public List<Owner> getOwners() {
+    	return owners;
+    }
+
 }

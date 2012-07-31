@@ -1,12 +1,14 @@
 /**
  *
  */
-package net.unbewaff.wicketcrudr.components;
+package net.unbewaff.wicketcrudr;
 
 import java.io.Serializable;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.columns.ColumnFactory;
+import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
+import net.unbewaff.wicketcrudr.components.StyledHeadersToolbar;
 
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
