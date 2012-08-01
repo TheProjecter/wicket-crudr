@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Owner;
+import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.datablocks.DataBlockFactory;
 import net.unbewaff.wicketcrudr.datablocks.IDataBlock;
@@ -48,10 +49,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, new OwnerWrapper(null).getList());
 		ddc.setOutputMarkupId(true);
 		final Set<Component> dynamicData = new HashSet<Component>();
-		final RepeatingView view = new RepeatingView("view");
-		view.setVisible(model.getObject() != null);
-		view.setOutputMarkupId(true);
-		view.setOutputMarkupPlaceholderTag(true);
+		final WebMarkupContainer wmc = new WebMarkupContainer("wmc");
+		wmc.setVisible(model.getObject() != null);
 		ddc.add(new OnChangeAjaxBehavior() {
 
 			private static final long serialVersionUID = 220633626349616188L;
@@ -59,10 +58,10 @@ public class DisplayOwner extends WebPage implements Serializable {
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
 				boolean show = model.getObject() != null;
-				if (show != view.isVisible()) {
-					target.add(view);
+				if (show != wmc.isVisible()) {
+					target.add(wmc);
 				}
-				view.setVisible(show);
+				wmc.setVisible(show);
 
 				for(Component c: dynamicData) {
 					target.add(c);
@@ -70,17 +69,21 @@ public class DisplayOwner extends WebPage implements Serializable {
 			}
 		});
 		add(ddc);
+		final RepeatingView view = new RepeatingView("view");
 		List<IDataBlock<OwnerWrapper>> list = DataBlockFactory.getColumns(OwnerWrapper.class);
 		for (IDataBlock<OwnerWrapper> block: list) {
-			WebMarkupContainer wmc = new WebMarkupContainer(view.newChildId());
-			view.add(wmc);
-			wmc.add(block.getHeader("header", model));
+			WebMarkupContainer innerWmc = new WebMarkupContainer(view.newChildId());
+			view.add(innerWmc);
+			innerWmc.add(block.getHeader("header", model));
 			Component label = block.getLabel("label", model);
 			label.setOutputMarkupId(true);
 			dynamicData.add(label);
-			wmc.add(label);
+			innerWmc.add(label);
 		}
-		add(view);
+		wmc.add(view);
+		add(wmc);
+		wmc.setOutputMarkupId(true);
+		wmc.setOutputMarkupPlaceholderTag(true);
 		super.onInitialize();
 	}
 
@@ -120,6 +123,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners First Name
 		 */
+		@Lister(position = 2)
 		public String getFirstName() {
 			return data.getFirstName();
 		}
@@ -135,6 +139,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners Last Name
 		 */
+		@Lister(position = 1)
 		public String getLastName() {
 			return data.getLastName();
 		}
@@ -151,6 +156,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners address
 		 */
+		@Lister(position = 3)
 		public String getAddress() {
 			return data.getAddress();
 		}
@@ -166,6 +172,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners city
 		 */
+		@Lister(position = 4)
 		public String getCity() {
 			return data.getCity();
 		}
@@ -181,6 +188,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners phone number
 		 */
+		@Lister(position = 5)
 		public String getPhone() {
 			return data.getPhone();
 		}
@@ -214,6 +222,10 @@ public class DisplayOwner extends WebPage implements Serializable {
 				owners.add(new OwnerWrapper(o));
 			}
 			return owners;
+		}
+		
+		public String toString() {
+			return getLastName() + " " + getFirstName();
 		}
 	}
 
