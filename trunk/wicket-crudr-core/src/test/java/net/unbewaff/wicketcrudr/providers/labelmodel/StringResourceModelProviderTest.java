@@ -5,6 +5,7 @@ package net.unbewaff.wicketcrudr.providers.labelmodel;
 
 import java.io.Serializable;
 
+import net.unbewaff.WicketApplication;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 
@@ -16,6 +17,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -38,15 +40,13 @@ public class StringResourceModelProviderTest {
     	}});
 		StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("", innerType);
 		ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
-		tester.startComponent(new Label("test", result));
-		tester.getLastRenderedPage();
-		tester.debugComponentTrees();
-		tester.assertLabel("test", "I am the Id.");
+		Label label = (Label)tester.startComponent(new Label("test", result));
+		assertEquals("I am the Id.", (String)label.getDefaultModelObject());
 	}
 
 	@Test
 	public void testWithIdWithResource() {
-		WicketTester tester = new WicketTester();
+		WicketTester tester = new WicketTester(new WicketApplication());
 		Mockery mockery = new Mockery();
 		final InnerType innerType = mockery.mock(InnerType.class);
     	mockery.checking(new Expectations() {{
@@ -54,11 +54,26 @@ public class StringResourceModelProviderTest {
     	}});
 		StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("prefix", innerType);
 		ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
-		tester.startComponent(new Label("test", result));
-		tester.assertLabel("test", "prefix.I am the Id.");
+		Label label = (Label)tester.startComponent(new Label("test", result));
+		assertEquals("I am the Id resource.", (String)label.getDefaultModelObject());
 	}
 
-	private class TestType {
+	@Test
+	public void testPlainEntity() {
+		WicketTester tester = new WicketTester(new WicketApplication());
+		Mockery mockery = new Mockery();
+		final InnerType innerType = mockery.mock(InnerType.class);
+    	mockery.checking(new Expectations() {{
+    		allowing(innerType).type(); will(returnValue(TestType.class));
+    	}});
+		StringResourceModelProvider<TestType> provider = new StringResourceModelProvider<TestType>("", innerType);
+		ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<TestType>(new TestType()));
+		Label label = (Label)tester.startComponent(new Label("test", result));
+		assertEquals("I am the string representation.", (String)label.getDefaultModelObject());
+
+	}
+
+	private class TestType implements Serializable {
 
 		public String getId() {
 			return "I am the Id.";

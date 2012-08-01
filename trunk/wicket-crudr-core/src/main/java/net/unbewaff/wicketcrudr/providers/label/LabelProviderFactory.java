@@ -48,7 +48,7 @@ public class LabelProviderFactory {
     @SuppressWarnings("unchecked")
     public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerType innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type) {
         ILabelProvider<T> provider = null;
-        if (Iterable.class.isAssignableFrom(type)) {
+        if (type != null && Iterable.class.isAssignableFrom(type)) {
         	String prefix = innerType.resourcePrefix();
         	if (prefix.isEmpty()) {
         		prefix = type.getName();
