@@ -6,4 +6,9 @@
 	<entry key="owner">Pet Owner</entry>
 	<entry key="title">View information pertaining to a pet owner</entry>
 	<entry key="showOwner1">Simple scaffolded entity-display</entry>
+    <entry key="OwnerWrapper.LastName">Last Name</entry>
+    <entry key="OwnerWrapper.FirstName">First Name</entry>
+    <entry key="OwnerWrapper.Address">Address</entry>
+    <entry key="OwnerWrapper.City">City</entry>
+    <entry key="OwnerWrapper.Phone">Phone</entry>
 </properties>
