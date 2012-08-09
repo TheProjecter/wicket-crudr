@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Owner;
+import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.datablocks.DataBlockFactory;
@@ -48,45 +49,23 @@ public class DisplayOwner extends WebPage implements Serializable {
 	protected void onInitialize() {
 		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, new OwnerWrapper(null).getList());
 		ddc.setOutputMarkupId(true);
-		final Set<Component> dynamicData = new HashSet<Component>();
-		final WebMarkupContainer wmc = new WebMarkupContainer("wmc");
-		wmc.setVisible(model.getObject() != null);
+		final Component wmc = new AutoDisplay<OwnerWrapper>("wmc", model, OwnerWrapper.class);
 		ddc.add(new OnChangeAjaxBehavior() {
-
+			
 			private static final long serialVersionUID = 220633626349616188L;
-
+			
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
 				boolean show = model.getObject() != null;
-				if (show != wmc.isVisible()) {
-					target.add(wmc);
-				}
+				target.add(wmc);
 				wmc.setVisible(show);
 
-				for(Component c: dynamicData) {
-					target.add(c);
-				}
 			}
 		});
 		add(ddc);
-		final RepeatingView view = new RepeatingView("view");
-		List<IDataBlock<OwnerWrapper>> list = DataBlockFactory.getColumns(OwnerWrapper.class);
-		for (IDataBlock<OwnerWrapper> block: list) {
-			WebMarkupContainer innerWmc = new WebMarkupContainer(view.newChildId());
-			view.add(innerWmc);
-			innerWmc.add(block.getHeader("header", model));
-			Component label = block.getLabel("label", model);
-			label.setOutputMarkupId(true);
-			dynamicData.add(label);
-			innerWmc.add(label);
-		}
-		wmc.add(view);
 		add(wmc);
-		wmc.setOutputMarkupId(true);
-		wmc.setOutputMarkupPlaceholderTag(true);
 		super.onInitialize();
 	}
-
 
 	/**
 	 * @author Nicktarix (David Hendrix)
