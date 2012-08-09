@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectOwner">Bitte wählen Sie den anzuzeigenden Tierhalter aus.</entry>
+	<entry key="owner">Tierhalter</entry>
+	<entry key="title">Anzeigen von Informationen bezüglich eines Tierhalters</entry>
+	<entry key="showOwner1">Einfache Entity-Darstellung via Scaffolding</entry>
+	<entry key="OwnerWrapper.LastName">Nachname</entry>
+    <entry key="OwnerWrapper.FirstName">Vorname</entry>
+    <entry key="OwnerWrapper.Address">Adresse</entry>
+    <entry key="OwnerWrapper.City">Stadt</entry>
+    <entry key="OwnerWrapper.Phone">Telefonnummer</entry>
+</properties>
