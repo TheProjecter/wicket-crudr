@@ -4,6 +4,12 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+
+import net.unbewaff.tools.BackLinkEditingSet;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -12,15 +18,26 @@ import java.io.Serializable;
 public class Owner implements Serializable {
 
     private static final long serialVersionUID = 6241124402970129344L;
+    private static final transient Logger logger = Logger.getLogger(Owner.class);
     private Integer id;
     private String firstName;
     private String lastName;
     private String address;
     private String city;
     private String phone;
+    private final Set<Pet> pets;
+    
 
     public Owner() {
-        // intentionally empty
+    	BackLinkEditingSet<Pet, Owner> backLinkEditingSet = null;
+    	try {
+			backLinkEditingSet = new BackLinkEditingSet<Pet, Owner>(new HashSet<Pet>(), Pet.class.getMethod("setOwner", Owner.class), this);
+		} catch (SecurityException e) {
+			logger.error("Swallowed exception: ", e);
+		} catch (NoSuchMethodException e) {
+			logger.error("Swallowed exception: ", e);
+		} 
+		pets = backLinkEditingSet;
     }
 
     /**
@@ -32,6 +49,7 @@ public class Owner implements Serializable {
      * @param phone
      */
     public Owner(Integer id, String firstName, String lastName, String address, String city, String phone) {
+    	this();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -129,5 +147,12 @@ public class Owner implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+	/**
+	 * @return the pets
+	 */
+	public Set<Pet> getPets() {
+		return pets;
+	}
 
 }
