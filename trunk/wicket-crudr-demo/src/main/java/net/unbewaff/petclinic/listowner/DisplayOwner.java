@@ -1,28 +1,27 @@
 /**
  *
  */
-package net.unbewaff.petclinic;
+package net.unbewaff.petclinic.listowner;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Owner;
+import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.wicketcrudr.AutoDisplay;
+import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
-import net.unbewaff.wicketcrudr.datablocks.DataBlockFactory;
-import net.unbewaff.wicketcrudr.datablocks.IDataBlock;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -36,6 +35,7 @@ import org.apache.wicket.model.Model;
  */
 public class DisplayOwner extends WebPage implements Serializable {
 
+	private static final long serialVersionUID = 8992622237513231584L;
 	private IModel<OwnerWrapper> model = new Model<OwnerWrapper>();
 
 	/**
@@ -71,8 +71,9 @@ public class DisplayOwner extends WebPage implements Serializable {
 	 * @author Nicktarix (David Hendrix)
 	 *
 	 */
-	public class OwnerWrapper implements ICrudrListProvider<OwnerWrapper>, Serializable{
+	public class OwnerWrapper implements ICrudrListProvider<OwnerWrapper>, Serializable {
 
+		private static final long serialVersionUID = -5188229327429353036L;
 		private Owner data;
 
 		/**
@@ -206,6 +207,41 @@ public class DisplayOwner extends WebPage implements Serializable {
 		public String toString() {
 			return getLastName() + " " + getFirstName();
 		}
+
+		/**
+		 * @return
+		 * @see net.unbewaff.petclinic.entities.Owner#getPets()
+		 */
+		@Lister(position=6)
+		@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
+		public Set<Pet> getPets() {
+			return data.getPets();
+		}
 	}
 
+	class PetWrapper implements Serializable, ICrudrListProvider<Pet> {
+		
+		private static final long serialVersionUID = 4972449001878482038L;
+		private Pet pet;
+		private Owner owner;
+		
+		public PetWrapper(Pet pet, Owner owner) {
+			this.pet = pet;
+		}
+
+		/**
+		 * @return
+		 * @see net.unbewaff.petclinic.entities.Pet#getName()
+		 */
+		@Lister(position = 1)
+		public String getHumanReadableId() {
+			return pet.getName() + " (" + pet.getType() + ")";
+		}
+
+
+		@Override
+		public List<Pet> getList() {
+			return new ArrayList<Pet>(owner.getPets());
+		}
+	}
 }

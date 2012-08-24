@@ -42,6 +42,9 @@ public class Pet implements Serializable {
         this.birthDate = df.parseLocalDate(birthDate).toDate();
         this.type = type;
         this.owner = owner;
+        if (!owner.getPets().contains(this)) {
+        	owner.getPets().add(this);
+        }
     }
 
     /**
@@ -115,8 +118,47 @@ public class Pet implements Serializable {
      * @param owner
      *            the owner to set
      */
-    public void setOwner(Owner owner) {
+    public boolean setOwner(Owner owner) {
+    	boolean changed = false;
+    	if (this.owner != null) {
+    		changed = this.owner.getPets().remove(this) || changed;
+    	}
         this.owner = owner;
+    	if (this.owner != null) {
+    		changed = owner.getPets().add(this) || changed;
+    	}
+    	return changed;
     }
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pet other = (Pet) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
 }

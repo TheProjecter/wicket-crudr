@@ -1,5 +1,6 @@
 package net.unbewaff.petclinic;
 
+import net.unbewaff.petclinic.listowner.DisplayOwner;
 import net.unbewaff.petclinic.listvets.ListVetsPage;
 
 import org.apache.wicket.markup.html.WebPage;
