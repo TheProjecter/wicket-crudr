@@ -9,9 +9,7 @@ import net.unbewaff.wicketcrudr.components.AjaxEditableLabelContainer;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -33,7 +31,7 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 	 * @see net.unbewaff.wicketcrudr.datablocks.IDataBlock#getLabel(java.lang.String, org.apache.wicket.model.IModel)
 	 */
 	@Override
-	public Component getLabel(String componentId, IModel<T> rowModel) {
+	public Component getValue(String componentId, IModel<T> rowModel) {
 		return new AjaxEditableLabelContainer<T>(componentId, rowModel, configuration);
 	}
 
@@ -42,7 +40,7 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 	 * @see net.unbewaff.wicketcrudr.datablocks.IDataBlock#getHeader(java.lang.String, org.apache.wicket.model.IModel)
 	 */
 	@Override
-	public Component getHeader(String componentId, IModel<T> model) {
+	public Component getLabel(String componentId, IModel<T> model) {
 		return new Label(componentId, headerModel);
 	}
 

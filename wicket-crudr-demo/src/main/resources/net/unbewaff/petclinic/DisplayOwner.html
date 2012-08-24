@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
-	<meta charset="utf-8" />
-	<title><wicket:message key="title" /></title>
-	<link type="text/css" href="/css/sunny/jquery-ui-1.8.22.custom.css" rel="Stylesheet" />
-	<script type="text/javascript" src="jhttps://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+<meta charset="utf-8" />
+<title><wicket:message key="title" /></title>
+<link type="text/css" href="/css/sunny/jquery-ui-1.8.22.custom.css"
+	rel="Stylesheet" />
+<script type="text/javascript"
+	src="jhttps://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
 </head>
 <body>
-	<div class="ui-widget" style="width:80%;left:10%">
-	<div class="ui-widget ui-corner-all"><p class="ui-widget-content ui-corner-all"><wicket:message key="owner" /></p></div>
-	<div class="ui-widget"><div class="ui-widget-header"><wicket:message key="selectOwner" /> <select wicket:id="select" /></div>
-	<div wicket:id="wmc" />
-	</div>
+	<style type="text/css">
+		.autoDisplaytable {
+			width: 80%;
+			left: 10%;
+			border: 0;
+		}
+		
+	</style>
+	<div class="ui-widget" style="width: 80%; left: 10%">
+		<div class="ui-widget ui-corner-all">
+			<p class="ui-widget-content ui-corner-all">
+				<wicket:message key="owner" />
+			</p>
+		</div>
+		<div class="ui-widget">
+			<div class="ui-widget-header">
+				<wicket:message key="selectOwner" />
+				<select wicket:id="select" />
+			</div>
+			<div wicket:id="owner" />
+		</div>
 	</div>
 </body>
 </html>

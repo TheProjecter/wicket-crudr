@@ -15,22 +15,22 @@ import org.apache.wicket.util.convert.IConverter;
 public class FlexibleNonEditableDataBlock<T extends Serializable> implements Serializable, IDataBlock<T>, ILabelFacade {
 
     private static final long serialVersionUID = 4158102566457762813L;
-    private final ILabelProvider<T> labelProvider;
-    private final IModel<String> headerProvider;
+    private final ILabelProvider<T> valueProvider;
+    private final IModel<String> labelProvider;
 
     public FlexibleNonEditableDataBlock(IModel<String> headerProvider, ILabelProvider<T> labelProvider) {
-        this.labelProvider = labelProvider;
-        this.headerProvider = headerProvider;
+        this.valueProvider = labelProvider;
+        this.labelProvider = headerProvider;
     }
 
     @Override
-	public Component getHeader(String componentId, IModel<T> model) {
-    	return new Label(componentId, headerProvider);
+	public Component getLabel(String componentId, IModel<T> model) {
+    	return new Label(componentId, labelProvider);
     }
 
     @Override
-	public Component getLabel(String componentId, IModel<T> rowModel) {
-        return labelProvider.newLabel(this, componentId, rowModel);
+	public Component getValue(String componentId, IModel<T> rowModel) {
+        return valueProvider.newLabel(this, componentId, rowModel);
     }
 
     public <C> IConverter<C> getConverter(Class<C> type) {
@@ -41,8 +41,8 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
         return null;
     }
 
-    public ILabelProvider<T> getLabelProvider() {
-        return labelProvider;
+    public ILabelProvider<T> getValueProvider() {
+        return valueProvider;
     }
 
 	/* (non-Javadoc)

@@ -24,12 +24,12 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
     }
 
     @Override
-	public Component getHeader(String componentId, IModel<T> model) {
+	public Component getLabel(String componentId, IModel<T> model) {
     	return new Label(componentId, headerProvider);
     }
 
     @Override
-	public Component getLabel(String componentId, IModel<T> rowModel) {
+	public Component getValue(String componentId, IModel<T> rowModel) {
         return labelProvider.newLabel(this, componentId, rowModel);
     }
 
@@ -41,7 +41,7 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
         return null;
     }
 
-    public ILabelProvider<T> getLabelProvider() {
+    public ILabelProvider<T> getValueProvider() {
         return labelProvider;
     }
 

@@ -14,8 +14,8 @@ import org.apache.wicket.model.IModel;
  */
 public interface IDataBlock<T extends Serializable> {
 
-	public abstract Component getLabel(String componentId, IModel<T> rowModel);
+	public abstract Component getValue(String componentId, IModel<T> rowModel);
 
-	public abstract Component getHeader(String componentId, IModel<T> model);
+	public abstract Component getLabel(String componentId, IModel<T> model);
 
 }
