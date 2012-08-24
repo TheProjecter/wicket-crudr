@@ -49,7 +49,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 	protected void onInitialize() {
 		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, new OwnerWrapper(null).getList());
 		ddc.setOutputMarkupId(true);
-		final Component wmc = new AutoDisplay<OwnerWrapper>("wmc", model, OwnerWrapper.class);
+		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", model, OwnerWrapper.class);
 		ddc.add(new OnChangeAjaxBehavior() {
 			
 			private static final long serialVersionUID = 220633626349616188L;

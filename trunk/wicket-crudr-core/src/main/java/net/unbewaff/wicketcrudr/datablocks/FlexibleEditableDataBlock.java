@@ -22,18 +22,18 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 
 	private static final long serialVersionUID = -5616560586558642852L;
 	private final ContainerConfiguration<T> configuration;
-	private final IModel<String> headerModel;
+	private final IModel<String> labelModel;
 
 	public FlexibleEditableDataBlock(IModel<String> displayModel, ContainerConfiguration<T> conf) {
 		configuration = conf;
-		this.headerModel = displayModel;
+		this.labelModel = displayModel;
 	}
 
 	/* (non-Javadoc)
 	 * @see net.unbewaff.wicketcrudr.datablocks.IDataBlock#getLabel(java.lang.String, org.apache.wicket.model.IModel)
 	 */
 	@Override
-	public Component getLabel(String componentId, IModel<T> rowModel) {
+	public Component getValue(String componentId, IModel<T> rowModel) {
 		return new AjaxEditableLabelContainer<T>(componentId, rowModel, configuration);
 	}
 
@@ -42,8 +42,8 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 	 * @see net.unbewaff.wicketcrudr.datablocks.IDataBlock#getHeader(java.lang.String, org.apache.wicket.model.IModel)
 	 */
 	@Override
-	public Component getHeader(String componentId, IModel<T> model) {
-		return new Label(componentId, headerModel);
+	public Component getLabel(String componentId, IModel<T> model) {
+		return new Label(componentId, labelModel);
 	}
 
 }

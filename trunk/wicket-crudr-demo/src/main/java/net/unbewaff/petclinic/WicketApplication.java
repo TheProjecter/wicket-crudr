@@ -27,6 +27,7 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+		getResourceSettings().setResourcePollFrequency(null);
 		getMarkupSettings().setStripWicketTags(true);
 		// add your configuration here
 	}
@@ -39,4 +40,6 @@ public class WicketApplication extends WebApplication {
 	public Session newSession(Request request, Response response) {
 		return new WebSession(request);
 	}
+	
+	
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title><wicket:message key="title" /></title>
+</head>
+<body>
+	<wicket:border>
+		<table wicket:id="table">
+			<tbody>
+				<wicket:body />
+			</tbody>
+		</table>
+		<wicket:fragment wicket:id="tableCellsFragment">
+			<wicket:container wicket:id="fragmentContainer">
+				<tr>
+					<td wicket:id="label" />
+					<td wicket:id="value" />
+				</tr>
+			</wicket:container>
+		</wicket:fragment>
+	</wicket:border>
+</body>
+</html>
