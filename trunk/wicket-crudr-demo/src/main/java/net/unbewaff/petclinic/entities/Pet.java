@@ -118,16 +118,8 @@ public class Pet implements Serializable {
      * @param owner
      *            the owner to set
      */
-    public boolean setOwner(Owner owner) {
-    	boolean changed = false;
-    	if (this.owner != null) {
-    		changed = this.owner.getPets().remove(this) || changed;
-    	}
+    public void setOwner(Owner owner) {
         this.owner = owner;
-    	if (this.owner != null) {
-    		changed = owner.getPets().add(this) || changed;
-    	}
-    	return changed;
     }
 
 	/* (non-Javadoc)

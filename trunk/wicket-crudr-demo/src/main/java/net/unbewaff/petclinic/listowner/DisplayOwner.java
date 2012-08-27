@@ -15,6 +15,7 @@ import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.Component;
@@ -103,7 +104,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners First Name
 		 */
-		@Lister(position = 2)
+		@Lister
+		@Position(2)
 		public String getFirstName() {
 			return data.getFirstName();
 		}
@@ -119,7 +121,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners Last Name
 		 */
-		@Lister(position = 1)
+		@Lister
+		@Position(1)
 		public String getLastName() {
 			return data.getLastName();
 		}
@@ -136,7 +139,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners address
 		 */
-		@Lister(position = 3)
+		@Lister
+		@Position(3)
 		public String getAddress() {
 			return data.getAddress();
 		}
@@ -152,7 +156,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners city
 		 */
-		@Lister(position = 4)
+		@Lister
+		@Position(4)
 		public String getCity() {
 			return data.getCity();
 		}
@@ -168,7 +173,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		/**
 		 * @return the owners phone number
 		 */
-		@Lister(position = 5)
+		@Lister
+		@Position(5)
 		public String getPhone() {
 			return data.getPhone();
 		}
@@ -212,7 +218,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @return
 		 * @see net.unbewaff.petclinic.entities.Owner#getPets()
 		 */
-		@Lister(position=6)
+		@Lister
+		@Position(6)
 		@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
 		public Set<Pet> getPets() {
 			return data.getPets();
@@ -233,7 +240,8 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @return
 		 * @see net.unbewaff.petclinic.entities.Pet#getName()
 		 */
-		@Lister(position = 1)
+		@Lister
+		@Position(1)
 		public String getHumanReadableId() {
 			return pet.getName() + " (" + pet.getType() + ")";
 		}

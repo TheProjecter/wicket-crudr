@@ -12,10 +12,6 @@ import java.lang.annotation.Target;
  * @author David Hendrix (Nicktarix)
  *
  */
-/**
- * @author David Hendrix (Nicktarix)
- *
- */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
@@ -70,11 +66,7 @@ public @interface Lister {
      * @return
      */
     Display displayAs() default Display.DEFAULT;
-    /**
-     * Defines the order of display. With Java 7 you'll get inconsistent display sequences even between calls if you don't define this.
-     * @return
-     */
-    int position() default -1;
+
 	/**
 	 * A resource-prefix used to define the resource loaded for displaying the header and values as [resourcePrefix].[propertyname] for headers and [resourcePrefix].[propertyvalue] for data. If you don't define this, the className will be used.
 	 * @return
