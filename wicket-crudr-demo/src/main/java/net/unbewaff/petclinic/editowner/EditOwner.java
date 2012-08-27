@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -28,7 +29,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public class EditOwner extends WebPage {
 	
-	private IModel<OwnerEditWrapper> model;
+	private IModel<OwnerEditWrapper> model = new Model<OwnerEditWrapper>();
 
 	/**
 	 * 
@@ -55,8 +56,8 @@ public class EditOwner extends WebPage {
 
 	protected void onInitialize() {
 		final DropDownChoice<OwnerEditWrapper> ddc = new DropDownChoice<OwnerEditWrapper>("select", model, new OwnerEditWrapper(null).getList());
-		ddc.setOutputMarkupId(true);
 		final Component wmc = new AutoDisplay<OwnerEditWrapper>("owner", model, OwnerEditWrapper.class);
+		ddc.setOutputMarkupId(true);
 		ddc.add(new OnChangeAjaxBehavior() {
 
 			private static final long serialVersionUID = 220633626349616188L;

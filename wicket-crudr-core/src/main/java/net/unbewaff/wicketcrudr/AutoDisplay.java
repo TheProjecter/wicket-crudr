@@ -42,7 +42,7 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 
 	@Override
 	protected void onInitialize() {
-		this.setVisible(model.getObject() != null);
+		this.setVisible(model != null && model.getObject() != null);
 		StyleableBorder border = new TableBorder("border", getBorderCss());
 		WebMarkupContainer webMarkupContainer = new WebMarkupContainer("table");
 		webMarkupContainer.add(new AttributeAppender("class", getBorderCss()));

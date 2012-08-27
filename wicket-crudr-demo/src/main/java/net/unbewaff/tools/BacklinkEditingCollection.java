@@ -86,9 +86,8 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	 * @see java.util.Collection#add(java.lang.Object)
 	 */
 	public boolean add(T e) {
-		Boolean changed = false;
 		try {
-			changed = (Boolean) backLinkSetter.invoke(e, parent);
+			backLinkSetter.invoke(e, parent);
 		} catch (IllegalArgumentException e1) {
 			logger.error("Swallowed exception: ", e1);
 		} catch (IllegalAccessException e1) {
@@ -96,7 +95,7 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 		} catch (InvocationTargetException e1) {
 			logger.error("Swallowed exception: ", e1);
 		}
-		return changed;
+		return data.add(e);
 	}
 
 	/**
@@ -105,9 +104,8 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	 * @see java.util.Collection#remove(java.lang.Object)
 	 */
 	public boolean remove(Object o) {
-		Boolean changed = false;
 		try {
-			changed = (Boolean) backLinkSetter.invoke(o, (T)null);
+			backLinkSetter.invoke(o, (T)null);
 		} catch (IllegalArgumentException e1) {
 			logger.error("Swallowed exception: ", e1);
 		} catch (IllegalAccessException e1) {
@@ -115,7 +113,7 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 		} catch (InvocationTargetException e1) {
 			logger.error("Swallowed exception: ", e1);
 		}
-		return changed;
+		return data.remove(o);
 	}
 
 	/**
@@ -133,6 +131,17 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	 * @see java.util.Collection#addAll(java.util.Collection)
 	 */
 	public boolean addAll(Collection<? extends T> c) {
+		for (T o: c) {
+			try {
+				backLinkSetter.invoke(o, parent);
+			} catch (IllegalAccessException e) {
+				logger.error("Swallowed exception: ", e);
+			} catch (IllegalArgumentException e) {
+				logger.error("Swallowed exception: ", e);
+			} catch (InvocationTargetException e) {
+				logger.error("Swallowed exception: ", e);
+			}
+		}
 		return data.addAll(c);
 	}
 

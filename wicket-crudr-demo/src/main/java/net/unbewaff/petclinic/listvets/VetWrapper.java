@@ -10,6 +10,7 @@ import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 
@@ -30,7 +31,8 @@ public class VetWrapper implements Serializable {
 		vet.setId(id);
 	}
 
-	@Lister(position=2, resourcePrefix="VetWrapper")
+	@Lister(resourcePrefix="VetWrapper")
+	@Position(2)
 	public String getFirstName() {
 		return vet.getFirstName();
 	}
@@ -39,7 +41,8 @@ public class VetWrapper implements Serializable {
 		vet.setFirstName(firstName);
 	}
 
-	@Lister(position=1, resourcePrefix="VetWrapper")
+	@Lister(resourcePrefix="VetWrapper")
+	@Position(1)
 	public String getLastName() {
 		return vet.getLastName();
 	}

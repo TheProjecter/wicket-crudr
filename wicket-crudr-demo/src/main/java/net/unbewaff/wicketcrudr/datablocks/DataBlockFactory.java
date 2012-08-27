@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
@@ -25,6 +24,7 @@ import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
+import net.unbewaff.wicketcrudr.tools.PositionComparator;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;
@@ -132,26 +132,6 @@ public class DataBlockFactory implements Serializable {
 		return columns;
     }
 
-    /**
-     * @author David Hendrix (Nicktarix)
-     *
-     */
-    private static final class PositionComparator implements Comparator<Method> {
-    	@Override
-    	public int compare(Method o1, Method o2) {
-    		Integer p1 = o1.getAnnotation(Lister.class).position();
-    		Integer p2 = o2.getAnnotation(Lister.class).position();
-    		int retVal;
-    		if (p1 == -1) {
-    			retVal = 1;
-    		} else if (p2 == -1) {
-    			retVal = -1;
-    		} else {
-    			retVal = p1.compareTo(p2);
-    		}
-    		return retVal;
-    	}
-    }
 }
 
 
