@@ -34,6 +34,9 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
      * @param propertyProvider
      */
     public StringResourceModelProvider(String resourcePrefix, InnerType innerType) {
+    	if (innerType == null) {
+    		throw new IllegalArgumentException("InnerType may not be null");
+    	}
     	this.innerType = innerType;
         this.resourcePrefix = resourcePrefix;
     }
