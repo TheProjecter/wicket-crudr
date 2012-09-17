@@ -47,7 +47,16 @@ public class DataBlockFactory implements Serializable {
 
     public static <T extends Serializable> IDataBlock<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
         String cleanProperty = getCleanPropertyName(property);
-        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(InnerType.class), cleanProperty, clazz, m.getReturnType(), listProvider);
+        InnerType innerType = m.getAnnotation(InnerType.class);
+        Class<?> returnType = m.getReturnType();
+		if (innerType == null) {
+			if (Serializable.class.isAssignableFrom(returnType)) {
+				innerType = new DefaultInnerType((Class<? extends Serializable>) returnType);
+			} else {
+				throw new IllegalArgumentException("Either the innerType must be defined or a Serializable returnType is expected. " + returnType.getSimpleName() + " has neither.");
+			}
+        }
+		return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), innerType, cleanProperty, clazz, returnType, listProvider);
     }
 
     public static <T extends Serializable> IDataBlock<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {

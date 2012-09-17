@@ -3,8 +3,8 @@
  */
 package net.unbewaff.tools;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -17,16 +17,16 @@ import org.apache.log4j.Logger;
 public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	
 	private Collection<T> data;
-	private Method backLinkSetter;
+	private Field backLink;
 	private V parent;
 	private transient final static Logger logger = Logger.getLogger(BacklinkEditingCollection.class);
 
 	/**
 	 * 
 	 */
-	public BacklinkEditingCollection(Collection<T> data, Method backlinkSetter, V parent) {
+	public BacklinkEditingCollection(Collection<T> data, Field backlinkSetter, V parent) {
 		this.data = data;
-		this.backLinkSetter = backlinkSetter;
+		this.backLink = backlinkSetter;
 		this.parent = parent;
 	}
 
@@ -87,12 +87,10 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	 */
 	public boolean add(T e) {
 		try {
-			backLinkSetter.invoke(e, parent);
+			backLink.set(e, parent);
 		} catch (IllegalArgumentException e1) {
 			logger.error("Swallowed exception: ", e1);
 		} catch (IllegalAccessException e1) {
-			logger.error("Swallowed exception: ", e1);
-		} catch (InvocationTargetException e1) {
 			logger.error("Swallowed exception: ", e1);
 		}
 		return data.add(e);
@@ -105,12 +103,10 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	 */
 	public boolean remove(Object o) {
 		try {
-			backLinkSetter.invoke(o, (T)null);
+			backLink.set(o, null);
 		} catch (IllegalArgumentException e1) {
 			logger.error("Swallowed exception: ", e1);
 		} catch (IllegalAccessException e1) {
-			logger.error("Swallowed exception: ", e1);
-		} catch (InvocationTargetException e1) {
 			logger.error("Swallowed exception: ", e1);
 		}
 		return data.remove(o);
@@ -133,12 +129,10 @@ public class BacklinkEditingCollection<T, V> implements Collection<T> {
 	public boolean addAll(Collection<? extends T> c) {
 		for (T o: c) {
 			try {
-				backLinkSetter.invoke(o, parent);
+				backLink.set(o, parent);
 			} catch (IllegalAccessException e) {
 				logger.error("Swallowed exception: ", e);
 			} catch (IllegalArgumentException e) {
-				logger.error("Swallowed exception: ", e);
-			} catch (InvocationTargetException e) {
 				logger.error("Swallowed exception: ", e);
 			}
 		}

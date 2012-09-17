@@ -119,6 +119,7 @@ public class AutoDisplayTest {
 
 		@Editor
 		@Position(2)
+		@Lister
 		public String getString() {
 			return data.getString();
 		}
@@ -129,6 +130,7 @@ public class AutoDisplayTest {
 
 		@Editor
 		@Position(1)
+		@Lister
 		public String getOtherString() {
 			return data.getOtherString();
 		}

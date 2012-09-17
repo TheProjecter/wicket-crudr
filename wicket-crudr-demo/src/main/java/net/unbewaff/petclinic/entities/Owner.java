@@ -4,6 +4,7 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,10 +32,12 @@ public class Owner implements Serializable {
     public Owner() {
     	BackLinkEditingSet<Pet, Owner> backLinkEditingSet = null;
     	try {
-			backLinkEditingSet = new BackLinkEditingSet<Pet, Owner>(new HashSet<Pet>(), Pet.class.getMethod("setOwner", Owner.class), this);
+			Field field = Pet.class.getDeclaredField("owner");
+			field.setAccessible(true);
+			backLinkEditingSet = new BackLinkEditingSet<Pet, Owner>(new HashSet<Pet>(), field, this);
 		} catch (SecurityException e) {
 			logger.error("Swallowed exception: ", e);
-		} catch (NoSuchMethodException e) {
+		} catch (NoSuchFieldException e) {
 			logger.error("Swallowed exception: ", e);
 		} 
 		pets = backLinkEditingSet;

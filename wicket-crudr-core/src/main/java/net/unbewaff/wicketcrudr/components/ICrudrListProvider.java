@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface ICrudrListProvider<T extends Serializable> {
+public interface ICrudrListProvider<T extends Serializable> extends Serializable {
 
 	public abstract List<T> getList();
 
