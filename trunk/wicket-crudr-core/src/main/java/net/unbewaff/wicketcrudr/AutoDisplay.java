@@ -40,6 +40,16 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 		this.clazz = clazz;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.Component#onConfigure()
+	 */
+	@Override
+	protected void onConfigure() {
+		setVisible(model != null && model.getObject() != null);
+		setOutputMarkupId(true);
+		setOutputMarkupPlaceholderTag(true);
+		super.onConfigure();
+	}
 	@Override
 	protected void onInitialize() {
 		this.setVisible(model != null && model.getObject() != null);

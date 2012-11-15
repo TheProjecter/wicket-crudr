@@ -109,11 +109,13 @@ public class IterableLabel<T extends Iterable<V>, V extends Serializable> extend
 			RepeatingView list = new RepeatingView("list");
 			add(list);
 			Label separatorLabel = null;
-			for (V item : model.getObject()) {
-				WebMarkupContainer container = new WebMarkupContainer(list.newChildId());
-				separatorLabel = addSeparator(container);
-				container.add(new Label("text", labelModelProvider.newLabelModel(Model.of(item))));
-				list.add(container);
+			if (model != null && model.getObject() != null) {
+				for (V item : model.getObject()) {
+					WebMarkupContainer container = new WebMarkupContainer(list.newChildId());
+					separatorLabel = addSeparator(container);
+					container.add(new Label("text", labelModelProvider.newLabelModel(Model.of(item))));
+					list.add(container);
+				}
 			}
 			if (separatorLabel != null) {
 				separatorLabel.setVisible(false);

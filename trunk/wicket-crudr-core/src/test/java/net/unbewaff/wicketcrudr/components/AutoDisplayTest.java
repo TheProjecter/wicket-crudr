@@ -29,7 +29,6 @@ public class AutoDisplayTest {
 		IModel<StringHolderDisplayWrapper> model = Model.of(new StringHolderDisplayWrapper(new StringHolder("first", "second")));
 		Component c = new AutoDisplay<StringHolderDisplayWrapper>("id", model, StringHolderDisplayWrapper.class);
 		tester.startComponentInPage(c);
-		tester.debugComponentTrees();
 		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
 		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
 		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
@@ -41,7 +40,6 @@ public class AutoDisplayTest {
 		IModel<StringHolderEditWrapper> model = Model.of(new StringHolderEditWrapper(new StringHolder("first", "second")));
 		Component c = new AutoDisplay<StringHolderEditWrapper>("id", model, StringHolderEditWrapper.class);
 		tester.startComponentInPage(c);
-		tester.debugComponentTrees();
 		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
 		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
 		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
