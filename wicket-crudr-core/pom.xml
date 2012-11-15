@@ -18,6 +18,13 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>staging</id>
+			<name>staging repository</name>
+			<url>file://c:/repo</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<developers>
 		<developer>
 			<id>Nicktarix</id>
@@ -86,6 +93,11 @@
 			<artifactId>jetty-all-server</artifactId>
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.1</version>
 		</dependency>
 	</dependencies>
 	<build>

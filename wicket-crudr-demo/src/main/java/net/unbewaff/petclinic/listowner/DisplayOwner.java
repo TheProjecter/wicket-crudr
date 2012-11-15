@@ -46,6 +46,10 @@ public class DisplayOwner extends WebPage implements Serializable {
 		super();
 	}
 
+	public DisplayOwner(Owner o) {
+		model = new Model(new OwnerWrapper(o));
+	}
+
 	@Override
 	protected void onInitialize() {
 		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, new OwnerWrapper(null).getList());

@@ -71,6 +71,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
+		<dependency>
+			<groupId>net.unbewaff</groupId>
+			<artifactId>wicket-crudr-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
 		<!-- JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
@@ -170,6 +175,16 @@
 
 	<repositories>
 		<repository>
+			<id>staging</id>
+			<url>file://c:/repo/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+<!-- 		<repository>
 			<id>Apache Nexus</id>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
 			<releases>
@@ -178,7 +193,7 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
+		</repository>  -->
 	</repositories>
 
 </project>

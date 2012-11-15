@@ -33,7 +33,7 @@ public class EditOwner extends WebPage {
 	}
 
 	protected void onInitialize() {
-		final DropDownChoice<OwnerEditWrapper> ddc = new DropDownChoice<OwnerEditWrapper>("select", model, new OwnerEditWrapper(null).getList());
+		final DropDownChoice<OwnerEditWrapper> ddc = new DropDownChoice<OwnerEditWrapper>("select", model, model.getObject().getList());
 		final Component wmc = new AutoDisplay<OwnerEditWrapper>("owner", model, OwnerEditWrapper.class);
 		ddc.setOutputMarkupId(true);
 		ddc.add(new OnChangeAjaxBehavior() {
