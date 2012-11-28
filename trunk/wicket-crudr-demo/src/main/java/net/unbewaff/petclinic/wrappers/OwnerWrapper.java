@@ -1,14 +1,19 @@
 package net.unbewaff.petclinic.wrappers;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.lang.reflect.Constructor;
+import java.util.Collections;
+import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
+import net.unbewaff.tools.WrappingList;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Nicktarix (David Hendrix)
@@ -17,7 +22,8 @@ import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 public class OwnerWrapper implements Serializable {
 
 	private static final long serialVersionUID = -5188229327429353036L;
-	private Owner data;
+	private Owner owner;
+	private static final transient Logger logger = Logger.getLogger(OwnerWrapper.class);
 
 	/**
 	 * Initializes a wrapper
@@ -25,14 +31,14 @@ public class OwnerWrapper implements Serializable {
 	 * @param data
 	 */
 	public OwnerWrapper(Owner data) {
-		this.data = data;
+		this.owner = data;
 	}
 
 	/**
 	 * @return the owners id
 	 */
 	public Integer getId() {
-		return data.getId();
+		return owner.getId();
 	}
 
 	/**
@@ -40,7 +46,7 @@ public class OwnerWrapper implements Serializable {
 	 * @param id
 	 */
 	public void setId(Integer id) {
-		data.setId(id);
+		owner.setId(id);
 	}
 
 	/**
@@ -49,7 +55,7 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(2)
 	public String getFirstName() {
-		return data.getFirstName();
+		return owner.getFirstName();
 	}
 
 	/**
@@ -57,7 +63,7 @@ public class OwnerWrapper implements Serializable {
 	 * @param firstName
 	 */
 	public void setFirstName(String firstName) {
-		data.setFirstName(firstName);
+		owner.setFirstName(firstName);
 	}
 
 	/**
@@ -66,7 +72,7 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(1)
 	public String getLastName() {
-		return data.getLastName();
+		return owner.getLastName();
 	}
 
 
@@ -75,7 +81,7 @@ public class OwnerWrapper implements Serializable {
 	 * @param lastName
 	 */
 	public void setLastName(String lastName) {
-		data.setLastName(lastName);
+		owner.setLastName(lastName);
 	}
 
 	/**
@@ -84,7 +90,7 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(3)
 	public String getAddress() {
-		return data.getAddress();
+		return owner.getAddress();
 	}
 
 	/**
@@ -92,7 +98,7 @@ public class OwnerWrapper implements Serializable {
 	 * @param address
 	 */
 	public void setAddress(String address) {
-		data.setAddress(address);
+		owner.setAddress(address);
 	}
 
 	/**
@@ -101,7 +107,7 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(4)
 	public String getCity() {
-		return data.getCity();
+		return owner.getCity();
 	}
 
 	/**
@@ -109,7 +115,7 @@ public class OwnerWrapper implements Serializable {
 	 * @param city
 	 */
 	public void setCity(String city) {
-		data.setCity(city);
+		owner.setCity(city);
 	}
 
 	/**
@@ -118,7 +124,7 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(5)
 	public String getPhone() {
-		return data.getPhone();
+		return owner.getPhone();
 	}
 
 	/**
@@ -126,21 +132,21 @@ public class OwnerWrapper implements Serializable {
 	 * @param phone
 	 */
 	public void setPhone(String phone) {
-		data.setPhone(phone);
+		owner.setPhone(phone);
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-		return data.equals(obj);
+		return owner.equals(obj);
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return data.hashCode();
+		return owner.hashCode();
 	}
 
 	public String toString() {
@@ -154,7 +160,20 @@ public class OwnerWrapper implements Serializable {
 	@Lister
 	@Position(6)
 	@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
-	public Set<Pet> getPets() {
-		return data.getPets();
+	public List<PetWrapper> getPets() {
+		Constructor<PetWrapper> constructor = null;
+		try {
+			constructor = PetWrapper.class.getConstructor(Pet.class);
+		} catch (SecurityException e) {
+			logger.error(e);
+		} catch (NoSuchMethodException e) {
+			logger.error(e);
+		}
+		return new WrappingList<PetWrapper, Pet>(constructor) {
+			@Override
+			protected List<Pet> getBaseList() {
+				return owner.getPets();
+			}
+		};
 	}
 }

@@ -4,16 +4,18 @@
 package net.unbewaff.petclinic.listowner;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
+import net.unbewaff.tools.IWrapper;
+import net.unbewaff.tools.WrappingList;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
 
@@ -39,38 +41,39 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 public class DisplayOwner extends WebPage implements Serializable {
 
 	private static final long serialVersionUID = 8992622237513231584L;
-	private IModel<OwnerWrapper> model = new Model<OwnerWrapper>();
 
 	/**
 	 * @param id
 	 */
 	public DisplayOwner() {
-		model.setObject(new OwnerWrapper(((WebSession)getSession()).getOwners().get(1)));
+		super(new Model<OwnerWrapper>());
+		setDefaultModelObject(new OwnerWrapper(((WebSession)getSession()).getOwners().get(1)));
 	}
 
 	public DisplayOwner(Owner o) {
-		model = new Model<OwnerWrapper>(new OwnerWrapper(o));
+		super(new Model<OwnerWrapper>(new OwnerWrapper(o)));
 	}
 	
 	public DisplayOwner(PageParameters params) {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void onInitialize() {
 		List<OwnerWrapper> list = new ArrayList<OwnerWrapper>();
 		for (Owner o: ((WebSession)getSession()).getOwners()) {
 			list.add(new OwnerWrapper(o));
 		}
-		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, list);
+		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", (IModel<OwnerWrapper>) getDefaultModel(), list);
 		ddc.setOutputMarkupId(true);
-		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", model, OwnerWrapper.class);
+		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", (IModel<OwnerWrapper>) getDefaultModelObject(), OwnerWrapper.class);
 		ddc.add(new OnChangeAjaxBehavior() {
 			
 			private static final long serialVersionUID = 220633626349616188L;
 			
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				boolean show = model.getObject() != null;
+				boolean show = getDefaultModel() != null && getDefaultModelObject() != null;
 				target.add(wmc);
 				wmc.setVisible(show);
 
@@ -88,7 +91,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 	public static class OwnerWrapper implements Serializable {
 
 		private static final long serialVersionUID = -5188229327429353036L;
-		private Owner data;
+		private Owner owner;
 		private static final transient Logger logger = Logger.getLogger(OwnerWrapper.class);
 
 		/**
@@ -97,7 +100,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param data
 		 */
 		public OwnerWrapper(Owner data) {
-			this.data = data;
+			this.owner = data;
 			if (!logger.isDebugEnabled()) {
 				logger.error("NO DEBUG");
 				logger.setLevel(Level.DEBUG);
@@ -110,7 +113,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @return the owners id
 		 */
 		public Integer getId() {
-			return data.getId();
+			return owner.getId();
 		}
 
 		/**
@@ -118,7 +121,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param id
 		 */
 		public void setId(Integer id) {
-			data.setId(id);
+			owner.setId(id);
 		}
 
 		/**
@@ -127,7 +130,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Position(2)
 		public String getFirstName() {
-			return data.getFirstName();
+			return owner.getFirstName();
 		}
 
 		/**
@@ -135,7 +138,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param firstName
 		 */
 		public void setFirstName(String firstName) {
-			data.setFirstName(firstName);
+			owner.setFirstName(firstName);
 		}
 
 		/**
@@ -144,7 +147,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Position(1)
 		public String getLastName() {
-			return data.getLastName();
+			return owner.getLastName();
 		}
 
 
@@ -153,7 +156,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param lastName
 		 */
 		public void setLastName(String lastName) {
-			data.setLastName(lastName);
+			owner.setLastName(lastName);
 		}
 
 		/**
@@ -162,7 +165,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Position(3)
 		public String getAddress() {
-			return data.getAddress();
+			return owner.getAddress();
 		}
 
 		/**
@@ -170,7 +173,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param address
 		 */
 		public void setAddress(String address) {
-			data.setAddress(address);
+			owner.setAddress(address);
 		}
 
 		/**
@@ -179,7 +182,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Position(4)
 		public String getCity() {
-			return data.getCity();
+			return owner.getCity();
 		}
 
 		/**
@@ -187,7 +190,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param city
 		 */
 		public void setCity(String city) {
-			data.setCity(city);
+			owner.setCity(city);
 		}
 
 		/**
@@ -196,7 +199,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Position(5)
 		public String getPhone() {
-			return data.getPhone();
+			return owner.getPhone();
 		}
 
 		/**
@@ -204,21 +207,21 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 * @param phone
 		 */
 		public void setPhone(String phone) {
-			data.setPhone(phone);
+			owner.setPhone(phone);
 		}
 
 		/* (non-Javadoc)
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
 		public boolean equals(Object obj) {
-			return data.equals(obj);
+			return owner.equals(obj);
 		}
 
 		/* (non-Javadoc)
 		 * @see java.lang.Object#hashCode()
 		 */
 		public int hashCode() {
-			return data.hashCode();
+			return owner.hashCode();
 		}
 
 		public String toString() {
@@ -231,20 +234,37 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 */
 		@Lister
 		@Position(6)
-		@InnerType(type=Pet.class)
-		public Set<Pet> getPets() {
-			logger.debug("Retrieving " + data.getPets().size() + " pets for " + data.getFirstName() + " " + data.getLastName() + ".");
-			return data.getPets();
+		@InnerType(type=PetWrapper.class)
+		public List<PetWrapper> getPets() {
+			logger.debug("Retrieving " + owner.getPets().size() + " pets for " + owner.getFirstName() + " " + owner.getLastName() + ".");
+			Constructor<PetWrapper> constructor = null;
+			try {
+				constructor = PetWrapper.class.getConstructor(Pet.class);
+			} catch (SecurityException e) {
+				logger.error(e);
+			} catch (NoSuchMethodException e) {
+				logger.error(e);
+			}
+			return new WrappingList<PetWrapper, Pet>(constructor) {
+				@Override
+				protected List<Pet> getBaseList() {
+					return owner.getPets();
+				}
+			};
 		}
 	}
 
-	class PetWrapper implements Serializable {
+	class PetWrapper implements Serializable, IWrapper<Pet> {
 		
 		private static final long serialVersionUID = 4972449001878482038L;
 		private Pet pet;
 		
 		public PetWrapper(Pet pet) {
 			this.pet = pet;
+		}
+		
+		public Pet getObject() {
+			return pet;
 		}
 
 		/**

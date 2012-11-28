@@ -1,22 +1,27 @@
 package net.unbewaff.petclinic.editowner;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
+import net.unbewaff.petclinic.wrappers.PetWrapper;
+import net.unbewaff.tools.WrappingList;
 import net.unbewaff.wicketcrudr.annotations.Editor;
+import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Position;
-import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 public class OwnerEditWrapper implements Serializable {
 	
 	private static final long serialVersionUID = -1310738561110224139L;
 	private Owner owner;
+	private static final transient Logger logger = Logger.getLogger(OwnerEditWrapper.class);
 	
 	public OwnerEditWrapper(Owner owner) {
 		this.owner = owner;
@@ -129,12 +134,25 @@ public class OwnerEditWrapper implements Serializable {
 	 * @return
 	 * @see net.unbewaff.petclinic.entities.Owner#getPets()
 	 */
-	@Editor(editAs=EditorType.PALETTE)
 	@Lister
-	@InnerType(type=Pet.class)
+	@Editor(editAs=EditorType.PALETTE)
+	@InnerType(type=PetWrapper.class)
 	@Position(6)
-	public Set<Pet> getPets() {
-		return owner.getPets();
+	public List<PetWrapper> getPets() {
+		Constructor<PetWrapper> constructor = null;
+		try {
+			constructor = PetWrapper.class.getConstructor(Pet.class);
+		} catch (SecurityException e) {
+			logger.error(e);
+		} catch (NoSuchMethodException e) {
+			logger.error(e);
+		}
+		return new WrappingList<PetWrapper, Pet>(constructor) {
+			@Override
+			protected List<Pet> getBaseList() {
+				return owner.getPets();
+			}
+		};
 	}
 
 	public String toString() {

@@ -28,7 +28,6 @@ import org.apache.wicket.model.Model;
  */
 public class AutoDisplay<T extends Serializable> extends Panel implements Serializable {
 
-	private IModel<T> model;
 	private final Class<T> clazz;
 	private static final transient Logger logger = Logger.getLogger(AutoDisplay.class);
 
@@ -38,7 +37,6 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	 */
 	public AutoDisplay(String id, IModel<T> model, Class<T> clazz) {
 		super(id, model);
-		this.model = model;
 		this.clazz = clazz;
 	}
 
@@ -47,14 +45,17 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	 */
 	@Override
 	protected void onConfigure() {
-		setVisible(model != null && model.getObject() != null);
+		setVisible(getDefaultModelObject() != null);
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 		super.onConfigure();
 	}
+	
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void onInitialize() {
-		this.setVisible(model != null && model.getObject() != null);
+		this.setVisible(getDefaultModelObject() != null);
+		logger.debug("Model Object: " + getDefaultModelObject());
 		StyleableBorder border = new TableBorder("border", getBorderCss());
 		WebMarkupContainer webMarkupContainer = new WebMarkupContainer("table");
 		webMarkupContainer.add(new AttributeAppender("class", getBorderCss()));
@@ -67,8 +68,8 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 			WebMarkupContainer container = new WebMarkupContainer("fragmentContainer");
 			fragment.add(container);
 			view.add(fragment);
-			Component label = block.getLabel("label", model).add(new AttributeAppender("class", Model.of(getLabelCss())));
-			Component value = block.getValue("value", model).add(new AttributeAppender("class", Model.of(getValueCss())));
+			Component label = block.getLabel("label", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of(getLabelCss())));
+			Component value = block.getValue("value", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of(getValueCss())));
 			container.add(label);
 			container.add(value);
 		}
