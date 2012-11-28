@@ -1,14 +1,16 @@
 package net.unbewaff.wicketcrudr.petclinic.listowner;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import net.unbewaff.petclinic.WicketApplication;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.entities.Type;
-import net.unbewaff.petclinic.listowner.DisplayOwner;
+import net.unbewaff.petclinic.wrappers.PetWrapper;
+import net.unbewaff.tools.WrappingList;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -62,9 +64,23 @@ public class ShowPetsTest {
 		}
 
 		@Lister
-		@InnerType(type=Pet.class)
-		public Set<Pet> getPets() {
-			return o.getPets();
+		@InnerType(type=PetWrapper.class)
+		public List<PetWrapper> getPets() {
+			Constructor<PetWrapper> constructor = null;
+			try {
+				constructor = PetWrapper.class.getConstructor(Pet.class);
+			} catch (SecurityException e) {
+				logger.error(e);
+			} catch (NoSuchMethodException e) {
+				logger.error(e);
+			}
+
+			return new WrappingList<PetWrapper, Pet>(constructor) {
+				@Override
+				protected List<Pet> getBaseList() {
+					return o.getPets();
+				}			
+			};
 		}
 		
 	}

@@ -8,19 +8,24 @@ import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
+import net.unbewaff.tools.IWrapper;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 
-public class VetWrapper implements Serializable {
+public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 
+	private static final long serialVersionUID = 911673107682330559L;
 	private final Veterinarian vet;
 
 	public VetWrapper(Veterinarian vet) {
-		super();
 		this.vet = vet;
+	}
+	
+	public Veterinarian getObject() {
+		return vet;
 	}
 
 	public Integer getId() {
@@ -100,6 +105,42 @@ public class VetWrapper implements Serializable {
 		}
 
 
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((vet == null) ? 0 : vet.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		VetWrapper other = (VetWrapper) obj;
+		if (vet == null) {
+			if (other.vet != null) {
+				return false;
+			}
+		} else if (!vet.equals(other.vet)) {
+			return false;
+		}
+		return true;
 	}
 
 }

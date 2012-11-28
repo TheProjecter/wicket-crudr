@@ -1,16 +1,14 @@
 package net.unbewaff.petclinic.wrappers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
+import net.unbewaff.tools.IWrapper;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
-import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
-class PetWrapper implements Serializable, ICrudrListProvider<Pet> {
+public class PetWrapper implements Serializable, IWrapper<Pet> {
 	
 	private static final long serialVersionUID = 4972449001878482038L;
 	private Pet pet;
@@ -30,9 +28,8 @@ class PetWrapper implements Serializable, ICrudrListProvider<Pet> {
 		return pet.getName() + " (" + pet.getType() + ")";
 	}
 
-
 	@Override
-	public List<Pet> getList() {
-		return new ArrayList<Pet>(owner.getPets());
+	public Pet getObject() {
+		return pet;
 	}
 }

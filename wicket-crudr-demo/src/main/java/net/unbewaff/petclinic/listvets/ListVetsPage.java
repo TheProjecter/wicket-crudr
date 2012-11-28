@@ -3,7 +3,8 @@
  */
 package net.unbewaff.petclinic.listvets;
 
-import net.unbewaff.petclinic.WebSession;
+import java.util.List;
+
 import net.unbewaff.wicketcrudr.AutoLister;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -41,8 +42,8 @@ public class ListVetsPage extends WebPage {
 
 	@Override
 	protected void onInitialize() {
-		VetListProvider listProvider = new VetListProvider(((WebSession)getSession()).getVeterinarians());
-		add(new AutoLister<VetWrapper>("vetsList", Model.of(listProvider), 5, VetWrapper.class));
+		VetListProvider listProvider = new VetListProvider();
+		add(new AutoLister<VetWrapper>("vetsList", Model.<List<VetWrapper>>of(listProvider), 5, VetWrapper.class));
 		super.onInitialize();
 	}
 

@@ -4,7 +4,8 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -23,7 +24,7 @@ public class Owner implements Serializable {
     private String address;
     private String city;
     private String phone;
-    private final Set<Pet> pets = new HashSet<Pet>();
+    private final List<Pet> pets = new ArrayList<Pet>();
     
     public Owner() {
     	super();
@@ -140,7 +141,7 @@ public class Owner implements Serializable {
 	/**
 	 * @return the pets
 	 */
-	public Set<Pet> getPets() {
+	public List<Pet> getPets() {
 		return pets;
 	}
 

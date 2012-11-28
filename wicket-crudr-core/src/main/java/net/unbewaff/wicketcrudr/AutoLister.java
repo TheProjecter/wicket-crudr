@@ -42,7 +42,7 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 	 * @param id
 	 * @param model
 	 */
-	public AutoLister(String id, IModel<? extends ICrudrListProvider<T>> model, int rowsPerPage, Class<T> clazz) {
+	public AutoLister(String id, IModel<? extends List<T>> model, int rowsPerPage, Class<T> clazz) {
 		super(id, model);
 		this.rowsPerPage = rowsPerPage;
 		this.clazz = clazz;
