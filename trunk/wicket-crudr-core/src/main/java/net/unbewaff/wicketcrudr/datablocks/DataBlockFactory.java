@@ -83,6 +83,7 @@ public class DataBlockFactory implements Serializable {
         } else {
             dataBlock = new FlexibleNonEditableDataBlock<T>(displayModel, labelProvider);
         }
+        logger.debug("Column created: " + property);
 
         return dataBlock;
     }

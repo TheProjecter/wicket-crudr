@@ -4,9 +4,12 @@
 package net.unbewaff.petclinic.editowner;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -23,6 +26,10 @@ import org.apache.wicket.model.Model;
 public class EditOwner extends WebPage {
 	
 	private IModel<OwnerEditWrapper> model = new Model<OwnerEditWrapper>();
+	
+	public EditOwner() {
+		super();
+	}
 
 	/**
 	 * @param model
@@ -33,7 +40,11 @@ public class EditOwner extends WebPage {
 	}
 
 	protected void onInitialize() {
-		final DropDownChoice<OwnerEditWrapper> ddc = new DropDownChoice<OwnerEditWrapper>("select", model, model.getObject().getList());
+		List<OwnerEditWrapper> list = new ArrayList<OwnerEditWrapper>();
+		for (Owner o: ((WebSession)getSession()).getOwners()) {
+			list.add(new OwnerEditWrapper(o));
+		}
+		final DropDownChoice<OwnerEditWrapper> ddc = new DropDownChoice<OwnerEditWrapper>("select", model, list);
 		final Component wmc = new AutoDisplay<OwnerEditWrapper>("owner", model, OwnerEditWrapper.class);
 		ddc.setOutputMarkupId(true);
 		ddc.add(new OnChangeAjaxBehavior() {

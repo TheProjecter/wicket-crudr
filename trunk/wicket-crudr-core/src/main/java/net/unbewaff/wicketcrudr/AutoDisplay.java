@@ -11,6 +11,7 @@ import net.unbewaff.wicketcrudr.borders.TableBorder;
 import net.unbewaff.wicketcrudr.datablocks.DataBlockFactory;
 import net.unbewaff.wicketcrudr.datablocks.IDataBlock;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -29,6 +30,7 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 
 	private IModel<T> model;
 	private final Class<T> clazz;
+	private static final transient Logger logger = Logger.getLogger(AutoDisplay.class);
 
 	/**
 	 * @param id

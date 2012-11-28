@@ -4,7 +4,7 @@
 package net.unbewaff.wicketcrudr.providers.label;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
@@ -17,7 +17,7 @@ import org.apache.wicket.model.IModel;
  * @author David Hendrix (Nicktarix)
  *
  */
-public class IterableLabelProvider<T extends Collection<V>, V extends Serializable> implements Serializable, ILabelProvider<T> {
+public class IterableLabelProvider<T extends List<V>, V extends Serializable> implements Serializable, ILabelProvider<T> {
 
 
     private ILabelModelProvider<T> labelModelProvider;
