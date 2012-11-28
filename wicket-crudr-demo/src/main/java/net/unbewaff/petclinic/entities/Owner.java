@@ -4,13 +4,10 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-
-import net.unbewaff.tools.BackLinkEditingSet;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -26,22 +23,12 @@ public class Owner implements Serializable {
     private String address;
     private String city;
     private String phone;
-    private final Set<Pet> pets;
+    private final Set<Pet> pets = new HashSet<Pet>();
     
-
     public Owner() {
-    	BackLinkEditingSet<Pet, Owner> backLinkEditingSet = null;
-    	try {
-			Field field = Pet.class.getDeclaredField("owner");
-			field.setAccessible(true);
-			backLinkEditingSet = new BackLinkEditingSet<Pet, Owner>(new HashSet<Pet>(), field, this);
-		} catch (SecurityException e) {
-			logger.error("Swallowed exception: ", e);
-		} catch (NoSuchFieldException e) {
-			logger.error("Swallowed exception: ", e);
-		} 
-		pets = backLinkEditingSet;
+    	super();
     }
+    
 
     /**
      * @param id
@@ -52,7 +39,6 @@ public class Owner implements Serializable {
      * @param phone
      */
     public Owner(Integer id, String firstName, String lastName, String address, String city, String phone) {
-    	this();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

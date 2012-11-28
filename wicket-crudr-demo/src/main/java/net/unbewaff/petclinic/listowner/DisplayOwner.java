@@ -16,8 +16,9 @@ import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
-import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -25,6 +26,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author davidh
@@ -43,16 +45,23 @@ public class DisplayOwner extends WebPage implements Serializable {
 	 * @param id
 	 */
 	public DisplayOwner() {
-		super();
+		model.setObject(new OwnerWrapper(((WebSession)getSession()).getOwners().get(1)));
 	}
 
 	public DisplayOwner(Owner o) {
-		model = new Model(new OwnerWrapper(o));
+		model = new Model<OwnerWrapper>(new OwnerWrapper(o));
+	}
+	
+	public DisplayOwner(PageParameters params) {
 	}
 
 	@Override
 	protected void onInitialize() {
-		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, new OwnerWrapper(null).getList());
+		List<OwnerWrapper> list = new ArrayList<OwnerWrapper>();
+		for (Owner o: ((WebSession)getSession()).getOwners()) {
+			list.add(new OwnerWrapper(o));
+		}
+		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", model, list);
 		ddc.setOutputMarkupId(true);
 		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", model, OwnerWrapper.class);
 		ddc.add(new OnChangeAjaxBehavior() {
@@ -76,10 +85,11 @@ public class DisplayOwner extends WebPage implements Serializable {
 	 * @author Nicktarix (David Hendrix)
 	 *
 	 */
-	public class OwnerWrapper implements ICrudrListProvider<OwnerWrapper>, Serializable {
+	public static class OwnerWrapper implements Serializable {
 
 		private static final long serialVersionUID = -5188229327429353036L;
 		private Owner data;
+		private static final transient Logger logger = Logger.getLogger(OwnerWrapper.class);
 
 		/**
 		 * Initializes a wrapper
@@ -88,6 +98,12 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 */
 		public OwnerWrapper(Owner data) {
 			this.data = data;
+			if (!logger.isDebugEnabled()) {
+				logger.error("NO DEBUG");
+				logger.setLevel(Level.DEBUG);
+			}
+			logger.debug("Created warpper for " + data);
+			logger.debug("Owner has " + data.getPets().size() + " pets.");
 		}
 
 		/**
@@ -205,15 +221,6 @@ public class DisplayOwner extends WebPage implements Serializable {
 			return data.hashCode();
 		}
 
-		@Override
-		public List<OwnerWrapper> getList() {
-			List<OwnerWrapper> owners = new ArrayList<OwnerWrapper>();
-			for (Owner o:((WebSession)WebSession.get()).getOwners()) {
-				owners.add(new OwnerWrapper(o));
-			}
-			return owners;
-		}
-		
 		public String toString() {
 			return getLastName() + " " + getFirstName();
 		}
@@ -224,19 +231,19 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 */
 		@Lister
 		@Position(6)
-		@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
+		@InnerType(type=Pet.class)
 		public Set<Pet> getPets() {
+			logger.debug("Retrieving " + data.getPets().size() + " pets for " + data.getFirstName() + " " + data.getLastName() + ".");
 			return data.getPets();
 		}
 	}
 
-	class PetWrapper implements Serializable, ICrudrListProvider<Pet> {
+	class PetWrapper implements Serializable {
 		
 		private static final long serialVersionUID = 4972449001878482038L;
 		private Pet pet;
-		private Owner owner;
 		
-		public PetWrapper(Pet pet, Owner owner) {
+		public PetWrapper(Pet pet) {
 			this.pet = pet;
 		}
 
@@ -248,12 +255,6 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Position(1)
 		public String getHumanReadableId() {
 			return pet.getName() + " (" + pet.getType() + ")";
-		}
-
-
-		@Override
-		public List<Pet> getList() {
-			return new ArrayList<Pet>(owner.getPets());
 		}
 	}
 }

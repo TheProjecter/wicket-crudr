@@ -13,18 +13,13 @@ import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
-public class OwnerEditWrapper implements ICrudrListProvider<OwnerEditWrapper>, Serializable {
+public class OwnerEditWrapper implements Serializable {
 	
 	private static final long serialVersionUID = -1310738561110224139L;
 	private Owner owner;
 	
 	public OwnerEditWrapper(Owner owner) {
 		this.owner = owner;
-	}
-
-	@Override
-	public List<OwnerEditWrapper> getList() {
-		return null;
 	}
 
 	/**
@@ -140,5 +135,9 @@ public class OwnerEditWrapper implements ICrudrListProvider<OwnerEditWrapper>, S
 	@Position(6)
 	public Set<Pet> getPets() {
 		return owner.getPets();
+	}
+
+	public String toString() {
+		return getLastName() + " " + getFirstName();
 	}
 }

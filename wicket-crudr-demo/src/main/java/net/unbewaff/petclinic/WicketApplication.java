@@ -20,7 +20,7 @@ public class WicketApplication extends WebApplication {
 	 */
 	@Override
 	public Class<? extends WebPage> getHomePage() {
-		return EditOwner.class;
+		return HomePage.class;
 	}
 
 	/**

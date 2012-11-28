@@ -5,10 +5,12 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ListOnTheParentModel;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -23,7 +25,7 @@ import org.apache.wicket.model.Model;
  * @author David Hendrix (Nicktarix)
  * 
  */
-public class IterableLabel<T extends Iterable<V>, V extends Serializable> extends Panel implements Serializable {
+public class IterableLabel<T extends List<V>, V extends Serializable> extends Panel implements Serializable {
 
 	private static final long serialVersionUID = 4751845396328553541L;
 	private IModel<T> model;
@@ -110,11 +112,16 @@ public class IterableLabel<T extends Iterable<V>, V extends Serializable> extend
 			add(list);
 			Label separatorLabel = null;
 			if (model != null && model.getObject() != null) {
+				int index = 0;
 				for (V item : model.getObject()) {
 					WebMarkupContainer container = new WebMarkupContainer(list.newChildId());
 					separatorLabel = addSeparator(container);
-					container.add(new Label("text", labelModelProvider.newLabelModel(Model.of(item))));
+					ListOnTheParentModel<V> itemModel = new ListOnTheParentModel<V>(IterableLabel.this, index);
+					IModel<?> labelModel = labelModelProvider.newLabelModel(itemModel);
+					Label label = new Label("text", labelModel);
+					container.add(label);
 					list.add(container);
+					index++;
 				}
 			}
 			if (separatorLabel != null) {

@@ -12,6 +12,6 @@ public class HomePage extends WebPage {
 
     public HomePage(final PageParameters parameters) {
     	add(new BookmarkablePageLink<ListVetsPage>("listVets", ListVetsPage.class));
-    	add(new BookmarkablePageLink<DisplayOwner>("showOwner", DisplayOwner.class));
+		add(new BookmarkablePageLink<DisplayOwner>("showOwner", DisplayOwner.class));
     }
 }
