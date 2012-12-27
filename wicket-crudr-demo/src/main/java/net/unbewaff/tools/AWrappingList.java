@@ -1,14 +1,16 @@
 package net.unbewaff.tools;
 
-import java.lang.reflect.Constructor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T> {
+public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>, Serializable {
 	
+	private static final long serialVersionUID = -9132692758202141765L;
+
 	/**
 	 * @param e
 	 * @return
