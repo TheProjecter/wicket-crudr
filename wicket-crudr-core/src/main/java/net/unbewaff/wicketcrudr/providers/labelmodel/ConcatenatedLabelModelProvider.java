@@ -43,13 +43,15 @@ public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>
 		
 		private List<PropertyModel<T>> models = new ArrayList<PropertyModel<T>>();
 		private String separator;
+		private IModel<T> target;
 		
 		
-		public ConcatenatedLabelModel(List<String> properties, String separator, IModel<T> model) {
+		public ConcatenatedLabelModel(List<String> properties, String separator, IModel<T> target) {
 			for (String property: properties) {
-				models.add(new PropertyModel<T>(model, property));
+				models.add(new PropertyModel<T>(target, property));
 			}
 			this.separator = separator;
+			this.target = target;
 		}
 
 		@Override
@@ -71,6 +73,10 @@ public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>
 		@Override
 		public void setObject(String object) {
 			throw new UnsupportedOperationException("SetObject isn't implemented on " + getClass().getName());
+		}
+		
+		public T getTarget() {
+			return target.getObject();
 		}
 
 	}

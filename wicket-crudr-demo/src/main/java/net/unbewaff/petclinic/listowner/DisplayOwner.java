@@ -289,5 +289,41 @@ public class DisplayOwner extends WebPage implements Serializable {
 		public String toString() {
 			return "Pet: " + getHumanReadableId() + " - Owner: " + pet.getOwner();
 		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((pet == null) ? 0 : pet.hashCode());
+			return result;
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			PetWrapper other = (PetWrapper) obj;
+			if (pet == null) {
+				if (other.pet != null) {
+					return false;
+				}
+			} else if (!pet.equals(other.pet)) {
+				return false;
+			}
+			return true;
+		}
 	}
 }
