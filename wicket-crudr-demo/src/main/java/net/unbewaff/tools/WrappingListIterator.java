@@ -14,14 +14,14 @@ import java.util.ListIterator;
 public class WrappingListIterator<T extends IWrapper<E>, E> implements ListIterator<T> {
 	
 	private ListIterator<E> innerIterator;
-	private Constructor<T> constructor;
+	private IWrapperFactory<T, E> wrapperFactory;
 
 	/**
 	 * 
 	 */
-	public WrappingListIterator(ListIterator<E> innerIterator, Constructor<T> constructor) {
+	public WrappingListIterator(ListIterator<E> innerIterator, IWrapperFactory<T, E> constructor) {
 		this.innerIterator = innerIterator;
-		this.constructor = constructor;
+		this.wrapperFactory = constructor;
 	}
 
 	/**
@@ -101,23 +101,7 @@ public class WrappingListIterator<T extends IWrapper<E>, E> implements ListItera
 	 * @return
 	 */
 	protected T newWrapper(E target) {
-		T newInstance = null;
-		try {
-			newInstance = constructor.newInstance(target);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return newInstance;
+		return wrapperFactory.newWrapper(target);
 	}
 	
 }

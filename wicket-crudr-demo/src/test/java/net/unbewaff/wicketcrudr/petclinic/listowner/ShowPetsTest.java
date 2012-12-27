@@ -1,7 +1,6 @@
 package net.unbewaff.wicketcrudr.petclinic.listowner;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.List;
 
@@ -10,12 +9,16 @@ import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.entities.Type;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
-import net.unbewaff.tools.WrappingList;
+import net.unbewaff.tools.AWrappingList;
+import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.petclinic.listowner.ShowPetsTest.OwnersPetsWrapper;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
@@ -49,14 +52,36 @@ public class ShowPetsTest {
 
 	@Test
 	public void testRendering() {
-		tester.startComponentInPage(new AutoDisplay("test", new Model<OwnersPetsWrapper>(new OwnersPetsWrapper(o)), OwnersPetsWrapper.class));
+		OwnersPetsWrapper wrapper = new OwnersPetsWrapper(o);
+		final AutoDisplay<OwnersPetsWrapper> component = new AutoDisplay<OwnersPetsWrapper>("test", new Model<OwnersPetsWrapper>(wrapper), OwnersPetsWrapper.class);
+		component.add(new AjaxEventBehavior("onclick") {
+
+			@Override
+			protected void onEvent(AjaxRequestTarget target) {
+				target.add(component);
+			}
+			
+		});
+		tester.startComponentInPage(component);
 		tester.debugComponentTrees();
 		tester.assertLabel("test:border:border_body:view:1:fragmentContainer:label", "Pets");
-		tester.assertLabel("test:border:border_body:view:1:fragmentContainer:value:body:list:1:text", "Pet [name=Binky]");
+		tester.assertLabel("test:border:border_body:view:1:fragmentContainer:value:body:list:1:text", "Binky (Skelettal Horse)");
+		Pet p2 = new Pet();
+		p2.setBirthDate(new Date());
+		p2.setId(214);
+		p2.setName("Albert");
+		Type type = new Type();
+		type.setId(12);
+		type.setName("Minion");
+		p2.setType(type);
+		o.getPets().add(p2);
+		tester.executeAjaxEvent(component, "onclick");
+		logger.debug(tester.getResponse());
 	}
 	
 	public class OwnersPetsWrapper implements Serializable {
 		
+		private static final long serialVersionUID = 2965653174774793043L;
 		private Owner o;
 
 		public OwnersPetsWrapper(Owner o) {
@@ -66,19 +91,22 @@ public class ShowPetsTest {
 		@Lister
 		@InnerType(type=PetWrapper.class)
 		public List<PetWrapper> getPets() {
-			Constructor<PetWrapper> constructor = null;
-			try {
-				constructor = PetWrapper.class.getConstructor(Pet.class);
-			} catch (SecurityException e) {
-				logger.error(e);
-			} catch (NoSuchMethodException e) {
-				logger.error(e);
-			}
 
-			return new WrappingList<PetWrapper, Pet>(constructor) {
+			return new AWrappingList<PetWrapper, Pet>() {
 				@Override
 				protected List<Pet> getBaseList() {
 					return o.getPets();
+				}
+
+				@Override
+				protected IWrapperFactory<PetWrapper, Pet> getWrapperFactory() {
+					return new IWrapperFactory<PetWrapper, Pet>() {
+
+						@Override
+						public PetWrapper newWrapper(Pet target) {
+							return new PetWrapper(target);
+						}
+					};
 				}			
 			};
 		}

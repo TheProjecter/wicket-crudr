@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
+import net.unbewaff.tools.AWrappingList;
+import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.tools.WrappingList;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
@@ -139,18 +141,21 @@ public class OwnerEditWrapper implements Serializable {
 	@InnerType(type=PetWrapper.class)
 	@Position(6)
 	public List<PetWrapper> getPets() {
-		Constructor<PetWrapper> constructor = null;
-		try {
-			constructor = PetWrapper.class.getConstructor(Pet.class);
-		} catch (SecurityException e) {
-			logger.error(e);
-		} catch (NoSuchMethodException e) {
-			logger.error(e);
-		}
-		return new WrappingList<PetWrapper, Pet>(constructor) {
+		return new AWrappingList<PetWrapper, Pet>() {
 			@Override
 			protected List<Pet> getBaseList() {
 				return owner.getPets();
+			}
+
+			@Override
+			protected IWrapperFactory<PetWrapper, Pet> getWrapperFactory() {
+				return new IWrapperFactory<PetWrapper, Pet>() {
+
+					@Override
+					public PetWrapper newWrapper(Pet target) {
+						return new PetWrapper(target);
+					}
+				};
 			}
 		};
 	}
