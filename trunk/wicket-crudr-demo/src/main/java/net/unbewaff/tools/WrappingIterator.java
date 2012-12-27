@@ -11,17 +11,17 @@ import java.util.Iterator;
  * @author DavidH
  *
  */
-public class WrappingIterator<T extends IWrapper, E> implements Iterator<T> {
+public class WrappingIterator<T extends IWrapper<E>, E> implements Iterator<T> {
 	
 	private Iterator<E> innerIterator;
-	private Constructor<T> constructor;
+	private IWrapperFactory<T, E> wrapperFactory;
 
 	/**
 	 * 
 	 */
-	public WrappingIterator(Iterator<E> innerIterator, Constructor<T> constructor) {
+	public WrappingIterator(Iterator<E> innerIterator, IWrapperFactory<T, E> wrapperFactory) {
 		this.innerIterator = innerIterator;
-		this.constructor = constructor;
+		this.wrapperFactory = wrapperFactory;
 	}
 
 	/* (non-Javadoc)
@@ -53,24 +53,8 @@ public class WrappingIterator<T extends IWrapper, E> implements Iterator<T> {
 	 * @param target
 	 * @return
 	 */
-	protected T newWrapper(E target) {
-		T newInstance = null;
-		try {
-			newInstance = constructor.newInstance(target);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return newInstance;
+	T newWrapper(E target) {
+		return wrapperFactory.newWrapper(target);
 	}
 	
 }

@@ -2,19 +2,18 @@ package net.unbewaff.petclinic.wrappers;
 
 import java.io.Serializable;
 
-import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.tools.IWrapper;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 
 public class PetWrapper implements Serializable, IWrapper<Pet> {
 	
 	private static final long serialVersionUID = 4972449001878482038L;
 	private Pet pet;
-	private Owner owner;
 	
-	public PetWrapper(Pet pet, Owner owner) {
+	public PetWrapper(Pet pet) {
 		this.pet = pet;
 	}
 
@@ -24,12 +23,18 @@ public class PetWrapper implements Serializable, IWrapper<Pet> {
 	 */
 	@Lister
 	@Position(1)
+	@ResourceKey
 	public String getHumanReadableId() {
-		return pet.getName() + " (" + pet.getType() + ")";
+		return pet.getName() + " (" + pet.getType().getName() + ")";
 	}
 
 	@Override
 	public Pet getObject() {
 		return pet;
+	}
+
+	@Override
+	public String toString() {
+		return pet.toString();
 	}
 }

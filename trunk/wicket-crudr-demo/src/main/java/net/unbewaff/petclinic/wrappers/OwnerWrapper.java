@@ -2,12 +2,12 @@ package net.unbewaff.petclinic.wrappers;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
-import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.tools.WrappingList;
+import net.unbewaff.tools.AWrappingList;
+import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -161,18 +161,22 @@ public class OwnerWrapper implements Serializable {
 	@Position(6)
 	@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
 	public List<PetWrapper> getPets() {
-		Constructor<PetWrapper> constructor = null;
-		try {
-			constructor = PetWrapper.class.getConstructor(Pet.class);
-		} catch (SecurityException e) {
-			logger.error(e);
-		} catch (NoSuchMethodException e) {
-			logger.error(e);
-		}
-		return new WrappingList<PetWrapper, Pet>(constructor) {
+
+		return new AWrappingList<PetWrapper, Pet>() {
 			@Override
 			protected List<Pet> getBaseList() {
 				return owner.getPets();
+			}
+
+			@Override
+			protected IWrapperFactory<PetWrapper, Pet> getWrapperFactory() {
+				return new IWrapperFactory<PetWrapper, Pet>() {
+
+					@Override
+					public PetWrapper newWrapper(Pet target) {
+						return new PetWrapper(target);
+					}
+				};
 			}
 		};
 	}

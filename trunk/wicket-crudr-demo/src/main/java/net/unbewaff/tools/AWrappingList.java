@@ -1,31 +1,14 @@
-/**
- * 
- */
 package net.unbewaff.tools;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * @author DavidH
- *
- */
-public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> {
+public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T> {
 	
-	private final IWrapperFactory<T, E> factory;
-
-	/**
-	 * 
-	 */
-	public WrappingList(IWrapperFactory<T, E> factory) {
-		this.factory = factory;
-	}
-
 	/**
 	 * @param e
 	 * @return
@@ -87,7 +70,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public boolean contains(Object o) {
 		boolean retValue = false;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().contains(((IWrapper<?>) o).getObject());
+			retValue = getBaseList().contains(((IWrapper) o).getObject());
 		}
 		return retValue;
 	}
@@ -120,7 +103,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#get(int)
 	 */
 	public T get(int index) {
-		return newWrapper(getBaseList().get(index));
+		return getWrapperFactory().newWrapper(getBaseList().get(index));
 	}
 
 	/**
@@ -139,7 +122,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public int indexOf(Object o) {
 		int retValue = -1;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().indexOf(((IWrapper<?>) o).getObject());
+			retValue = getBaseList().indexOf(((IWrapper) o).getObject());
 		}
 		return retValue;
 	}
@@ -157,7 +140,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#iterator()
 	 */
 	public Iterator<T> iterator() {
-		return new WrappingIterator<T, E>(getBaseList().iterator(), factory);
+		return new WrappingIterator<T, E>(getBaseList().iterator(), getWrapperFactory());
 	}
 
 	/**
@@ -168,7 +151,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public int lastIndexOf(Object o) {
 		int retValue = -1;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().lastIndexOf(((IWrapper<?>) o).getObject());
+			retValue = getBaseList().lastIndexOf(((IWrapper) o).getObject());
 		}
 		return retValue;
 	}
@@ -178,7 +161,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#listIterator()
 	 */
 	public ListIterator<T> listIterator() {
-		return new WrappingListIterator<T, E>(getBaseList().listIterator(), factory);
+		return new WrappingListIterator<T, E>(getBaseList().listIterator(), getWrapperFactory());
 	}
 
 	/**
@@ -187,7 +170,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#listIterator(int)
 	 */
 	public ListIterator<T> listIterator(int index) {
-		return new WrappingListIterator<T, E>(getBaseList().listIterator(index), factory);
+		return new WrappingListIterator<T, E>(getBaseList().listIterator(index), getWrapperFactory());
 	}
 
 	/**
@@ -196,15 +179,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#remove(int)
 	 */
 	public T remove(int index) {
-		return newWrapper(getBaseList().remove(index));
-	}
-
-	/**
-	 * @param target
-	 * @return
-	 */
-	protected T newWrapper(E target) {
-		return factory.newWrapper(target);
+		return getWrapperFactory().newWrapper(getBaseList().remove(index));
 	}
 
 	/**
@@ -215,7 +190,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public boolean remove(Object o) {
 		boolean retValue = false;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().remove(((IWrapper<?>) o).getObject());
+			retValue = getBaseList().remove(((IWrapper) o).getObject());
 		}
 		return retValue;
 	}
@@ -226,10 +201,11 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#removeAll(java.util.Collection)
 	 */
 	public boolean removeAll(Collection<?> c) {
+		List<E> temp = new ArrayList<E>();
 		boolean retValue = false;
 		for (Object o :c) {
 			if (o instanceof IWrapper) {
-				retValue = getBaseList().remove(((IWrapper<?>) o).getObject()) || retValue;
+				retValue = getBaseList().remove(((IWrapper) o).getObject()) || retValue;
 			}
 		}
 		return retValue;
@@ -251,7 +227,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#set(int, java.lang.Object)
 	 */
 	public T set(int index, T element) {
-		return newWrapper(getBaseList().set(index, element.getObject()));
+		return getWrapperFactory().newWrapper(getBaseList().set(index, element.getObject()));
 	}
 
 	/**
@@ -269,10 +245,15 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	 * @see java.util.List#subList(int, int)
 	 */
 	public List<T> subList(final int fromIndex, final int toIndex) {
-		return new WrappingList<T, E>(factory) {
+		return new AWrappingList<T, E>() {
 			@Override
 			protected List<E> getBaseList() {
 				return getBaseList().subList(fromIndex, toIndex);
+			}
+
+			@Override
+			protected IWrapperFactory<T, E> getWrapperFactory() {
+				return AWrappingList.this.getWrapperFactory();
 			}
 		};
 	}
@@ -284,7 +265,7 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public Object[] toArray() {
 		List<T> list = new ArrayList<T>();
 		for (E o: getBaseList()) {
-			list.add(newWrapper(o));
+			list.add(getWrapperFactory().newWrapper(o));
 		}
 		return list.toArray();
 	}
@@ -297,11 +278,12 @@ public abstract class WrappingList<T extends IWrapper<E>, E> implements List<T> 
 	public <U> U[] toArray(U[] a) {
 		List<T> list = new ArrayList<T>();
 		for (E o: getBaseList()) {
-			list.add(newWrapper(o));
+			list.add(getWrapperFactory().newWrapper(o));
 		}
 		return list.toArray(a);
 	}
 
 	protected abstract List<E> getBaseList();
-
+	
+	protected abstract IWrapperFactory<T, E> getWrapperFactory();
 }
