@@ -25,6 +25,7 @@ import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 import net.unbewaff.wicketcrudr.tools.PositionComparator;
+import net.unbewaff.wicketcrudr.tools.PropertyCleaner;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;
@@ -46,8 +47,17 @@ public class DataBlockFactory implements Serializable {
     }
 
     public static <T extends Serializable> IDataBlock<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
-        String cleanProperty = getCleanPropertyName(property);
-        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(InnerType.class), cleanProperty, clazz, m.getReturnType(), listProvider);
+        String cleanProperty = PropertyCleaner.getCleanPropertyName(property);
+        InnerType innerType = m.getAnnotation(InnerType.class);
+        Class<?> returnType = m.getReturnType();
+		if (innerType == null) {
+			if (Serializable.class.isAssignableFrom(returnType)) {
+				innerType = new DefaultInnerType((Class<? extends Serializable>) returnType);
+			} else {
+				throw new IllegalArgumentException("Either the innerType must be defined or a Serializable returnType is expected. " + returnType.getSimpleName() + " has neither.");
+			}
+        }
+		return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), innerType, cleanProperty, clazz, returnType, listProvider);
     }
 
     public static <T extends Serializable> IDataBlock<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
@@ -104,16 +114,6 @@ public class DataBlockFactory implements Serializable {
     }
 
 
-
-    private static String getCleanPropertyName(String property) {
-        String clean = property;
-        if (clean.startsWith("get")) {
-            clean = clean.substring(3);
-        } else if (clean.startsWith("is")) {
-            clean = clean.substring(2);
-        }
-        return clean;
-    }
 
     public static <T extends Serializable> List<IDataBlock<T>> getColumns(Class<T> clazz){
     	List<IDataBlock<T>> columns = new ArrayList<IDataBlock<T>>();

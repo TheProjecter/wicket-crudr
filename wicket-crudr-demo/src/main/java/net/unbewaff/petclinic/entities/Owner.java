@@ -145,4 +145,13 @@ public class Owner implements Serializable {
 		return pets;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Owner [" + firstName + " " + lastName + "]";
+	}
+
 }

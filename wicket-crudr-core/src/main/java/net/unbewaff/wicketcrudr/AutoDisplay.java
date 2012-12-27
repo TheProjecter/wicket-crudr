@@ -61,7 +61,7 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 		webMarkupContainer.add(new AttributeAppender("class", getBorderCss()));
 		border.addToBorder(webMarkupContainer);
 
-		final RepeatingView view = new RepeatingView("view");
+		final RepeatingView view = new RepeatingView("view", getDefaultModel());
 		List<IDataBlock<T>> list = DataBlockFactory.getColumns(clazz);
 		for (IDataBlock<T> block: list) {
 			Fragment fragment = new DisplayFragment(view.newChildId(), border.getFragmentId(), border);
@@ -109,5 +109,29 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 		public DisplayFragment(String id, String markupId, MarkupContainer markupProvider) {
 			super(id, markupId, markupProvider);
 		}
+	}
+	
+	@Override
+	protected void onRender() {
+		// TODO Auto-generated method stub
+		super.onRender();
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		// TODO Auto-generated method stub
+		super.onBeforeRender();
+	}
+	
+	@Override
+	protected void onModelChanging() {
+		// TODO Auto-generated method stub
+		super.onModelChanging();
+	}
+	
+	@Override
+	protected void onModelChanged() {
+		// TODO Auto-generated method stub
+		super.onModelChanged();
 	}
 }

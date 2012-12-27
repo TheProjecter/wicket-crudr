@@ -1,4 +1,4 @@
-package net.unbewaff.tools;
+package net.unbewaff.wicketcrudr.tools.wrappinglist;
 
 import java.io.Serializable;
 import java.util.ArrayList;

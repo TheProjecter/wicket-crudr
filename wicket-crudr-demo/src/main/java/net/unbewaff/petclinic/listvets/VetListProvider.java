@@ -8,8 +8,8 @@ import java.util.List;
 
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Veterinarian;
-import net.unbewaff.tools.AWrappingList;
-import net.unbewaff.tools.IWrapperFactory;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Session;
