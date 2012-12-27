@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.petclinic.listowner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +16,7 @@ import net.unbewaff.petclinic.wrappers.PetWrapper;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.providers.labelmodel.ConcatenatedLabelModelProvider.ConcatenatedLabelModel;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
@@ -118,8 +120,9 @@ public class ShowPetsTest {
 		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value", true).getDefaultModel()).getTarget());
 		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body", true).getDefaultModel()).getTarget());
 		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list", true).getDefaultModel()).getTarget());
-		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel()).getTarget());
-		logger.debug(tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel());
+		net.unbewaff.petclinic.listowner.DisplayOwner.PetWrapper firstPet = secondModel.getPets().get(0);
+		net.unbewaff.petclinic.listowner.DisplayOwner.PetWrapper target = (net.unbewaff.petclinic.listowner.DisplayOwner.PetWrapper) ((ConcatenatedLabelModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel()).getTarget();
+		assertTrue(firstPet.equals(target));
 	}
 	
 	public class OwnersPetsWrapper implements Serializable {
