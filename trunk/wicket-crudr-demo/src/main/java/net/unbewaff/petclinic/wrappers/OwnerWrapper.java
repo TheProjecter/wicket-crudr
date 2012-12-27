@@ -6,12 +6,12 @@ import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.tools.AWrappingList;
-import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
 import org.apache.log4j.Logger;
 

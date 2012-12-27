@@ -1,5 +1,7 @@
 package net.unbewaff.wicketcrudr.petclinic.listowner;
 
+import static org.junit.Assert.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -8,18 +10,20 @@ import net.unbewaff.petclinic.WicketApplication;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.entities.Type;
+import net.unbewaff.petclinic.listowner.DisplayOwner.OwnerWrapper;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
-import net.unbewaff.tools.AWrappingList;
-import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.petclinic.listowner.ShowPetsTest.OwnersPetsWrapper;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +81,45 @@ public class ShowPetsTest {
 		o.getPets().add(p2);
 		tester.executeAjaxEvent(component, "onclick");
 		logger.debug(tester.getResponse());
+	}
+	
+	@Test
+	public void testModelUpdateRerendering() {
+		tester.startPage(new ShowPetsTestPage(Model.of(new OwnerWrapper(o))));
+		tester.assertRenderedPage(ShowPetsTestPage.class);
+		AutoDisplay<OwnerWrapper> beforeSelectionChanged = (AutoDisplay<OwnerWrapper>) tester.getComponentFromLastRenderedPage("owner", true);
+		OwnerWrapper firstModelObject = (OwnerWrapper) beforeSelectionChanged.getDefaultModelObject();
+		tester.debugComponentTrees();
+		logger.debug("First Model FirstName: " + firstModelObject.getFirstName());
+		assertEquals("First Name", firstModelObject.getFirstName());
+		assertEquals("First Name", ((OwnerWrapper)tester.getComponentFromLastRenderedPage("owner:border:border_body:view", true).getDefaultModelObject()).getFirstName());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:1:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:2:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:3:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:4:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:5:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(firstModelObject == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		
+		logger.debug((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:1:fragmentContainer:value", true).getDefaultModel());
+		logger.debug(tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel());
+		
+		FormTester ft = tester.newFormTester("form");
+		ft.select("select", 4);
+		ft.submit("submit");
+		AutoDisplay<OwnerWrapper> afterSelectionChanged = (AutoDisplay<OwnerWrapper>) tester.getComponentFromLastRenderedPage("owner", true);
+		OwnerWrapper secondModel = (OwnerWrapper)afterSelectionChanged.getDefaultModelObject();
+		logger.debug("Second Model FirstName: " + secondModel.getFirstName());
+		assertEquals("Peter", ((OwnerWrapper)tester.getComponentFromLastRenderedPage("owner:border:border_body:view", true).getDefaultModelObject()).getFirstName());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:1:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:2:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:3:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:4:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:5:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list", true).getDefaultModel()).getTarget());
+		assertTrue(secondModel == ((PropertyModel<?>)tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel()).getTarget());
+		logger.debug(tester.getComponentFromLastRenderedPage("owner:border:border_body:view:6:fragmentContainer:value:body:list:1:text", true).getDefaultModel());
 	}
 	
 	public class OwnersPetsWrapper implements Serializable {

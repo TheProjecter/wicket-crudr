@@ -1,5 +1,8 @@
 package net.unbewaff.wicketcrudr.petclinic.listowner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 
 import net.unbewaff.petclinic.WicketApplication;
@@ -12,11 +15,9 @@ import net.unbewaff.petclinic.wrappers.OwnerWrapper;
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class DisplayOwnerTest {
 

@@ -11,13 +11,13 @@ import java.util.List;
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.tools.AWrappingList;
-import net.unbewaff.tools.IWrapper;
-import net.unbewaff.tools.IWrapperFactory;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -41,13 +41,13 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 public class DisplayOwner extends WebPage implements Serializable {
 
 	private static final long serialVersionUID = 8992622237513231584L;
+	private static final transient Logger logger = Logger.getLogger(DisplayOwner.class);
 
 	/**
 	 * @param id
 	 */
 	public DisplayOwner() {
-		super(new Model<OwnerWrapper>());
-		setDefaultModelObject(new OwnerWrapper(((WebSession)getSession()).getOwners().get(1)));
+		this(((WebSession)WebSession.get()).getOwners().get(0));
 	}
 
 	public DisplayOwner(Owner o) {
@@ -66,7 +66,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		}
 		final DropDownChoice<OwnerWrapper> ddc = new DropDownChoice<OwnerWrapper>("select", (IModel<OwnerWrapper>) getDefaultModel(), list);
 		ddc.setOutputMarkupId(true);
-		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", (IModel<OwnerWrapper>) getDefaultModelObject(), OwnerWrapper.class);
+		final Component wmc = new AutoDisplay<OwnerWrapper>("owner", (IModel<OwnerWrapper>) getDefaultModel(), OwnerWrapper.class);
 		ddc.add(new OnChangeAjaxBehavior() {
 			
 			private static final long serialVersionUID = 220633626349616188L;
@@ -75,6 +75,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 			protected void onUpdate(AjaxRequestTarget target) {
 				boolean show = getDefaultModel() != null && getDefaultModelObject() != null;
 				target.add(wmc);
+				logger.debug("First pet of selected owner (" + ((OwnerWrapper)wmc.getDefaultModelObject()).getFirstName() + ") in onUpdate: " + ((OwnerWrapper)wmc.getDefaultModelObject()).getPets().get(0).getHumanReadableId()); 
 				wmc.setVisible(show);
 
 			}
@@ -258,7 +259,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		}
 	}
 
-	static class PetWrapper implements Serializable, IWrapper<Pet> {
+	public static class PetWrapper implements Serializable, IWrapper<Pet> {
 		
 		private static final long serialVersionUID = 4972449001878482038L;
 		private Pet pet;
@@ -279,6 +280,14 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Position(1)
 		public String getHumanReadableId() {
 			return pet.getName() + " (" + pet.getType() + ")";
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Pet: " + getHumanReadableId() + " - Owner: " + pet.getOwner();
 		}
 	}
 }

@@ -3,10 +3,10 @@ package net.unbewaff.petclinic.wrappers;
 import java.io.Serializable;
 
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.tools.IWrapper;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 
 public class PetWrapper implements Serializable, IWrapper<Pet> {
 	

@@ -28,7 +28,6 @@ import org.apache.wicket.model.Model;
 public class IterableLabel<T extends List<V>, V extends Serializable> extends Panel implements Serializable {
 
 	private static final long serialVersionUID = 4751845396328553541L;
-	private IModel<T> model;
 	private ILabelModelProvider<V> labelModelProvider;
 	private InnerType innerType;
 
@@ -38,7 +37,6 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 	 */
 	public IterableLabel(String id, IModel<T> model, ILabelModelProvider<V> labelModelProvider, InnerType innerType) {
 		super(id, model);
-		this.model = model;
 		this.labelModelProvider = labelModelProvider;
 		if (innerType != null) {
 			this.innerType = innerType;
@@ -63,7 +61,7 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 		}
 		switch (displayAs) {
 		case LIST:
-			fragment = new ListFragment("body", this, model) {
+			fragment = new ListFragment("body", this, getDefaultModel()) {
 
 				private static final long serialVersionUID = 7409868325155349573L;
 
@@ -74,7 +72,7 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 			};
 			break;
 		case CONCATENATED:
-			fragment = new ListFragment("body", this, model) {
+			fragment = new ListFragment("body", this, getDefaultModel()) {
 
 				private static final long serialVersionUID = 3871309355861640052L;
 
@@ -90,38 +88,60 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 		add(fragment);
 		super.onInitialize();
 	}
+	
+	@Override
+	protected void onBeforeRender() {
+		// TODO Auto-generated method stub
+		super.onBeforeRender();
+	}
+	
+	@Override
+	protected void onRender() {
+		// TODO Auto-generated method stub
+		super.onRender();
+	}
+	
+	@Override
+	protected void onModelChanged() {
+		// TODO Auto-generated method stub
+		super.onModelChanged();
+	}
+	
+	@Override
+	protected void onModelChanging() {
+		// TODO Auto-generated method stub
+		super.onModelChanging();
+	}
 
 	private abstract class ListFragment extends Fragment implements Serializable {
 
 		private static final long serialVersionUID = 6089762601810199229L;
-		private IModel<T> model;
 
 		/**
 		 * @param id
 		 * @param markupId
 		 * @param markupProvider
 		 */
-		public ListFragment(String id, MarkupContainer markupProvider, IModel<T> model) {
-			super(id, innerType.displayAs().getFragmentId(), markupProvider);
-			this.model = model;
+		public ListFragment(String id, MarkupContainer markupProvider, IModel<?> model) {
+			super(id, innerType.displayAs().getFragmentId(), markupProvider, model);
 		}
 
 		@Override
+		@SuppressWarnings("unchecked")
 		protected void onInitialize() {
-			RepeatingView list = new RepeatingView("list");
+			RepeatingView list = new RepeatingView("list", getDefaultModel());
 			add(list);
 			Label separatorLabel = null;
-			if (model != null && model.getObject() != null) {
-				int index = 0;
-				for (V item : model.getObject()) {
+			if (getDefaultModelObject() != null) {
+				List<V> defaultModelObject = (List<V>)getDefaultModelObject();
+				for (int i = 0; i < defaultModelObject.size(); i++) {
 					WebMarkupContainer container = new WebMarkupContainer(list.newChildId());
 					separatorLabel = addSeparator(container);
-					ListOnTheParentModel<V> itemModel = new ListOnTheParentModel<V>(IterableLabel.this, index);
+					ListOnTheParentModel<V> itemModel = new ListOnTheParentModel<V>(list, i);
 					IModel<?> labelModel = labelModelProvider.newLabelModel(itemModel);
 					Label label = new Label("text", labelModel);
 					container.add(label);
 					list.add(container);
-					index++;
 				}
 			}
 			if (separatorLabel != null) {

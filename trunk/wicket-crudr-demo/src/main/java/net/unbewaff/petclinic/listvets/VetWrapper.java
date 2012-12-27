@@ -8,12 +8,12 @@ import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
-import net.unbewaff.tools.IWrapper;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Position;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 
 public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 
