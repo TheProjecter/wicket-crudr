@@ -23,10 +23,12 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 	private static final long serialVersionUID = -5616560586558642852L;
 	private final ContainerConfiguration<T> configuration;
 	private final IModel<String> labelModel;
+	private final String name;
 
-	public FlexibleEditableDataBlock(IModel<String> displayModel, ContainerConfiguration<T> conf) {
+	public FlexibleEditableDataBlock(IModel<String> displayModel, ContainerConfiguration<T> conf, String name) {
 		configuration = conf;
 		this.labelModel = displayModel;
+		this.name = name;
 	}
 
 	/* (non-Javadoc)
@@ -44,6 +46,11 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
 	@Override
 	public Component getLabel(String componentId, IModel<T> model) {
 		return new Label(componentId, labelModel);
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 }

@@ -87,9 +87,9 @@ public class DataBlockFactory implements Serializable {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), returnType, property, l.resourcePrefix());
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
-            dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf);
+            dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf, property);
         } else {
-            dataBlock = new FlexibleNonEditableDataBlock<T>(displayModel, labelProvider);
+            dataBlock = new FlexibleNonEditableDataBlock<T>(displayModel, labelProvider, property);
         }
         logger.debug("Column created: " + property);
 

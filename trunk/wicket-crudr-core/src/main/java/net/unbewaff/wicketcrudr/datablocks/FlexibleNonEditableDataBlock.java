@@ -6,9 +6,7 @@ import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
@@ -17,10 +15,12 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
     private static final long serialVersionUID = 4158102566457762813L;
     private final ILabelProvider<T> valueProvider;
     private final IModel<String> labelProvider;
+    private final String name;
 
-    public FlexibleNonEditableDataBlock(IModel<String> headerProvider, ILabelProvider<T> labelProvider) {
+    public FlexibleNonEditableDataBlock(IModel<String> headerProvider, ILabelProvider<T> labelProvider, String name) {
         this.valueProvider = labelProvider;
         this.labelProvider = headerProvider;
+        this.name = name;
     }
 
     @Override
@@ -71,5 +71,10 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
 	 */
 	public String getCssClassForBody() {
 		return "ui-widget-content";
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 }

@@ -277,7 +277,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		@Lister
 		@Order(1)
 		public String getHumanReadableId() {
-			return pet.getName() + " (" + pet.getType() + ")";
+			return pet.getName() + " (" + pet.getType().getName() + ")";
 		}
 
 		/* (non-Javadoc)
