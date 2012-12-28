@@ -10,7 +10,7 @@ import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
@@ -37,7 +37,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 	}
 
 	@Lister(resourcePrefix="VetWrapper")
-	@Position(2)
+	@Order(2)
 	public String getFirstName() {
 		return vet.getFirstName();
 	}
@@ -47,7 +47,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 	}
 
 	@Lister(resourcePrefix="VetWrapper")
-	@Position(1)
+	@Order(1)
 	public String getLastName() {
 		return vet.getLastName();
 	}

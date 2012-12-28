@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.util.time.Time;
@@ -22,7 +22,7 @@ import org.apache.wicket.util.time.Time;
 public class EditorProviderFactory {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T extends Serializable> IEditorProvider<T> getEditorProvider(Editor e, final Lister l, Class<?> returnType, final String property) {
+    public static <T extends Serializable> IEditorProvider<T> getEditorProvider(Editor e, final DisplayType.Display displayType, Class<?> returnType, final String property, String resourcePrefix) {
         IEditorProvider<T> ep = null;
         switch (e.editAs()) {
             case TEXTFIELD:
@@ -37,32 +37,33 @@ public class EditorProviderFactory {
             case AJAXLINK:
                 throw new UnsupportedOperationException("AjaxLink isn't implemented yet.");
             case DROPDOWNCHOICE:
-			    ep = new DropDownChoiceProvider(getChoiceRenderer(l, property));
+			    ep = new DropDownChoiceProvider(getChoiceRenderer(displayType, property, resourcePrefix));
                 break;
             case PALETTE:
-            	ep = (IEditorProvider<T>) new PaletteProvider<T>(getChoiceRenderer(l, property));
+            	ep = (IEditorProvider<T>) new PaletteProvider<T>(getChoiceRenderer(displayType, property, resourcePrefix));
             	break;
             case DATE:
                 ep = (IEditorProvider<T>) new DateEditorProvider();
                 break;
             default:
-                ep = getDefaultEditorProvider(returnType, getChoiceRenderer(l, property));
+                ep = getDefaultEditorProvider(returnType, getChoiceRenderer(displayType, property, resourcePrefix));
         }
         return ep;
     }
 
 
 	/**
-	 * @param l the Lister Annotation
+	 * @param displayType the Lister Annotation
 	 * @param property the property to access the data
+	 * @param resourcePrefix the resource Prefix
 	 * @return a matching ChoiceRendererProvider
 	 */
 	@SuppressWarnings("rawtypes")
-	private static ChoiceRendererProvider getChoiceRenderer(final Lister l, final String property) {
+	private static ChoiceRendererProvider getChoiceRenderer(final DisplayType.Display displayType, final String property, String resourcePrefix) {
 		ChoiceRendererProvider renderer = null;
-		if (l != null) {
-		    if (Display.RESOURCE.equals(l.displayAs())) {
-		        renderer = new ChoiceRendererProvider(l.resourcePrefix(), property);
+		if (displayType != null) {
+		    if (DisplayType.Display.RESOURCE.equals(displayType)) {
+		        renderer = new ChoiceRendererProvider(resourcePrefix, property);
 		    }
 		}
 		return renderer;

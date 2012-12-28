@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.unbewaff.TempPanel;
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -64,10 +65,11 @@ public class DateProviderTest {
 
     @Test
     public void testBasicFunctionality() {
-        final Lister l = mockery.mock(Lister.class);
+        final DisplayType d = mockery.mock(DisplayType.class);
         final Editor e = mockery.mock(Editor.class);
         mockery.checking(new Expectations() {{
             exactly(2).of(e).editAs(); will(returnValue(EditorType.DATE));
+            exactly(1).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
         }});
         ISurroundingContainerProvider provider = SurroundingContainerProviderFactory.getContainerProvider(e);
         String componentId = panel.getComponentId();
@@ -75,11 +77,10 @@ public class DateProviderTest {
         WebMarkupContainer component = provider.newSurroundingContainer(componentId, null);
         component.setVisible(true);
         panel.add(component);
-        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, l, DateHolder.class, "data");
+        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), DateHolder.class, "data", "");
         FormComponent<DateHolder> dtf = editorProvider.newEditor(panel, "editor", Model.of(dh), null);
         component.add(dtf);
         tester.startComponentInPage(panel);
-        tester.debugComponentTrees();
         tester.assertComponent("panel", TempPanel.class);
         tester.assertComponent("panel:table:editor", DateTextField.class);
         DateTextField result = (DateTextField) tester.getComponentFromLastRenderedPage("panel:table:editor");

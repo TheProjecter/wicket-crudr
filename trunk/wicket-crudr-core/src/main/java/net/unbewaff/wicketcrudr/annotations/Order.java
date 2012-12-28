@@ -17,8 +17,8 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Position {
+@Target({ElementType.METHOD})
+public @interface Order {
     /**
      * Defines the order of display. With Java 7 you'll get inconsistent display sequences even between calls if you don't define this.
      * @return

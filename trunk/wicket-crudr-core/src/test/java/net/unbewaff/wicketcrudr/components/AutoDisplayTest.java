@@ -8,7 +8,7 @@ import java.io.Serializable;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.Order;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
@@ -57,7 +57,7 @@ public class AutoDisplayTest {
 		}
 
 		@Lister
-		@Position(2)
+		@Order(2)
 		public String getString() {
 			return data.getString();
 		}
@@ -67,7 +67,7 @@ public class AutoDisplayTest {
 		}
 
 		@Lister
-		@Position(1)
+		@Order(1)
 		public String getOtherString() {
 			return data.getOtherString();
 		}
@@ -116,7 +116,7 @@ public class AutoDisplayTest {
 		}
 
 		@Editor
-		@Position(2)
+		@Order(2)
 		@Lister
 		public String getString() {
 			return data.getString();
@@ -127,7 +127,7 @@ public class AutoDisplayTest {
 		}
 
 		@Editor
-		@Position(1)
+		@Order(1)
 		@Lister
 		public String getOtherString() {
 			return data.getOtherString();

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
@@ -57,25 +58,22 @@ public class DataBlockFactory implements Serializable {
 				throw new IllegalArgumentException("Either the innerType must be defined or a Serializable returnType is expected. " + returnType.getSimpleName() + " has neither.");
 			}
         }
-		return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), innerType, cleanProperty, clazz, returnType, listProvider);
-    }
-
-    public static <T extends Serializable> IDataBlock<T> getColumn(Field f, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
-        return getColumn(f.getAnnotation(Lister.class), f.getAnnotation(Editor.class), f.getAnnotation(InnerType.class), property, clazz, f.getType(), listProvider);
+		return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(DisplayType.class), innerType, cleanProperty, clazz, returnType, listProvider);
     }
 
     /**
      * @param <T>
      * @param l The Lister Annotation
      * @param e The Editor Annotation
-     * @param innerType TODO
+     * @param d The DisplayType Annotation
+     * @param innerType The Generic Type of a List
      * @param property The property name
      * @param clazz the Class T
      * @param returnType the return type of the method
      * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    public static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, InnerType innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
+    private static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, DisplayType d, InnerType innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
         IDataBlock<T> dataBlock = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
@@ -86,7 +84,7 @@ public class DataBlockFactory implements Serializable {
             editInPlace = InPlaceEditor.NONE;
         }
         if (!InPlaceEditor.NONE.equals(editInPlace)) {
-            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, l, returnType, property);
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), returnType, property, l.resourcePrefix());
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
             dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf);

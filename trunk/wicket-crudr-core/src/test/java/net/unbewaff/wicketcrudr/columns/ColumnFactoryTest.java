@@ -8,13 +8,16 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
+import net.unbewaff.wicketcrudr.annotations.type.Prototypes;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
@@ -53,7 +56,7 @@ public class ColumnFactoryTest {
     public void testDefaultLister() throws SecurityException, NoSuchMethodException {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         Method method = StringHolder.class.getMethod("getData");
-        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), null, "Data", StringHolder.class, null, getListProvider());
+        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), method.getAnnotation(DisplayType.class), null, "Data", StringHolder.class, null, getListProvider(), StringHolder.class.getAnnotation(LabelResourcePrefix.class));
         assertTrue(column instanceof FlexibleNonEditableColumn);
         FlexibleNonEditableColumn<StringHolder> pc = (FlexibleNonEditableColumn<ColumnFactoryTest.StringHolder>)column;
         assertTrue(pc.getDisplayModel() instanceof StringResourceModel);
@@ -88,7 +91,7 @@ public class ColumnFactoryTest {
     public void testCustomHeader() throws SecurityException, NoSuchMethodException {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         Method method = StringHolder.class.getMethod("getData2");
-        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), null, "Data2", StringHolder.class, null, getListProvider());
+        IColumn<StringHolder> column = ColumnFactory.getColumn(method.getAnnotation(Lister.class), method.getAnnotation(Editor.class), method.getAnnotation(DisplayType.class), null, "Data2", StringHolder.class, null, getListProvider(), StringHolder.class.getAnnotation(LabelResourcePrefix.class));
         assertTrue(column instanceof FlexibleNonEditableColumn);
         cols.add(column);
         DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
@@ -107,6 +110,8 @@ public class ColumnFactoryTest {
 
 
     @SuppressWarnings("unused")
+    @Prototype(Prototypes.SHORT)
+    @LabelResourcePrefix("tralala")
     private static class StringHolder implements Serializable {
 
         private static final long serialVersionUID = 8070868717307881900L;
