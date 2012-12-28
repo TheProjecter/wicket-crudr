@@ -6,8 +6,8 @@ import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
@@ -159,7 +159,7 @@ public class OwnerWrapper implements Serializable {
 	 */
 	@Lister
 	@Order(6)
-	@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
+	@InnerPrototype(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
 	public List<PetWrapper> getPets() {
 
 		return new AWrappingList<PetWrapper, Pet>() {

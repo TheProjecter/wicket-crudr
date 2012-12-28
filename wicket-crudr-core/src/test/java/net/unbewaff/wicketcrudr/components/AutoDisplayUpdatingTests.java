@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.annotations.Order;
@@ -112,7 +112,7 @@ public class AutoDisplayUpdatingTests {
 
 		@Lister(editInPlace=InPlaceEditor.NONE)
 		@Order(2)
-		@InnerType(type=String.class, separator = "sep", displayAs=DisplayType.CONCATENATED)
+		@InnerPrototype(type=String.class, separator = "sep", displayAs=DisplayType.CONCATENATED)
 		public List<String> getList() {
 			return list;
 		}

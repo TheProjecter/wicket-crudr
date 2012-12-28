@@ -13,14 +13,16 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
 
     private static final long serialVersionUID = 4158102566457762813L;
     private final ILabelProvider<T> labelProvider;
+    private String cssClass;
 
-    public FlexibleNonEditableColumn(IModel<String> displayModel, String sortProperty, ILabelProvider<T> labelProvider) {
+    public FlexibleNonEditableColumn(IModel<String> displayModel, String sortProperty, ILabelProvider<T> labelProvider, String cssClass) {
         super(displayModel, sortProperty);
         this.labelProvider = labelProvider;
+        this.cssClass = " " + cssClass;
     }
 
-    public FlexibleNonEditableColumn(IModel<String> displayModel, ILabelProvider<T> labelProvider) {
-        this(displayModel, null, labelProvider);
+    public FlexibleNonEditableColumn(IModel<String> displayModel, ILabelProvider<T> labelProvider, String cssClass) {
+        this(displayModel, null, labelProvider, cssClass);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
 	 */
 	@Override
 	public String getCssClassForHeader() {
-		return "ui-widget-header";
+		return "ui-widget-header" + cssClass;
 	}
 
 	/* (non-Javadoc)
@@ -71,7 +73,7 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
 	 */
 	@Override
 	public String getCssClassForBody() {
-		return "ui-widget-content";
+		return "ui-widget-content" + cssClass;
 	}
 
 	/* (non-Javadoc)
@@ -79,7 +81,7 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
 	 */
 	@Override
 	public String getCssClassForFooter() {
-		return "ui-widget-content";
+		return "ui-widget-content" + cssClass;
 	}
 
 }

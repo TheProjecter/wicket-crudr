@@ -12,7 +12,7 @@ import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
@@ -49,7 +49,7 @@ public class DataBlockFactory implements Serializable {
 
     public static <T extends Serializable> IDataBlock<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider) {
         String cleanProperty = PropertyCleaner.getCleanPropertyName(property);
-        InnerType innerType = m.getAnnotation(InnerType.class);
+        InnerPrototype innerType = m.getAnnotation(InnerPrototype.class);
         Class<?> returnType = m.getReturnType();
 		if (innerType == null) {
 			if (Serializable.class.isAssignableFrom(returnType)) {
@@ -73,7 +73,7 @@ public class DataBlockFactory implements Serializable {
      * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    private static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, DisplayType d, InnerType innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
+    private static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
         IDataBlock<T> dataBlock = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);

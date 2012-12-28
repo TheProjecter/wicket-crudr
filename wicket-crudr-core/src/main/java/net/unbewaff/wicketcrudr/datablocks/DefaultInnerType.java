@@ -6,13 +6,13 @@ package net.unbewaff.wicketcrudr.datablocks;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 
 /**
  * @author DavidH
  *
  */
-public class DefaultInnerType implements InnerType {
+public class DefaultInnerType implements InnerPrototype {
 	
 	private Class<? extends Serializable> clazz;
 

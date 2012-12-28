@@ -6,6 +6,7 @@ package net.unbewaff.wicketcrudr;
 import java.io.Serializable;
 import java.util.List;
 
+import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.borders.StyleableBorder;
 import net.unbewaff.wicketcrudr.borders.TableBorder;
 import net.unbewaff.wicketcrudr.datablocks.DataBlockFactory;
@@ -28,8 +29,10 @@ import org.apache.wicket.model.Model;
  */
 public class AutoDisplay<T extends Serializable> extends Panel implements Serializable {
 
-	private final Class<T> clazz;
+	private static final long serialVersionUID = 1837476148440999521L;
+	private String cssClass;
 	private static final transient Logger logger = Logger.getLogger(AutoDisplay.class);
+	private final List<IDataBlock<T>> blocks;
 
 	/**
 	 * @param id
@@ -37,7 +40,11 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	 */
 	public AutoDisplay(String id, IModel<T> model, Class<T> clazz) {
 		super(id, model);
-		this.clazz = clazz;
+		Css css = clazz.getAnnotation(Css.class);
+		if (css != null) {
+			cssClass = " " + css.value();
+		}
+		blocks = DataBlockFactory.getColumns(clazz); 
 	}
 
 	/* (non-Javadoc)
@@ -56,20 +63,19 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	protected void onInitialize() {
 		this.setVisible(getDefaultModelObject() != null);
 		logger.debug("Model Object: " + getDefaultModelObject());
-		StyleableBorder border = new TableBorder("border", getBorderCss());
+		StyleableBorder border = new TableBorder("border", Model.of("autoDisplaytable" + cssClass));
 		WebMarkupContainer webMarkupContainer = new WebMarkupContainer("table");
-		webMarkupContainer.add(new AttributeAppender("class", getBorderCss()));
+		webMarkupContainer.add(new AttributeAppender("class", Model.of("autoDisplaytable" + cssClass)));
 		border.addToBorder(webMarkupContainer);
 
 		final RepeatingView view = new RepeatingView("view", getDefaultModel());
-		List<IDataBlock<T>> list = DataBlockFactory.getColumns(clazz);
-		for (IDataBlock<T> block: list) {
+		for (IDataBlock<T> block: blocks) {
 			Fragment fragment = new DisplayFragment(view.newChildId(), border.getFragmentId(), border);
 			WebMarkupContainer container = new WebMarkupContainer("fragmentContainer");
 			fragment.add(container);
 			view.add(fragment);
-			Component label = block.getLabel("label", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of(getLabelCss())));
-			Component value = block.getValue("value", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of(getValueCss())));
+			Component label = block.getLabel("label", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-header" + cssClass)));
+			Component value = block.getValue("value", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-content" + cssClass)));
 			container.add(label);
 			container.add(value);
 		}
@@ -81,24 +87,6 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	}
 
 
-	/**
-	 * @return
-	 */
-	protected String getValueCss() {
-		return "ui-widget-content";
-	}
-
-	/**
-	 * @return
-	 */
-	protected String getLabelCss() {
-		return "ui-widget-header";
-	}
-	
-	protected IModel<String> getBorderCss() {
-		return Model.of("autoDisplaytable");
-	}
-	
 	protected static class DisplayFragment extends Fragment implements Serializable {
 
 		/**
@@ -109,29 +97,5 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 		public DisplayFragment(String id, String markupId, MarkupContainer markupProvider) {
 			super(id, markupId, markupProvider);
 		}
-	}
-	
-	@Override
-	protected void onRender() {
-		// TODO Auto-generated method stub
-		super.onRender();
-	}
-	
-	@Override
-	protected void onBeforeRender() {
-		// TODO Auto-generated method stub
-		super.onBeforeRender();
-	}
-	
-	@Override
-	protected void onModelChanging() {
-		// TODO Auto-generated method stub
-		super.onModelChanging();
-	}
-	
-	@Override
-	protected void onModelChanged() {
-		// TODO Auto-generated method stub
-		super.onModelChanged();
 	}
 }

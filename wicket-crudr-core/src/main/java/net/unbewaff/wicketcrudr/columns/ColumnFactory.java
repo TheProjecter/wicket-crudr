@@ -12,9 +12,10 @@ import java.util.List;
 import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Ignore;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
+import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
@@ -49,25 +50,26 @@ public class ColumnFactory implements Serializable {
         // static use only
     }
 
-    public static <T extends Serializable> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix) {
+    public static <T extends Serializable> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
         String cleanProperty = PropertyCleaner.getCleanPropertyName(property);
-        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(DisplayType.class), m.getAnnotation(InnerType.class), cleanProperty, clazz, m.getReturnType(), listProvider, labelResourcePrefix);
+        return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(DisplayType.class), m.getAnnotation(InnerPrototype.class), cleanProperty, clazz, m.getReturnType(), listProvider, labelResourcePrefix, cssClass);
     }
 
     /**
      * @param <T>
      * @param l The Lister Annotation
      * @param e The Editor Annotation
-     * @param d TODO
+     * @param d The DisplayType Annotation
      * @param innerType The Generic Type of a list
      * @param property The property name
      * @param clazz the Class T
      * @param returnType the return type of the method
      * @param listProvider A listprovider
      * @param labelResourcePrefix The LabelResourcePrefix Annotation
+     * @param cssClass TODO
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    public static <T extends Serializable> IColumn<T> getColumn(Lister l, Editor e, DisplayType d, InnerType innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix) {
+    public static <T extends Serializable> IColumn<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(labelResourcePrefix, clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
@@ -83,7 +85,7 @@ public class ColumnFactory implements Serializable {
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
             col = new FlexibleEditableColumn<T>(displayModel, conf);
         } else {
-            col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider);
+            col = new FlexibleNonEditableColumn<T>(displayModel, labelProvider, cssClass);
         }
 
         return col;
@@ -116,9 +118,12 @@ public class ColumnFactory implements Serializable {
     		}
     	}
     	Collections.sort(methods, new PositionComparator());
+    	
+    	Css css = clazz.getAnnotation(Css.class);
+		String cssClass = css != null ? css.value() : "";
 
     	for (Method m: methods) {
-			columns.add(getColumn(m, m.getName(), clazz, null, clazz.getAnnotation(LabelResourcePrefix.class)));
+			columns.add(getColumn(m, m.getName(), clazz, null, clazz.getAnnotation(LabelResourcePrefix.class), cssClass));
 		}
 
 		return columns;

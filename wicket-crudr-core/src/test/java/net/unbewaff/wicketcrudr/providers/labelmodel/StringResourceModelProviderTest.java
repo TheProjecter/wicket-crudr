@@ -6,7 +6,7 @@ package net.unbewaff.wicketcrudr.providers.labelmodel;
 import java.io.Serializable;
 
 import net.unbewaff.WicketApplication;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,7 +34,7 @@ public class StringResourceModelProviderTest {
 	public void testWithIdWithoutResource() {
 		WicketTester tester = new WicketTester();
 		Mockery mockery = new Mockery();
-		final InnerType innerType = mockery.mock(InnerType.class);
+		final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
     	mockery.checking(new Expectations() {{
     		allowing(innerType).type(); will(returnValue(WithResourceKeyWrapper.class));
     	}});
@@ -48,7 +48,7 @@ public class StringResourceModelProviderTest {
 	public void testWithIdWithResource() {
 		WicketTester tester = new WicketTester(new WicketApplication());
 		Mockery mockery = new Mockery();
-		final InnerType innerType = mockery.mock(InnerType.class);
+		final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
     	mockery.checking(new Expectations() {{
     		allowing(innerType).type(); will(returnValue(WithResourceKeyWrapper.class));
     	}});
@@ -62,7 +62,7 @@ public class StringResourceModelProviderTest {
 	public void testPlainEntity() {
 		WicketTester tester = new WicketTester(new WicketApplication());
 		Mockery mockery = new Mockery();
-		final InnerType innerType = mockery.mock(InnerType.class);
+		final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
     	mockery.checking(new Expectations() {{
     		allowing(innerType).type(); will(returnValue(TestType.class));
     	}});

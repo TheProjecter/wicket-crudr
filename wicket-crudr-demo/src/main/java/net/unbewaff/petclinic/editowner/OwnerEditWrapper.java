@@ -12,7 +12,7 @@ import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
@@ -138,7 +138,7 @@ public class OwnerEditWrapper implements Serializable {
 	 */
 	@Lister
 	@Editor(editAs=EditorType.PALETTE)
-	@InnerType(type=PetWrapper.class)
+	@InnerPrototype(type=PetWrapper.class)
 	@Order(6)
 	public List<PetWrapper> getPets() {
 		return new AWrappingList<PetWrapper, Pet>() {

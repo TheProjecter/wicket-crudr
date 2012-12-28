@@ -5,7 +5,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
@@ -33,7 +33,7 @@ public class LabelProviderFactory {
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider) {
-    	return getLabelProvider(m.getAnnotation(Lister.class), m.getAnnotation(InnerType.class), labelModelProvider, m.getReturnType());
+    	return getLabelProvider(m.getAnnotation(Lister.class), m.getAnnotation(InnerPrototype.class), labelModelProvider, m.getReturnType());
     }
 
     /**
@@ -46,7 +46,7 @@ public class LabelProviderFactory {
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     @SuppressWarnings("unchecked")
-    public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerType innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type) {
+    public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerPrototype innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type) {
         ILabelProvider<T> provider = null;
         if (type != null && Iterable.class.isAssignableFrom(type)) {
         	

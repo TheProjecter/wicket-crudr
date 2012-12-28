@@ -14,7 +14,7 @@ import net.unbewaff.petclinic.entities.Type;
 import net.unbewaff.petclinic.listowner.DisplayOwner.OwnerWrapper;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ConcatenatedLabelModelProvider.ConcatenatedLabelModel;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
@@ -135,7 +135,7 @@ public class ShowPetsTest {
 		}
 
 		@Lister
-		@InnerType(type=PetWrapper.class)
+		@InnerPrototype(type=PetWrapper.class)
 		public List<PetWrapper> getPets() {
 
 			return new AWrappingList<PetWrapper, Pet>() {
