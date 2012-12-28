@@ -1,20 +1,24 @@
 package net.unbewaff.petclinic.listvets;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.DisplayType.Display;
+import net.unbewaff.wicketcrudr.annotations.Ignore;
 import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 
+@Prototype
 public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 
 	private static final long serialVersionUID = 911673107682330559L;
@@ -24,7 +28,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 		this.vet = vet;
 	}
 	
-	public Veterinarian getObject() {
+	public Veterinarian exposeObject() {
 		return vet;
 	}
 
@@ -58,8 +62,8 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 
 	@Lister
 	@InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class)
-	public Set<SpecialitiesWrapper> getSpecialities() {
-		Set<SpecialitiesWrapper> list = new HashSet<SpecialitiesWrapper>();
+	public List<SpecialitiesWrapper> getSpecialities() {
+		List<SpecialitiesWrapper> list = new ArrayList<SpecialitiesWrapper>();
 		for (Specialities speciality : vet.getSpecialities()) {
 			list.add(new SpecialitiesWrapper(speciality));
 		}
@@ -70,6 +74,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 		return vet.toString();
 	}
 
+	@Prototype
 	public static class SpecialitiesWrapper implements ICrudrDataProvider<Specialities>{
 
 		private static final long serialVersionUID = 1734840726953537324L;
@@ -99,8 +104,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 			return speciality;
 		}
 
-		@ResourceKey
-		public final String name() {
+		public final String toString() {
 			return speciality.name();
 		}
 

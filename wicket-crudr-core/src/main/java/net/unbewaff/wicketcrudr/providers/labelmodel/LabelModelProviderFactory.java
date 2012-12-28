@@ -31,7 +31,7 @@ public class LabelModelProviderFactory {
     /**
      * @param <T>
      * @param cleanProperty
-     * @param d The Lister Annotation defining the Metadata
+     * @param d The DisplayType Annotation defining the Metadata
      * @return
      */
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, DisplayType d) {

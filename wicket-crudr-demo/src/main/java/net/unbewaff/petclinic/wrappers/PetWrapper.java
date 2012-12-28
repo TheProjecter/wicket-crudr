@@ -29,7 +29,7 @@ public class PetWrapper implements Serializable, IWrapper<Pet> {
 	}
 
 	@Override
-	public Pet getObject() {
+	public Pet exposeObject() {
 		return pet;
 	}
 

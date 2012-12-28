@@ -1,8 +1,8 @@
 package net.unbewaff.petclinic.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -14,7 +14,7 @@ public class Veterinarian implements Serializable {
     private Integer id;
     private String firstName;
     private String lastName;
-    private final Set<Specialities> specialities = new HashSet<Specialities>();
+    private final List<Specialities> specialities = new ArrayList<Specialities>();
 
     public Veterinarian() {
         // intentionally empty
@@ -79,7 +79,7 @@ public class Veterinarian implements Serializable {
     /**
      * @return the specialities
      */
-    public Set<Specialities> getSpecialities() {
+    public List<Specialities> getSpecialities() {
         return specialities;
     }
 
