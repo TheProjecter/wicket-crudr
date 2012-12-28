@@ -27,7 +27,7 @@ import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
-import net.unbewaff.wicketcrudr.tools.PositionComparator;
+import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 import net.unbewaff.wicketcrudr.tools.PropertyCleaner;
 
 import org.apache.log4j.Logger;
@@ -72,7 +72,7 @@ public class ColumnFactory implements Serializable {
     public static <T extends Serializable> IColumn<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(labelResourcePrefix, clazz.getSimpleName(), property);
-        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, l);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType);
         InPlaceEditor editInPlace = l.editInPlace();
         if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
@@ -117,7 +117,7 @@ public class ColumnFactory implements Serializable {
     			methods.add(m);
     		}
     	}
-    	Collections.sort(methods, new PositionComparator());
+    	Collections.sort(methods, new OrderIndexComparator());
     	
     	Css css = clazz.getAnnotation(Css.class);
 		String cssClass = css != null ? css.value() : "";
