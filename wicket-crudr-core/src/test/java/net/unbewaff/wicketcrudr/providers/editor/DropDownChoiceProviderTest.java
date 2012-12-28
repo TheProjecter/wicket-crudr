@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+import net.unbewaff.wicketcrudr.annotations.DisplayType.Display;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.DropDownChoicePanel;
 import net.unbewaff.wicketcrudr.providers.editorpanel.DropDownChoicePanelProvider;
@@ -76,11 +77,12 @@ public class DropDownChoiceProviderTest {
     public void primitiveToStringRendering() {
         final Editor e = mockery.mock(Editor.class);
         final Lister l = mockery.mock(Lister.class);
+        final DisplayType d = mockery.mock(DisplayType.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(l).displayAs(); will(returnValue(Display.DEFAULT));
+            exactly(1).of(d).value(); will(returnValue(Display.DEFAULT));
             exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, l, StringHolder.class, "data");
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", "");
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);
@@ -112,12 +114,13 @@ public class DropDownChoiceProviderTest {
     public void stringResourceRendering() {
         final Editor e = mockery.mock(Editor.class);
         final Lister l = mockery.mock(Lister.class);
+        final DisplayType d = mockery.mock(DisplayType.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(l).displayAs(); will(returnValue(Display.RESOURCE));
+            exactly(1).of(d).value(); will(returnValue(Display.RESOURCE));
             exactly(1).of(l).resourcePrefix(); will(returnValue("ddctest"));
             exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, l, StringHolder.class, "data");
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", l.resourcePrefix());
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);

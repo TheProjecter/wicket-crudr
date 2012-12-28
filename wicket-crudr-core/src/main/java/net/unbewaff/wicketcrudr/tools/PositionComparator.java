@@ -3,7 +3,7 @@ package net.unbewaff.wicketcrudr.tools;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
-import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.Order;
 
 /**
  * @author David Hendrix (Nicktarix)
@@ -23,7 +23,7 @@ public class PositionComparator implements Comparator<Method> {
 	 */
 	private int getPosition(Method o1) {
 		int value = Integer.MAX_VALUE;
-		Position annotation = o1.getAnnotation(Position.class);
+		Order annotation = o1.getAnnotation(Order.class);
 		if (annotation != null) {
 			value = annotation.value();
 		}

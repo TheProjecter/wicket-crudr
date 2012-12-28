@@ -14,7 +14,7 @@ import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
-import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.Order;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -101,7 +101,7 @@ public class AutoDisplayUpdatingTests {
 		}
 
 		@Lister(editInPlace=InPlaceEditor.NONE)
-		@Position(1)
+		@Order(1)
 		public String getData() {
 			return data;
 		}
@@ -111,7 +111,7 @@ public class AutoDisplayUpdatingTests {
 		}
 
 		@Lister(editInPlace=InPlaceEditor.NONE)
-		@Position(2)
+		@Order(2)
 		@InnerType(type=String.class, separator = "sep", displayAs=DisplayType.CONCATENATED)
 		public List<String> getList() {
 			return list;

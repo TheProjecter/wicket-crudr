@@ -16,6 +16,7 @@ import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
@@ -77,7 +78,7 @@ public class FlexibleEditableColumnTest {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", l);
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
@@ -109,7 +110,7 @@ public class FlexibleEditableColumnTest {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", l);
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, String.class, "data");
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
@@ -141,7 +142,7 @@ public class FlexibleEditableColumnTest {
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", l);
         ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, null, Boolean.class, "data");
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, Boolean.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
         cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
@@ -184,7 +185,8 @@ public class FlexibleEditableColumnTest {
 		};
 	}
 
-    private static class StringHolder implements Serializable {
+    @Prototype
+	private static class StringHolder implements Serializable {
 
         private static final long serialVersionUID = 8070868717307881900L;
         private String data;

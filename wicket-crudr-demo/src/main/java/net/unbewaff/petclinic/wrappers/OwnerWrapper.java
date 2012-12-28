@@ -9,7 +9,7 @@ import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.wicketcrudr.annotations.InnerType;
 import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Position;
+import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 
@@ -53,7 +53,7 @@ public class OwnerWrapper implements Serializable {
 	 * @return the owners First Name
 	 */
 	@Lister
-	@Position(2)
+	@Order(2)
 	public String getFirstName() {
 		return owner.getFirstName();
 	}
@@ -70,7 +70,7 @@ public class OwnerWrapper implements Serializable {
 	 * @return the owners Last Name
 	 */
 	@Lister
-	@Position(1)
+	@Order(1)
 	public String getLastName() {
 		return owner.getLastName();
 	}
@@ -88,7 +88,7 @@ public class OwnerWrapper implements Serializable {
 	 * @return the owners address
 	 */
 	@Lister
-	@Position(3)
+	@Order(3)
 	public String getAddress() {
 		return owner.getAddress();
 	}
@@ -105,7 +105,7 @@ public class OwnerWrapper implements Serializable {
 	 * @return the owners city
 	 */
 	@Lister
-	@Position(4)
+	@Order(4)
 	public String getCity() {
 		return owner.getCity();
 	}
@@ -122,7 +122,7 @@ public class OwnerWrapper implements Serializable {
 	 * @return the owners phone number
 	 */
 	@Lister
-	@Position(5)
+	@Order(5)
 	public String getPhone() {
 		return owner.getPhone();
 	}
@@ -158,7 +158,7 @@ public class OwnerWrapper implements Serializable {
 	 * @see net.unbewaff.petclinic.entities.Owner#getPets()
 	 */
 	@Lister
-	@Position(6)
+	@Order(6)
 	@InnerType(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
 	public List<PetWrapper> getPets() {
 
