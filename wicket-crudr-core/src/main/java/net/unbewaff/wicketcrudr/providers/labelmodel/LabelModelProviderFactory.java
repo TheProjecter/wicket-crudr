@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
-import net.unbewaff.wicketcrudr.tools.PositionComparator;
+import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 
 import org.apache.log4j.Logger;
 
@@ -31,13 +31,13 @@ public class LabelModelProviderFactory {
     /**
      * @param <T>
      * @param cleanProperty
-     * @param l The Lister Annotation defining the Metadata
+     * @param d The Lister Annotation defining the Metadata
      * @return
      */
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, Lister l) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, DisplayType d) {
         ILabelModelProvider<T> provider;
-        if (l.displayAs().equals(Display.RESOURCE)) {
-            provider = new StringResourcePropertyModelProvider<T>(cleanProperty, l.resourcePrefix());
+        if (d.value().equals(DisplayType.Display.RESOURCE)) {
+            provider = new StringResourcePropertyModelProvider<T>(cleanProperty, d.resourcePrefix());
         } else {
             provider = new PropertyModelProvider<T>(cleanProperty);
         }
@@ -53,7 +53,7 @@ public class LabelModelProviderFactory {
     		}
     	}
 
-    	Collections.sort(methods, new PositionComparator());
+    	Collections.sort(methods, new OrderIndexComparator());
     	
     	if (methods.size() > 0) {
     		labelModelProvider = new ConcatenatedLabelModelProvider<T>(methods, " ");

@@ -39,5 +39,10 @@ public @interface DisplayType {
      * @return
      */
     Display value() default Display.DEFAULT;
+    
+    /**
+     * @return the resourcePrefix used for StringResources.
+     */
+    String resourcePrefix() default "";
 
 }
