@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ListOnTheParentModel;
 
@@ -29,13 +29,13 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 
 	private static final long serialVersionUID = 4751845396328553541L;
 	private ILabelModelProvider<V> labelModelProvider;
-	private InnerType innerType;
+	private InnerPrototype innerType;
 
 	/**
 	 * @param id
 	 * @param model
 	 */
-	public IterableLabel(String id, IModel<T> model, ILabelModelProvider<V> labelModelProvider, InnerType innerType) {
+	public IterableLabel(String id, IModel<T> model, ILabelModelProvider<V> labelModelProvider, InnerPrototype innerType) {
 		super(id, model);
 		this.labelModelProvider = labelModelProvider;
 		if (innerType != null) {
@@ -157,7 +157,7 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 		abstract Label addSeparator(WebMarkupContainer container);
 	}
 	
-	private class DefaultInnerType implements InnerType {
+	private class DefaultInnerType implements InnerPrototype {
 		
 		private Class<?> clazz;
 		

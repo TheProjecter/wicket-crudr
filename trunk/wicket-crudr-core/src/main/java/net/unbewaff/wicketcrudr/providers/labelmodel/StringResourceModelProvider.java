@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.ResourceKey;
 
 import org.apache.log4j.Logger;
@@ -27,13 +27,13 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
 	private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
 	private String resourcePrefix;
-	private InnerType innerType;
+	private InnerPrototype innerType;
 
     /**
      * @param resourcePrefix
      * @param propertyProvider
      */
-    public StringResourceModelProvider(String resourcePrefix, InnerType innerType) {
+    public StringResourceModelProvider(String resourcePrefix, InnerPrototype innerType) {
     	if (innerType == null) {
     		throw new IllegalArgumentException("InnerType may not be null");
     	}
@@ -73,7 +73,7 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 	 * @param innerType
 	 * @return
 	 */
-	private Method findResourceProvider(InnerType innerType) {
+	private Method findResourceProvider(InnerPrototype innerType) {
 		Method resourceProvider = null;
 		Class<?> type = innerType.type();
 		for (Method m: type.getMethods()) {

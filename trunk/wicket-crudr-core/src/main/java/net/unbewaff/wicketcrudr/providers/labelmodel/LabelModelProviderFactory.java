@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.Display;
 import net.unbewaff.wicketcrudr.tools.PositionComparator;
@@ -44,7 +44,7 @@ public class LabelModelProviderFactory {
         return provider;
     }
 
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerType innerType) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerPrototype innerType) {
     	ILabelModelProvider<T> labelModelProvider;
     	List<Method> methods = new ArrayList<Method>();
     	for (Method m: innerType.type().getMethods()) {

@@ -4,7 +4,6 @@
 package net.unbewaff.petclinic.listowner;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +11,11 @@ import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Order;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
+import net.unbewaff.wicketcrudr.annotations.type.Prototypes;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
@@ -31,11 +32,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
- * @author davidh
- *
- */
-/**
- * @author davidh
+ * @author David Hendrix (Nicktarix)
  *
  */
 public class DisplayOwner extends WebPage implements Serializable {
@@ -235,7 +232,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		 */
 		@Lister
 		@Order(6)
-		@InnerType(type=PetWrapper.class)
+		@InnerPrototype(type=PetWrapper.class)
 		public List<PetWrapper> getPets() {
 			logger.debug("Retrieving " + owner.getPets().size() + " pets for " + owner.getFirstName() + " " + owner.getLastName() + ".");
 
@@ -259,6 +256,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 		}
 	}
 
+	@Prototype(Prototypes.LONG)
 	public static class PetWrapper implements Serializable, IWrapper<Pet> {
 		
 		private static final long serialVersionUID = 4972449001878482038L;

@@ -13,8 +13,8 @@ import java.util.Set;
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.petclinic.listvets.VetWrapper;
-import net.unbewaff.wicketcrudr.annotations.InnerType;
-import net.unbewaff.wicketcrudr.annotations.InnerType.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
@@ -33,7 +33,7 @@ public class VetWrapperVariant extends VetWrapper implements Serializable, ICrud
 
 	@Override
 	@Lister(resourcePrefix="VetWrapper")
-	@InnerType(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
+	@InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
 	public Set<SpecialitiesWrapper> getSpecialities() {
 		return super.getSpecialities();
 	}

@@ -6,7 +6,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 import java.io.Serializable;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.InnerType;
+import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 
@@ -22,12 +22,12 @@ public class IterableLabelProvider<T extends List<V>, V extends Serializable> im
 
     private ILabelModelProvider<T> labelModelProvider;
     private ILabelModelProvider<V> innerLabelModelProvider;
-    private InnerType innerType;
+    private InnerPrototype innerType;
 
     /**
      * @param labelModelProvider
      */
-    public IterableLabelProvider(ILabelModelProvider<T> labelModelProvider, ILabelModelProvider<V> innerLabelModelProvider, InnerType innerType) {
+    public IterableLabelProvider(ILabelModelProvider<T> labelModelProvider, ILabelModelProvider<V> innerLabelModelProvider, InnerPrototype innerType) {
         this.labelModelProvider = labelModelProvider;
         this.innerLabelModelProvider = innerLabelModelProvider;
         this.innerType = innerType;

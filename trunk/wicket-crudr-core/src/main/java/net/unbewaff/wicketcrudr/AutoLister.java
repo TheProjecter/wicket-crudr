@@ -6,8 +6,8 @@ package net.unbewaff.wicketcrudr;
 import java.io.Serializable;
 import java.util.List;
 
+import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.columns.ColumnFactory;
-import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.StyledHeadersToolbar;
 
 import org.apache.wicket.behavior.AttributeAppender;
@@ -25,27 +25,23 @@ import org.apache.wicket.model.Model;
  */
 public class AutoLister<T extends Serializable> extends Panel implements Serializable {
 
+	private static final long serialVersionUID = -840357677393152697L;
 	private final int rowsPerPage;
-	private final Class<T> clazz;
-	private String tableCssClass = "ui-widget ui-corner-all";
-
-	/**
-	 * @param id
-	 */
-	public AutoLister(String id, int rowsPerPage, Class<T> clazz) {
-		super(id);
-		this.rowsPerPage = rowsPerPage;
-		this.clazz = clazz;
-	}
+	private String tableCssClass = "ui-widget";
+	private final List<IColumn<T>> columns;
 
 	/**
 	 * @param id
 	 * @param model
 	 */
-	public AutoLister(String id, IModel<? extends List<T>> model, int rowsPerPage, Class<T> clazz) {
+	public AutoLister(String id, IModel<List<T>> model, int rowsPerPage, Class<T> clazz) {
 		super(id, model);
 		this.rowsPerPage = rowsPerPage;
-		this.clazz = clazz;
+		Css css = clazz.getAnnotation(Css.class);
+		if (css != null) {
+			tableCssClass = tableCssClass + " " + css.value();
+		}
+		columns = ColumnFactory.getColumns(clazz);
 	}
 
 	/* (non-Javadoc)
@@ -53,28 +49,13 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 	 */
 	@Override
 	protected void onInitialize() {
-		final List<IColumn<T>> columns = ColumnFactory.getColumns(clazz);
 		@SuppressWarnings("unchecked")
-		ICrudrListProvider<T> listProvider = (ICrudrListProvider<T>)getDefaultModelObject();
-		final IDataProvider<T> dataProvider = new ListDataProvider<T>(listProvider.getList());
+		final IDataProvider<T> dataProvider = new ListDataProvider<T>((List<T>)getDefaultModelObject());
 		DataTable<T> dataTable = new DataTable<T>("lister", columns, dataProvider, rowsPerPage);
-		dataTable.add(new AttributeAppender("class", Model.of(getTableCssClass())));
+		dataTable.add(new AttributeAppender("class", Model.of(tableCssClass), " "));
 		StyledHeadersToolbar headerToolbar = new StyledHeadersToolbar(dataTable, null);
 		dataTable.addTopToolbar(headerToolbar);
 		add(dataTable);
 		super.onInitialize();
 	}
-
-	/**
-	 * @return the CSS Class to use for the DataTable component of AutoLister. To change this you can either
-	 * override this method in a subclass or use {@link AutoLister#setTableCssClass(String)}.
-	 */
-	protected String getTableCssClass() {
-		return tableCssClass;
-	}
-
-	public void setTableCssClass(String tableCssClass) {
-		this.tableCssClass = tableCssClass;
-	}
-
 }
