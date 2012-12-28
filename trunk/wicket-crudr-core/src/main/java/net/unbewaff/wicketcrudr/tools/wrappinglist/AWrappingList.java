@@ -17,7 +17,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	 * @see java.util.List#add(java.lang.Object)
 	 */
 	public boolean add(T e) {
-		return getBaseList().add(e.getObject());
+		return getBaseList().add(e.exposeObject());
 	}
 
 	/**
@@ -26,7 +26,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	 * @see java.util.List#add(int, java.lang.Object)
 	 */
 	public void add(int index, T element) {
-		getBaseList().add(index, element.getObject());
+		getBaseList().add(index, element.exposeObject());
 	}
 
 	/**
@@ -37,7 +37,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public boolean addAll(Collection<? extends T> c) {
 		List<E> temp = new ArrayList<E>();
 		for (T o :c) {
-			temp.add(o.getObject());
+			temp.add(o.exposeObject());
 		}
 		return getBaseList().addAll(temp);
 	}
@@ -51,7 +51,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public boolean addAll(int index, Collection<? extends T> c) {
 		List<E> temp = new ArrayList<E>();
 		for (T o :c) {
-			temp.add(o.getObject());
+			temp.add(o.exposeObject());
 		}
 		return getBaseList().addAll(index, temp);
 	}
@@ -72,7 +72,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public boolean contains(Object o) {
 		boolean retValue = false;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().contains(((IWrapper) o).getObject());
+			retValue = getBaseList().contains(((IWrapper) o).exposeObject());
 		}
 		return retValue;
 	}
@@ -124,7 +124,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public int indexOf(Object o) {
 		int retValue = -1;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().indexOf(((IWrapper) o).getObject());
+			retValue = getBaseList().indexOf(((IWrapper) o).exposeObject());
 		}
 		return retValue;
 	}
@@ -153,7 +153,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public int lastIndexOf(Object o) {
 		int retValue = -1;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().lastIndexOf(((IWrapper) o).getObject());
+			retValue = getBaseList().lastIndexOf(((IWrapper) o).exposeObject());
 		}
 		return retValue;
 	}
@@ -192,7 +192,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	public boolean remove(Object o) {
 		boolean retValue = false;
 		if (o instanceof IWrapper) {
-			retValue = getBaseList().remove(((IWrapper) o).getObject());
+			retValue = getBaseList().remove(((IWrapper) o).exposeObject());
 		}
 		return retValue;
 	}
@@ -207,7 +207,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 		boolean retValue = false;
 		for (Object o :c) {
 			if (o instanceof IWrapper) {
-				retValue = getBaseList().remove(((IWrapper) o).getObject()) || retValue;
+				retValue = getBaseList().remove(((IWrapper) o).exposeObject()) || retValue;
 			}
 		}
 		return retValue;
@@ -229,7 +229,7 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	 * @see java.util.List#set(int, java.lang.Object)
 	 */
 	public T set(int index, T element) {
-		return getWrapperFactory().newWrapper(getBaseList().set(index, element.getObject()));
+		return getWrapperFactory().newWrapper(getBaseList().set(index, element.exposeObject()));
 	}
 
 	/**
@@ -247,10 +247,11 @@ public abstract class AWrappingList<T extends IWrapper<E>, E> implements List<T>
 	 * @see java.util.List#subList(int, int)
 	 */
 	public List<T> subList(final int fromIndex, final int toIndex) {
+
 		return new AWrappingList<T, E>() {
 			@Override
 			protected List<E> getBaseList() {
-				return getBaseList().subList(fromIndex, toIndex);
+				return AWrappingList.this.getBaseList().subList(fromIndex, toIndex);
 			}
 
 			@Override

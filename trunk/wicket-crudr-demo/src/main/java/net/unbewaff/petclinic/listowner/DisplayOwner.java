@@ -266,7 +266,7 @@ public class DisplayOwner extends WebPage implements Serializable {
 			this.pet = pet;
 		}
 		
-		public Pet getObject() {
+		public Pet exposeObject() {
 			return pet;
 		}
 

@@ -17,6 +17,7 @@ import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
@@ -74,7 +75,7 @@ public class ColumnFactory implements Serializable {
         IModel<String> displayModel = getHeaderModel(labelResourcePrefix, clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType, d);
-        InPlaceEditor editInPlace = l.editInPlace();
+        InPlaceEditor editInPlace = l != null ? l.editInPlace() : InPlaceEditor.NONE;
         if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
             logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");
             editInPlace = InPlaceEditor.NONE;
@@ -113,8 +114,10 @@ public class ColumnFactory implements Serializable {
     	List<Method> methods = new ArrayList<Method>();
     	for (Method m :clazz.getMethods()) {
     		String name = m.getName();
-    		if (m.getAnnotation(Ignore.class) == null && (name.startsWith("get") || name.startsWith("is"))) {
-    			methods.add(m);
+    		if (m.getDeclaringClass().isAnnotationPresent(Prototype.class)) {
+    			if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is"))) {
+    				methods.add(m);
+    			}
     		}
     	}
     	Collections.sort(methods, new OrderIndexComparator());

@@ -29,7 +29,7 @@ public class WrappingListIterator<T extends IWrapper<E>, E> implements ListItera
 	 * @see java.util.ListIterator#add(java.lang.Object)
 	 */
 	public void add(T e) {
-		innerIterator.add(e.getObject());
+		innerIterator.add(e.exposeObject());
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class WrappingListIterator<T extends IWrapper<E>, E> implements ListItera
 	 * @see java.util.ListIterator#set(java.lang.Object)
 	 */
 	public void set(T e) {
-		innerIterator.set(e.getObject());
+		innerIterator.set(e.exposeObject());
 	}
 
 	/**
