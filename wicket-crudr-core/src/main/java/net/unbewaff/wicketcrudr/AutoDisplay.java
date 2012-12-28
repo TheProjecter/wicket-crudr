@@ -30,9 +30,11 @@ import org.apache.wicket.model.Model;
 public class AutoDisplay<T extends Serializable> extends Panel implements Serializable {
 
 	private static final long serialVersionUID = 1837476148440999521L;
-	private String cssClass;
+	private String cssClass = "";
 	private static final transient Logger logger = Logger.getLogger(AutoDisplay.class);
 	private final List<IDataBlock<T>> blocks;
+	private RepeatingView view;
+	private StyleableBorder border;
 
 	/**
 	 * @param id
@@ -59,31 +61,38 @@ public class AutoDisplay<T extends Serializable> extends Panel implements Serial
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	protected void onInitialize() {
 		this.setVisible(getDefaultModelObject() != null);
 		logger.debug("Model Object: " + getDefaultModelObject());
-		StyleableBorder border = new TableBorder("border", Model.of("autoDisplaytable" + cssClass));
+		border = new TableBorder("border", Model.of("autoDisplaytable" + cssClass));
 		WebMarkupContainer webMarkupContainer = new WebMarkupContainer("table");
 		webMarkupContainer.add(new AttributeAppender("class", Model.of("autoDisplaytable" + cssClass)));
 		border.addToBorder(webMarkupContainer);
 
-		final RepeatingView view = new RepeatingView("view", getDefaultModel());
-		for (IDataBlock<T> block: blocks) {
-			Fragment fragment = new DisplayFragment(view.newChildId(), border.getFragmentId(), border);
-			WebMarkupContainer container = new WebMarkupContainer("fragmentContainer");
-			fragment.add(container);
-			view.add(fragment);
-			Component label = block.getLabel("label", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-header" + cssClass)));
-			Component value = block.getValue("value", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-content" + cssClass)));
-			container.add(label);
-			container.add(value);
-		}
+		view = new RepeatingView("view", getDefaultModel());
 		border.add(view);
 		add(border);
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 		super.onInitialize();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void onBeforeRender() {
+		view.removeAll();
+		for (IDataBlock<T> block: blocks) {
+			Fragment fragment = new DisplayFragment(view.newChildId(), border.getFragmentId(), border);
+			WebMarkupContainer container = new WebMarkupContainer("fragmentContainer");
+			fragment.add(container);
+			view.add(fragment);
+			Component label = block.getLabel("label", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-header" + cssClass))).add(new AttributeAppender("class", Model.of(block.getName()), " "));
+			Component value = block.getValue("value", (IModel<T>) getDefaultModel()).add(new AttributeAppender("class", Model.of("ui-widget-content" + cssClass))).add(new AttributeAppender("class", Model.of(block.getName()), " "));
+			container.add(label);
+			container.add(value);
+		}
+
+		super.onBeforeRender();
 	}
 
 
