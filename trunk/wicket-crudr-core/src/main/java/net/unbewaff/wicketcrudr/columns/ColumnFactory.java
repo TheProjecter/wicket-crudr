@@ -73,7 +73,7 @@ public class ColumnFactory implements Serializable {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(labelResourcePrefix, clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
-        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType);
+        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType, d);
         InPlaceEditor editInPlace = l.editInPlace();
         if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
             logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");

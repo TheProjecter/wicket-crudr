@@ -74,13 +74,12 @@ public class FlexibleEditableColumnTest {
     	final DisplayType d = mockery.mock(DisplayType.class);
     	final Editor e = mockery.mock(Editor.class);
     	mockery.checking(new Expectations() {{
-    		exactly(1).of(l).displayAs(); will(returnValue(Display.DEFAULT));
-    		exactly(1).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+    		exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
     		exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
     	}});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -108,13 +107,12 @@ public class FlexibleEditableColumnTest {
         final Editor e = mockery.mock(Editor.class);
         final DisplayType d = mockery.mock(DisplayType.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(l).displayAs(); will(returnValue(Display.DEFAULT));
-            exactly(1).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+            exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
             exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
         }});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -143,13 +141,12 @@ public class FlexibleEditableColumnTest {
         final DisplayType d = mockery.mock(DisplayType.class);
         final Editor e = mockery.mock(Editor.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(l).displayAs(); will(returnValue(Display.CHECKBOX));
-            exactly(1).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+            exactly(2).of(d).value(); will(returnValue(DisplayType.Display.CHECKBOX));
             exactly(2).of(e).editAs(); will(returnValue(EditorType.CHECKBOX));
         }});
         List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
         ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class);
+        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, Boolean.class, "data", "");
         ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
         ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -159,6 +156,7 @@ public class FlexibleEditableColumnTest {
         TempPanel panel = new TempPanel("test");
         panel.add(table);
         tester.startComponentInPage(panel);
+        tester.debugComponentTrees();
         tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
         tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
         tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");

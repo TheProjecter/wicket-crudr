@@ -36,7 +36,7 @@ public class LabelModelProviderFactory {
      */
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, DisplayType d) {
         ILabelModelProvider<T> provider;
-        if (d.value().equals(DisplayType.Display.RESOURCE)) {
+        if (d != null && d.value().equals(DisplayType.Display.RESOURCE)) {
             provider = new StringResourcePropertyModelProvider<T>(cleanProperty, d.resourcePrefix());
         } else {
             provider = new PropertyModelProvider<T>(cleanProperty);
