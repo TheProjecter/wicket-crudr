@@ -65,7 +65,7 @@ public class DataBlockFactory implements Serializable {
      * @param <T>
      * @param l The Lister Annotation
      * @param e The Editor Annotation
-     * @param d The DisplayType Annotation
+     * @param d The DisplayType Annotation if present
      * @param innerType The Generic Type of a List
      * @param property The property name
      * @param clazz the Class T
@@ -77,7 +77,7 @@ public class DataBlockFactory implements Serializable {
         IDataBlock<T> dataBlock = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
-        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType);
+        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType, d);
         InPlaceEditor editInPlace = l.editInPlace();
         if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
             logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");

@@ -5,9 +5,10 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import java.lang.reflect.Method;
 
+import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+import net.unbewaff.wicketcrudr.annotations.DisplayType.Display;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
@@ -30,10 +31,11 @@ public class LabelProviderFactory {
      * @param <T>
      * @param m The annotated Method
      * @param labelModelProvider The {@link net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider<T>}
+     * @param d The DisplayType Annotation if present
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
-    public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider) {
-    	return getLabelProvider(m.getAnnotation(Lister.class), m.getAnnotation(InnerPrototype.class), labelModelProvider, m.getReturnType());
+    public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider, DisplayType d) {
+    	return getLabelProvider(m.getAnnotation(Lister.class), m.getAnnotation(InnerPrototype.class), labelModelProvider, m.getReturnType(), d);
     }
 
     /**
@@ -43,10 +45,11 @@ public class LabelProviderFactory {
      * @param innerType TODO
      * @param labelModelProvider The {@link net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider<T>}
      * @param type the type of the Object to display
+     * @param dt d The DisplayType Annotation if present
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     @SuppressWarnings("unchecked")
-    public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerPrototype innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type) {
+    public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerPrototype innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type, DisplayType dt) {
         ILabelProvider<T> provider = null;
         if (type != null && Iterable.class.isAssignableFrom(type)) {
         	
@@ -61,7 +64,7 @@ public class LabelProviderFactory {
        		provider = new IterableLabelProvider(labelModelProvider, LabelModelProviderFactory.getLabelModelProvider(prefix, innerType), innerType);
 
         } else {
-	        Display d = l.displayAs();
+        	DisplayType.Display d = dt != null ? dt.value(): Display.DEFAULT;
 	        switch (d) {
 	            case DEFAULT:
 	            case RESOURCE:
