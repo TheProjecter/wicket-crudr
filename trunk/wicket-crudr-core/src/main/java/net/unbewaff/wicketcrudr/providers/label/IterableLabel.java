@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ListOnTheParentModel;
 

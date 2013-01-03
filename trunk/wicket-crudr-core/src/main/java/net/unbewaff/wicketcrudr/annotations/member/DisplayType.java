@@ -1,4 +1,4 @@
-package net.unbewaff.wicketcrudr.annotations;
+package net.unbewaff.wicketcrudr.annotations.member;
 
 import java.io.Serializable;
 import java.lang.annotation.Documented;

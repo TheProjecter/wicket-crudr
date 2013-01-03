@@ -4,34 +4,25 @@
 package net.unbewaff.wicketcrudr.providers.editor;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
-import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
-import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
-import net.unbewaff.wicketcrudr.providers.editorpanel.DropDownChoicePanel;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -77,7 +68,7 @@ public class DateProviderTest {
         WebMarkupContainer component = provider.newSurroundingContainer(componentId, null);
         component.setVisible(true);
         panel.add(component);
-        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), DateHolder.class, "data", "");
+        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), DateHolder.class, "data", null);
         FormComponent<DateHolder> dtf = editorProvider.newEditor(panel, "editor", Model.of(dh), null);
         component.add(dtf);
         tester.startComponentInPage(panel);
@@ -95,14 +86,14 @@ public class DateProviderTest {
         private Integer id = 1;
 
         public Integer getId() {
-			return id;
-		}
+            return id;
+        }
 
-		public void setId(Integer id) {
-			this.id = id;
-		}
+        public void setId(Integer id) {
+            this.id = id;
+        }
 
-		public Date getData() {
+        public Date getData() {
             return data;
         }
 

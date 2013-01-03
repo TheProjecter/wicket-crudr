@@ -6,8 +6,8 @@ package net.unbewaff.wicketcrudr.providers.labelmodel;
 import java.io.Serializable;
 
 import net.unbewaff.WicketApplication;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;

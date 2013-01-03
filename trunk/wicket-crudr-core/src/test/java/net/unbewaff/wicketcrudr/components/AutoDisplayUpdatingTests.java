@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
-import net.unbewaff.wicketcrudr.annotations.Order;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.Order;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;

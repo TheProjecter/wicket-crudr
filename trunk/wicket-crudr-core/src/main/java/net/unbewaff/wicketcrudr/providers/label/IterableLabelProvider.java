@@ -6,7 +6,7 @@ package net.unbewaff.wicketcrudr.providers.label;
 import java.io.Serializable;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 

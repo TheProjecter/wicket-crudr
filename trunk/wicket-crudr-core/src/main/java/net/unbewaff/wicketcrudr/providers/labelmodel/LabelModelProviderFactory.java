@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 
 import org.apache.log4j.Logger;

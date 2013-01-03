@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Order;
-import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.member.Order;
+import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 
 public class PetWrapper implements Serializable, IWrapper<Pet> {

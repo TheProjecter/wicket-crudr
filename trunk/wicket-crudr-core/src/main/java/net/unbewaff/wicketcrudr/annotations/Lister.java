@@ -61,12 +61,6 @@ public @interface Lister {
     	RAISEDCONTAINER
     }
 
-    /**
-     * defines the way the value is displayed.
-     * @return
-     */
-    Display displayAs() default Display.DEFAULT;
-
 	/**
 	 * A resource-prefix used to define the resource loaded for displaying the header and values as [resourcePrefix].[propertyname] for headers and [resourcePrefix].[propertyvalue] for data. If you don't define this, the className will be used.
 	 * @return

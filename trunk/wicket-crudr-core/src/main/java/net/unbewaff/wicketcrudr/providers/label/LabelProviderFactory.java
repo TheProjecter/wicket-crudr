@@ -5,10 +5,10 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.DisplayType.Display;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
 
