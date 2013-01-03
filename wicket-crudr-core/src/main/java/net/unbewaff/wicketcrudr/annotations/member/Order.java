@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.unbewaff.wicketcrudr.annotations;
+package net.unbewaff.wicketcrudr.annotations.member;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

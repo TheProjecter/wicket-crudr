@@ -8,7 +8,7 @@ import java.io.Serializable;
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Order;
+import net.unbewaff.wicketcrudr.annotations.member.Order;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;

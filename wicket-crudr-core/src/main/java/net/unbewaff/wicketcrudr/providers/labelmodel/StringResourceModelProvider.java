@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;

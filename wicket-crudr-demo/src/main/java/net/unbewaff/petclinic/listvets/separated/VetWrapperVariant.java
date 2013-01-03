@@ -10,8 +10,8 @@ import java.util.List;
 import net.unbewaff.petclinic.WebSession;
 import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.petclinic.listvets.VetWrapper;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 

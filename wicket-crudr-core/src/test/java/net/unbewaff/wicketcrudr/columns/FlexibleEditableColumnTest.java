@@ -12,11 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.Display;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
@@ -54,172 +53,172 @@ public class FlexibleEditableColumnTest {
 
         private static final long serialVersionUID = 8397804885542314329L;
 
-    {
-        add(new StringHolder("Apple"));
-        add(new StringHolder("Banana"));
-        add(new StringHolder("Cherry"));
-    }};
+        {
+            add(new StringHolder("Apple"));
+            add(new StringHolder("Banana"));
+            add(new StringHolder("Cherry"));
+        }};
 
 
-    @Before
-    public void setUp() {
+        @Before
+        public void setUp() {
             tester = new WicketTester();
-        	mockery = new Mockery();
-    }
-
-    @Test
-    public void testDisplay() {
-
-    	final Lister l = mockery.mock(Lister.class);
-    	final DisplayType d = mockery.mock(DisplayType.class);
-    	final Editor e = mockery.mock(Editor.class);
-    	mockery.checking(new Expectations() {{
-    		exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
-    		exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
-    	}});
-        List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
-        ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
-        cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
-
-        DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
-        TempPanel panel = new TempPanel("test");
-        panel.add(table);
-        tester.startComponentInPage(panel);
-        tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
-        tester.assertInvisible("test:table:body:rows:1:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
-        tester.assertLabel("test:table:body:rows:1:cells:1:cell:label", "Apple");
-        tester.assertLabel("test:table:body:rows:2:cells:1:cell:label", "Banana");
-        tester.assertLabel("test:table:body:rows:3:cells:1:cell:label", "Cherry");
-        mockery.assertIsSatisfied();
-    }
-
-    @Test
-    public void testDisplayEditor() {
-        final Lister l = mockery.mock(Lister.class);
-        final Editor e = mockery.mock(Editor.class);
-        final DisplayType d = mockery.mock(DisplayType.class);
-        mockery.checking(new Expectations() {{
-            exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
-            exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
-        }});
-        List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, String.class, "data", "");
-        ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
-        cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
-
-        DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
-        TempPanel panel = new TempPanel("test");
-        panel.add(table);
-        tester.startComponentInPage(panel);
-        tester.executeAjaxEvent("test:table:body:rows:1:cells:1:cell:label", "onclick");
-        tester.assertInvisible("test:table:body:rows:1:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:1:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
-        tester.assertLabel("test:table:body:rows:2:cells:1:cell:label", "Banana");
-        tester.assertLabel("test:table:body:rows:3:cells:1:cell:label", "Cherry");
-        mockery.assertIsSatisfied();
-    }
-
-    @Test
-    public void testCheckboxDisplay() {
-
-        final Lister l = mockery.mock(Lister.class);
-        final DisplayType d = mockery.mock(DisplayType.class);
-        final Editor e = mockery.mock(Editor.class);
-        mockery.checking(new Expectations() {{
-            exactly(2).of(d).value(); will(returnValue(DisplayType.Display.CHECKBOX));
-            exactly(2).of(e).editAs(); will(returnValue(EditorType.CHECKBOX));
-        }});
-        List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-        ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", d);
-        ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.DisplayType.Display.DEFAULT, Boolean.class, "data", "");
-        ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
-        ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
-        cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
-
-        DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
-        TempPanel panel = new TempPanel("test");
-        panel.add(table);
-        tester.startComponentInPage(panel);
-        tester.debugComponentTrees();
-        tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
-        tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
-        tester.assertInvisible("test:table:body:rows:1:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
-        tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
-        tester.assertComponent("test:table:body:rows:1:cells:1:cell:label:editor", CheckBox.class);
-        tester.assertComponent("test:table:body:rows:2:cells:1:cell:label:editor", CheckBox.class);
-        tester.assertComponent("test:table:body:rows:3:cells:1:cell:label:editor", CheckBox.class);
-        CheckBox cb1 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:label:editor");
-        assertTrue(cb1.getModelObject());
-        CheckBox cb2 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:label:editor");
-        assertFalse(cb2.getModelObject());
-        CheckBox cb3 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:label:editor");
-        assertFalse(cb3.getModelObject());
-        tester.assertDisabled("test:table:body:rows:1:cells:1:cell:label:editor");
-        tester.assertDisabled("test:table:body:rows:2:cells:1:cell:label:editor");
-        tester.assertDisabled("test:table:body:rows:3:cells:1:cell:label:editor");
-        mockery.assertIsSatisfied();
-    }
-
-	/**
-	 * @return
-	 */
-	private ICrudrListProvider<StringHolder> getListProvider() {
-		return new ICrudrListProvider<StringHolder>() {
-
-			@Override
-			public List<StringHolder> getList() {
-				return Collections.emptyList();
-			}
-		};
-	}
-
-    @Prototype
-	private static class StringHolder implements Serializable {
-
-        private static final long serialVersionUID = 8070868717307881900L;
-        private String data;
-
-        public StringHolder(String data) {
-            this.data = data;
+            mockery = new Mockery();
         }
 
-        @SuppressWarnings("unused")
-        public String getData() {
-            return data;
+        @Test
+        public void testDisplay() {
+
+            final Lister l = mockery.mock(Lister.class);
+            final DisplayType d = mockery.mock(DisplayType.class);
+            final Editor e = mockery.mock(Editor.class);
+            mockery.checking(new Expectations() {{
+                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+                exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
+            }});
+            List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
+            cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
+
+            DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
+            TempPanel panel = new TempPanel("test");
+            panel.add(table);
+            tester.startComponentInPage(panel);
+            tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
+            tester.assertInvisible("test:table:body:rows:1:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
+            tester.assertLabel("test:table:body:rows:1:cells:1:cell:label", "Apple");
+            tester.assertLabel("test:table:body:rows:2:cells:1:cell:label", "Banana");
+            tester.assertLabel("test:table:body:rows:3:cells:1:cell:label", "Cherry");
+            mockery.assertIsSatisfied();
         }
 
-        @SuppressWarnings("unused")
-        public void setData(String data) {
-            this.data = data;
+        @Test
+        public void testDisplayEditor() {
+            final Lister l = mockery.mock(Lister.class);
+            final Editor e = mockery.mock(Editor.class);
+            final DisplayType d = mockery.mock(DisplayType.class);
+            mockery.checking(new Expectations() {{
+                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+                exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
+            }});
+            List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
+            cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
+
+            DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
+            TempPanel panel = new TempPanel("test");
+            panel.add(table);
+            tester.startComponentInPage(panel);
+            tester.executeAjaxEvent("test:table:body:rows:1:cells:1:cell:label", "onclick");
+            tester.assertInvisible("test:table:body:rows:1:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:1:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
+            tester.assertLabel("test:table:body:rows:2:cells:1:cell:label", "Banana");
+            tester.assertLabel("test:table:body:rows:3:cells:1:cell:label", "Cherry");
+            mockery.assertIsSatisfied();
         }
 
-        public Boolean getOddLength() {
-            return (this.data.length() % 2) == 1;
+        @Test
+        public void testCheckboxDisplay() {
+
+            final Lister l = mockery.mock(Lister.class);
+            final DisplayType d = mockery.mock(DisplayType.class);
+            final Editor e = mockery.mock(Editor.class);
+            mockery.checking(new Expectations() {{
+                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.CHECKBOX));
+                exactly(2).of(e).editAs(); will(returnValue(EditorType.CHECKBOX));
+            }});
+            List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, Boolean.class, "data", null);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
+            cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
+
+            DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
+            TempPanel panel = new TempPanel("test");
+            panel.add(table);
+            tester.startComponentInPage(panel);
+            tester.debugComponentTrees();
+            tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
+            tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
+            tester.assertInvisible("test:table:body:rows:1:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
+            tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
+            tester.assertComponent("test:table:body:rows:1:cells:1:cell:label:editor", CheckBox.class);
+            tester.assertComponent("test:table:body:rows:2:cells:1:cell:label:editor", CheckBox.class);
+            tester.assertComponent("test:table:body:rows:3:cells:1:cell:label:editor", CheckBox.class);
+            CheckBox cb1 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:label:editor");
+            assertTrue(cb1.getModelObject());
+            CheckBox cb2 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:label:editor");
+            assertFalse(cb2.getModelObject());
+            CheckBox cb3 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:label:editor");
+            assertFalse(cb3.getModelObject());
+            tester.assertDisabled("test:table:body:rows:1:cells:1:cell:label:editor");
+            tester.assertDisabled("test:table:body:rows:2:cells:1:cell:label:editor");
+            tester.assertDisabled("test:table:body:rows:3:cells:1:cell:label:editor");
+            mockery.assertIsSatisfied();
         }
 
-        public void setOddLength(boolean val) {
-            if (val != getOddLength()) {
-                this.data += " ";
+        /**
+         * @return
+         */
+        private ICrudrListProvider<StringHolder> getListProvider() {
+            return new ICrudrListProvider<StringHolder>() {
+
+                @Override
+                public List<StringHolder> getList() {
+                    return Collections.emptyList();
+                }
+            };
+        }
+
+        @Prototype
+        private static class StringHolder implements Serializable {
+
+            private static final long serialVersionUID = 8070868717307881900L;
+            private String data;
+
+            public StringHolder(String data) {
+                this.data = data;
             }
-        }
 
-    }
+            @SuppressWarnings("unused")
+            public String getData() {
+                return data;
+            }
+
+            @SuppressWarnings("unused")
+            public void setData(String data) {
+                this.data = data;
+            }
+
+            public Boolean getOddLength() {
+                return this.data.length() % 2 == 1;
+            }
+
+            public void setOddLength(boolean val) {
+                if (val != getOddLength()) {
+                    this.data += " ";
+                }
+            }
+
+        }
 }

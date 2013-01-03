@@ -4,17 +4,17 @@
 package net.unbewaff.wicketcrudr.datablocks;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
@@ -40,7 +40,7 @@ import org.apache.wicket.model.StringResourceModel;
 public class DataBlockFactory implements Serializable {
 
 
-	private static final long serialVersionUID = -3884250993203217609L;
+    private static final long serialVersionUID = -3884250993203217609L;
     private static transient final Logger logger = Logger.getLogger(DataBlockFactory.class);
 
     private DataBlockFactory() {
@@ -51,14 +51,18 @@ public class DataBlockFactory implements Serializable {
         String cleanProperty = PropertyCleaner.getCleanPropertyName(property);
         InnerPrototype innerType = m.getAnnotation(InnerPrototype.class);
         Class<?> returnType = m.getReturnType();
-		if (innerType == null) {
-			if (Serializable.class.isAssignableFrom(returnType)) {
-				innerType = new DefaultInnerType((Class<? extends Serializable>) returnType);
-			} else {
-				throw new IllegalArgumentException("Either the innerType must be defined or a Serializable returnType is expected. " + returnType.getSimpleName() + " has neither.");
-			}
+        if (innerType == null) {
+            if (Serializable.class.isAssignableFrom(returnType)) {
+                innerType = new DefaultInnerType((Class<? extends Serializable>) returnType);
+            } else {
+                throw new IllegalArgumentException("Either the innerType must be defined or a Serializable returnType is expected. " + returnType.getSimpleName() + " has neither.");
+            }
         }
-		return getColumn(m.getAnnotation(Lister.class), m.getAnnotation(Editor.class), m.getAnnotation(DisplayType.class), innerType, cleanProperty, clazz, returnType, listProvider);
+        Lister lister = m.getAnnotation(Lister.class);
+        Editor editor = m.getAnnotation(Editor.class);
+        DisplayType displayType = m.getAnnotation(DisplayType.class);
+        StringResource stringResource = m.getAnnotation(StringResource.class);
+        return getColumn(lister, editor, displayType, innerType, stringResource, cleanProperty, clazz, returnType, listProvider);
     }
 
     /**
@@ -73,7 +77,7 @@ public class DataBlockFactory implements Serializable {
      * @param listProvider A listprovider
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    private static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
+    private static <T extends Serializable> IDataBlock<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, StringResource r, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider) {
         IDataBlock<T> dataBlock = null;
         IModel<String> displayModel = getHeaderModel(l.resourcePrefix(), clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
@@ -84,7 +88,7 @@ public class DataBlockFactory implements Serializable {
             editInPlace = InPlaceEditor.NONE;
         }
         if (!InPlaceEditor.NONE.equals(editInPlace)) {
-            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), returnType, property, l.resourcePrefix());
+            IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), returnType, property, r);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
             dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf, property);
@@ -114,21 +118,21 @@ public class DataBlockFactory implements Serializable {
 
 
     public static <T extends Serializable> List<IDataBlock<T>> getColumns(Class<T> clazz){
-    	List<IDataBlock<T>> columns = new ArrayList<IDataBlock<T>>();
-    	List<Method> methods = new ArrayList<Method>();
-    	for (Method m :clazz.getMethods()) {
-    		Lister lister = m.getAnnotation(Lister.class);
-    		if (lister != null) {
-    			methods.add(m);
-    		}
-    	}
-    	Collections.sort(methods, new OrderIndexComparator());
+        List<IDataBlock<T>> columns = new ArrayList<IDataBlock<T>>();
+        List<Method> methods = new ArrayList<Method>();
+        for (Method m :clazz.getMethods()) {
+            Lister lister = m.getAnnotation(Lister.class);
+            if (lister != null) {
+                methods.add(m);
+            }
+        }
+        Collections.sort(methods, new OrderIndexComparator());
 
-    	for (Method m: methods) {
-			columns.add(getColumn(m, m.getName(), clazz, null));
-		}
+        for (Method m: methods) {
+            columns.add(getColumn(m, m.getName(), clazz, null));
+        }
 
-		return columns;
+        return columns;
     }
 
 }

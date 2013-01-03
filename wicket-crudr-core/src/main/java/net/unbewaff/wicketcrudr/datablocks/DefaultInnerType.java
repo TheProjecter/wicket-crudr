@@ -6,7 +6,7 @@ package net.unbewaff.wicketcrudr.datablocks;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 
 /**
  * @author DavidH

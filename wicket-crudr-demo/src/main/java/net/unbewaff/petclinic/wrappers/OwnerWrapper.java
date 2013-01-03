@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.InnerPrototype.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.member.Order;
+import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
 

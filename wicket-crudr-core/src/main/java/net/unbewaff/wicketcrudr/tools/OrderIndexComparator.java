@@ -3,7 +3,7 @@ package net.unbewaff.wicketcrudr.tools;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
-import net.unbewaff.wicketcrudr.annotations.Order;
+import net.unbewaff.wicketcrudr.annotations.member.Order;
 
 /**
  * @author David Hendrix (Nicktarix)

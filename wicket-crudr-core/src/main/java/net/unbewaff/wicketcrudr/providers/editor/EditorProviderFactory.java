@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-import net.unbewaff.wicketcrudr.annotations.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 import org.apache.wicket.util.time.Time;
@@ -22,52 +22,49 @@ import org.apache.wicket.util.time.Time;
 public class EditorProviderFactory {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T extends Serializable> IEditorProvider<T> getEditorProvider(Editor e, final DisplayType.Display displayType, Class<?> returnType, final String property, String resourcePrefix) {
+    public static <T extends Serializable> IEditorProvider<T> getEditorProvider(Editor e, final DisplayType.Display displayType, Class<?> returnType, final String property, StringResource stringResource) {
         IEditorProvider<T> ep = null;
         switch (e.editAs()) {
-            case TEXTFIELD:
-                ep = new TextFieldProvider<T>();
-                break;
-            case TEXTAREA:
-                ep = new TextAreaProvider<T>();
-                break;
-            case CHECKBOX:
-                ep = (IEditorProvider<T>) new CheckBoxProvider();
-                break;
-            case AJAXLINK:
-                throw new UnsupportedOperationException("AjaxLink isn't implemented yet.");
-            case DROPDOWNCHOICE:
-			    ep = new DropDownChoiceProvider(getChoiceRenderer(displayType, property, resourcePrefix));
-                break;
-            case PALETTE:
-            	ep = (IEditorProvider<T>) new PaletteProvider<T>(getChoiceRenderer(displayType, property, resourcePrefix));
-            	break;
-            case DATE:
-                ep = (IEditorProvider<T>) new DateEditorProvider();
-                break;
-            default:
-                ep = getDefaultEditorProvider(returnType, getChoiceRenderer(displayType, property, resourcePrefix));
+        case TEXTFIELD:
+            ep = new TextFieldProvider<T>();
+            break;
+        case TEXTAREA:
+            ep = new TextAreaProvider<T>();
+            break;
+        case CHECKBOX:
+            ep = (IEditorProvider<T>) new CheckBoxProvider();
+            break;
+        case AJAXLINK:
+            throw new UnsupportedOperationException("AjaxLink isn't implemented yet.");
+        case DROPDOWNCHOICE:
+            ep = new DropDownChoiceProvider(getChoiceRenderer(property, stringResource));
+            break;
+        case PALETTE:
+            ep = new PaletteProvider<T>(getChoiceRenderer(property, stringResource));
+            break;
+        case DATE:
+            ep = (IEditorProvider<T>) new DateEditorProvider();
+            break;
+        default:
+            ep = getDefaultEditorProvider(returnType, getChoiceRenderer(property, stringResource));
         }
         return ep;
     }
 
 
-	/**
-	 * @param displayType the Lister Annotation
-	 * @param property the property to access the data
-	 * @param resourcePrefix the resource Prefix
-	 * @return a matching ChoiceRendererProvider
-	 */
-	@SuppressWarnings("rawtypes")
-	private static ChoiceRendererProvider getChoiceRenderer(final DisplayType.Display displayType, final String property, String resourcePrefix) {
-		ChoiceRendererProvider renderer = null;
-		if (displayType != null) {
-		    if (DisplayType.Display.RESOURCE.equals(displayType)) {
-		        renderer = new ChoiceRendererProvider(resourcePrefix, property);
-		    }
-		}
-		return renderer;
-	}
+    /**
+     * @param property the property to access the data
+     * @param resourcePrefix the resource Prefix
+     * @return a matching ChoiceRendererProvider
+     */
+    @SuppressWarnings("rawtypes")
+    private static ChoiceRendererProvider getChoiceRenderer(final String property, StringResource resource) {
+        ChoiceRendererProvider renderer = null;
+        if (resource != null) {
+            renderer = new ChoiceRendererProvider(resource, property);
+        }
+        return renderer;
+    }
 
 
     @SuppressWarnings("unchecked")
@@ -79,15 +76,15 @@ public class EditorProviderFactory {
         if (returnType.equals(boolean.class) || Boolean.class.isAssignableFrom(returnType)) {
             ep = (IEditorProvider<T>) new CheckBoxProvider();
         } else if (Number.class.isAssignableFrom(returnType) && Comparable.class.isAssignableFrom(returnType)) {
-            ep = (IEditorProvider<T>) NumberFieldProvider.newInstance(returnType);
+            ep = NumberFieldProvider.newInstance(returnType);
         } else if (returnType.isAssignableFrom(ICrudrListProvider.class)) {
-            ep = (IEditorProvider<T>) new DropDownChoiceProvider(renderer);
+            ep = new DropDownChoiceProvider(renderer);
         } else if (returnType.isAssignableFrom(Collection.class)) {
-            ep = (IEditorProvider<T>) new PaletteProvider<T>(renderer);
+            ep = new PaletteProvider<T>(renderer);
         } else if (returnType.equals(Date.class) || returnType.equals(Time.class)) {
             ep = (IEditorProvider<T>) new DateEditorProvider();
         } else {
-            ep = (IEditorProvider<T>) new TextFieldProvider<T>();
+            ep = new TextFieldProvider<T>();
         }
         return ep;
     }
