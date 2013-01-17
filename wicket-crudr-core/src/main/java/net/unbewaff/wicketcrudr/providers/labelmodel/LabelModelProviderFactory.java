@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 
 import org.apache.log4j.Logger;
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
  */
 public class LabelModelProviderFactory {
 
-	private final static transient Logger logger = Logger.getLogger(LabelModelProviderFactory.class);
+    private final static transient Logger logger = Logger.getLogger(LabelModelProviderFactory.class);
 
     private LabelModelProviderFactory() {
         //static use only
@@ -45,23 +46,26 @@ public class LabelModelProviderFactory {
     }
 
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerPrototype innerType) {
-    	ILabelModelProvider<T> labelModelProvider;
-    	List<Method> methods = new ArrayList<Method>();
-    	for (Method m: innerType.type().getMethods()) {
-    		if (m.getAnnotation(Lister.class) != null) {
-    			methods.add(m);
-    		}
-    	}
+        ILabelModelProvider<T> labelModelProvider;
+        List<Method> methods = new ArrayList<Method>();
+        for (Method m :innerType.type().getMethods()) {
+            String name = m.getName();
+            if (m.getDeclaringClass().isAnnotationPresent(Prototype.class)) {
+                if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is"))) {
+                    methods.add(m);
+                }
+            }
+        }
 
-    	Collections.sort(methods, new OrderIndexComparator());
-    	
-    	if (methods.size() > 0) {
-    		labelModelProvider = new ConcatenatedLabelModelProvider<T>(methods, " ");
-    	} else {
-    		labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);
-    	}
+        Collections.sort(methods, new OrderIndexComparator());
 
-		return labelModelProvider;
+        if (methods.size() > 0) {
+            labelModelProvider = new ConcatenatedLabelModelProvider<T>(methods, " ");
+        } else {
+            labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);
+        }
+
+        return labelModelProvider;
     }
 
 }

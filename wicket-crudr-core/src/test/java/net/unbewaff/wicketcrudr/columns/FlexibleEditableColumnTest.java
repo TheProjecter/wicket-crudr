@@ -14,7 +14,6 @@ import java.util.List;
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
@@ -69,7 +68,6 @@ public class FlexibleEditableColumnTest {
         @Test
         public void testDisplay() {
 
-            final Lister l = mockery.mock(Lister.class);
             final DisplayType d = mockery.mock(DisplayType.class);
             final Editor e = mockery.mock(Editor.class);
             mockery.checking(new Expectations() {{
@@ -78,7 +76,7 @@ public class FlexibleEditableColumnTest {
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
             IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -102,7 +100,6 @@ public class FlexibleEditableColumnTest {
 
         @Test
         public void testDisplayEditor() {
-            final Lister l = mockery.mock(Lister.class);
             final Editor e = mockery.mock(Editor.class);
             final DisplayType d = mockery.mock(DisplayType.class);
             mockery.checking(new Expectations() {{
@@ -111,7 +108,7 @@ public class FlexibleEditableColumnTest {
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
             IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
@@ -136,7 +133,6 @@ public class FlexibleEditableColumnTest {
         @Test
         public void testCheckboxDisplay() {
 
-            final Lister l = mockery.mock(Lister.class);
             final DisplayType d = mockery.mock(DisplayType.class);
             final Editor e = mockery.mock(Editor.class);
             mockery.checking(new Expectations() {{
@@ -145,7 +141,7 @@ public class FlexibleEditableColumnTest {
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(l, null, labelModelProvider, String.class, d);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
             IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, Boolean.class, "data", null);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");

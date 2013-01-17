@@ -14,10 +14,10 @@ import org.apache.wicket.model.IModel;
  */
 public interface IDataBlock<T extends Serializable> {
 
-	public abstract Component getValue(String componentId, IModel<T> rowModel);
+    public abstract Component getValue(String componentId, IModel<T> rowModel);
 
-	public abstract Component getLabel(String componentId, IModel<T> model);
-	
-	public abstract String getName();
+    public abstract Component getLabel(String componentId, IModel<T> model);
+
+    public abstract String getName();
 
 }
