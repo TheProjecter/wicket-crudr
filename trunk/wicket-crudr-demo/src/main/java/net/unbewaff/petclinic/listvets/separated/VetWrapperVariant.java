@@ -12,7 +12,7 @@ import net.unbewaff.petclinic.entities.Veterinarian;
 import net.unbewaff.petclinic.listvets.VetWrapper;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.Lister;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 
 /**
@@ -21,27 +21,27 @@ import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
  */
 public class VetWrapperVariant extends VetWrapper implements Serializable, ICrudrListProvider<VetWrapperVariant> {
 
-	/**
-	 * @param vet
-	 */
-	public VetWrapperVariant(Veterinarian vet) {
-		super(vet);
-	}
+    /**
+     * @param vet
+     */
+    public VetWrapperVariant(Veterinarian vet) {
+        super(vet);
+    }
 
-	@Override
-	@Lister(resourcePrefix="VetWrapper")
-	@InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
-	public List<SpecialitiesWrapper> getSpecialities() {
-		return super.getSpecialities();
-	}
+    @Override
+    @StringResource("VetWrapper")
+    @InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
+    public List<SpecialitiesWrapper> getSpecialities() {
+        return super.getSpecialities();
+    }
 
-	@Override
-	public List<VetWrapperVariant> getList() {
-		List<VetWrapperVariant> list = new ArrayList<VetWrapperVariant>();
-		for (Veterinarian vet : ((WebSession)WebSession.get()).getVeterinarians()) {
-			list.add(new VetWrapperVariant(vet));
-		}
-		return list;
-	}
+    @Override
+    public List<VetWrapperVariant> getList() {
+        List<VetWrapperVariant> list = new ArrayList<VetWrapperVariant>();
+        for (Veterinarian vet : ((WebSession)WebSession.get()).getVeterinarians()) {
+            list.add(new VetWrapperVariant(vet));
+        }
+        return list;
+    }
 
 }

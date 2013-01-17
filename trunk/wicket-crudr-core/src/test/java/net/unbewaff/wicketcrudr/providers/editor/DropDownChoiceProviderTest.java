@@ -13,7 +13,6 @@ import java.util.List;
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
@@ -77,7 +76,6 @@ public class DropDownChoiceProviderTest {
     @Test
     public void primitiveToStringRendering() {
         final Editor e = mockery.mock(Editor.class);
-        final Lister l = mockery.mock(Lister.class);
         final DisplayType d = mockery.mock(DisplayType.class);
         mockery.checking(new Expectations() {{
             exactly(1).of(d).value(); will(returnValue(Display.DEFAULT));
@@ -114,7 +112,6 @@ public class DropDownChoiceProviderTest {
     @Test
     public void stringResourceRendering() {
         final Editor e = mockery.mock(Editor.class);
-        final Lister l = mockery.mock(Lister.class);
         final DisplayType d = mockery.mock(DisplayType.class);
         final StringResource r = mockery.mock(StringResource.class);
         mockery.checking(new Expectations() {{

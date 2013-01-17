@@ -7,13 +7,9 @@ import java.util.List;
 
 import net.unbewaff.petclinic.entities.Specialities;
 import net.unbewaff.petclinic.entities.Veterinarian;
-import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
-import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
@@ -21,130 +17,132 @@ import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 @Prototype
 public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
 
-	private static final long serialVersionUID = 911673107682330559L;
-	private final Veterinarian vet;
+    private static final long serialVersionUID = 911673107682330559L;
+    private final Veterinarian vet;
 
-	public VetWrapper(Veterinarian vet) {
-		this.vet = vet;
-	}
-	
-	public Veterinarian exposeObject() {
-		return vet;
-	}
+    public VetWrapper(Veterinarian vet) {
+        this.vet = vet;
+    }
 
-	public Integer getId() {
-		return vet.getId();
-	}
+    @Override
+    public Veterinarian exposeObject() {
+        return vet;
+    }
 
-	public void setId(Integer id) {
-		vet.setId(id);
-	}
+    public Integer getId() {
+        return vet.getId();
+    }
 
-	@Lister(resourcePrefix="VetWrapper")
-	@Order(2)
-	public String getFirstName() {
-		return vet.getFirstName();
-	}
+    public void setId(Integer id) {
+        vet.setId(id);
+    }
 
-	public void setFirstName(String firstName) {
-		vet.setFirstName(firstName);
-	}
+    @Order(2)
+    @StringResource("VetWrapper")
+    public String getFirstName() {
+        return vet.getFirstName();
+    }
 
-	@Lister(resourcePrefix="VetWrapper")
-	@Order(1)
-	public String getLastName() {
-		return vet.getLastName();
-	}
+    public void setFirstName(String firstName) {
+        vet.setFirstName(firstName);
+    }
 
-	public void setLastName(String lastName) {
-		vet.setLastName(lastName);
-	}
+    @Order(1)
+    @StringResource("VetWrapper")
+    public String getLastName() {
+        return vet.getLastName();
+    }
 
-	@Lister
-	@InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class)
-	public List<SpecialitiesWrapper> getSpecialities() {
-		List<SpecialitiesWrapper> list = new ArrayList<SpecialitiesWrapper>();
-		for (Specialities speciality : vet.getSpecialities()) {
-			list.add(new SpecialitiesWrapper(speciality));
-		}
-		return list;
-	}
+    public void setLastName(String lastName) {
+        vet.setLastName(lastName);
+    }
 
-	public String toString() {
-		return vet.toString();
-	}
+    @InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class)
+    public List<SpecialitiesWrapper> getSpecialities() {
+        List<SpecialitiesWrapper> list = new ArrayList<SpecialitiesWrapper>();
+        for (Specialities speciality : vet.getSpecialities()) {
+            list.add(new SpecialitiesWrapper(speciality));
+        }
+        return list;
+    }
 
-	@Prototype
-	public static class SpecialitiesWrapper implements ICrudrDataProvider<Specialities>{
+    @Override
+    public String toString() {
+        return vet.toString();
+    }
 
-		private static final long serialVersionUID = 1734840726953537324L;
-		private final Specialities speciality;
+    @Prototype
+    public static class SpecialitiesWrapper implements ICrudrDataProvider<Specialities>{
 
-		public SpecialitiesWrapper(Specialities speciality) {
-			this.speciality = speciality;
-		}
+        private static final long serialVersionUID = 1734840726953537324L;
+        private final Specialities speciality;
 
-		@Override
-		public List<Specialities> getList() {
-			return Arrays.asList(Specialities.values());
-		}
+        public SpecialitiesWrapper(Specialities speciality) {
+            this.speciality = speciality;
+        }
 
-		@Override
-		public Specialities newInstance() {
-			return null;
-		}
+        @Override
+        public List<Specialities> getList() {
+            return Arrays.asList(Specialities.values());
+        }
 
-		@Override
-		public Class<Specialities> getType() {
-			return Specialities.class;
-		}
+        @Override
+        public Specialities newInstance() {
+            return null;
+        }
 
-		@Override
-		public Serializable getId() {
-			return speciality;
-		}
+        @Override
+        public Class<Specialities> getType() {
+            return Specialities.class;
+        }
 
-		public final String toString() {
-			return speciality.name();
-		}
+        @Override
+        public Serializable getId() {
+            return speciality;
+        }
+
+        @Override
+        public final String toString() {
+            return speciality.name();
+        }
 
 
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((vet == null) ? 0 : vet.hashCode());
-		return result;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (vet == null ? 0 : vet.hashCode());
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		VetWrapper other = (VetWrapper) obj;
-		if (vet == null) {
-			if (other.vet != null) {
-				return false;
-			}
-		} else if (!vet.equals(other.vet)) {
-			return false;
-		}
-		return true;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        VetWrapper other = (VetWrapper) obj;
+        if (vet == null) {
+            if (other.vet != null) {
+                return false;
+            }
+        } else if (!vet.equals(other.vet)) {
+            return false;
+        }
+        return true;
+    }
 
 }

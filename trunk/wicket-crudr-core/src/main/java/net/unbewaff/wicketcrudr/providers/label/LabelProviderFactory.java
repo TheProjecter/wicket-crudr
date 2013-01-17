@@ -5,7 +5,6 @@ package net.unbewaff.wicketcrudr.providers.label;
 
 import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
@@ -35,21 +34,20 @@ public class LabelProviderFactory {
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     public static <T> ILabelProvider<T> getLabelProvider(Method m, ILabelModelProvider<T> labelModelProvider, DisplayType d) {
-    	return getLabelProvider(m.getAnnotation(Lister.class), m.getAnnotation(InnerPrototype.class), labelModelProvider, m.getReturnType(), d);
+    	return getLabelProvider(m.getAnnotation(InnerPrototype.class), labelModelProvider, m.getReturnType(), d);
     }
 
     /**
      * The real factory that provides matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>} instances based on Metadata
-     * @param <T>
-     * @param l the {@link net.unbewaff.wicketcrudr.annotations.Lister} from the current method
      * @param innerType TODO
      * @param labelModelProvider The {@link net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider<T>}
      * @param type the type of the Object to display
      * @param dt d The DisplayType Annotation if present
+     * @param <T>
      * @return The matching {@link net.unbewaff.wicketcrudr.providers.label.ILabelProvider<T>}
      */
     @SuppressWarnings("unchecked")
-    public static <T> ILabelProvider<T> getLabelProvider(Lister l, InnerPrototype innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type, DisplayType dt) {
+    public static <T> ILabelProvider<T> getLabelProvider(InnerPrototype innerType, ILabelModelProvider<T> labelModelProvider, Class<?> type, DisplayType dt) {
         ILabelProvider<T> provider = null;
         if (type != null && Iterable.class.isAssignableFrom(type)) {
         	

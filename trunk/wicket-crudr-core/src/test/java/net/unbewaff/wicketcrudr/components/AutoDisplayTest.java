@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
 
 import org.apache.wicket.Component;
@@ -21,120 +20,116 @@ import org.junit.Test;
  *
  */
 public class AutoDisplayTest {
-	
-	WicketTester tester = new WicketTester();
 
-	@Test
-	public void renderForDisplayTest() {
-		IModel<StringHolderDisplayWrapper> model = Model.of(new StringHolderDisplayWrapper(new StringHolder("first", "second")));
-		Component c = new AutoDisplay<StringHolderDisplayWrapper>("id", model, StringHolderDisplayWrapper.class);
-		tester.startComponentInPage(c);
-		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
-		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
-		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
-		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:value", "first");
-	}
-	
-	@Test
-	public void renderForEditTest() {
-		IModel<StringHolderEditWrapper> model = Model.of(new StringHolderEditWrapper(new StringHolder("first", "second")));
-		Component c = new AutoDisplay<StringHolderEditWrapper>("id", model, StringHolderEditWrapper.class);
-		tester.startComponentInPage(c);
-		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
-		tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
-		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
-		tester.assertLabel("id:border:border_body:view:2:fragmentContainer:value", "first");
-	}
-	
-	
-	static class StringHolderDisplayWrapper implements Serializable {
-		
-		private static final long serialVersionUID = -2827254203725518250L;
-		private StringHolder data;
-		
-		public StringHolderDisplayWrapper(StringHolder data) {
-			this.data = data;
-		}
+    WicketTester tester = new WicketTester();
 
-		@Lister
-		@Order(2)
-		public String getString() {
-			return data.getString();
-		}
+    @Test
+    public void renderForDisplayTest() {
+        IModel<StringHolderDisplayWrapper> model = Model.of(new StringHolderDisplayWrapper(new StringHolder("first", "second")));
+        Component c = new AutoDisplay<StringHolderDisplayWrapper>("id", model, StringHolderDisplayWrapper.class);
+        tester.startComponentInPage(c);
+        tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
+        tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
+        tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
+        tester.assertLabel("id:border:border_body:view:2:fragmentContainer:value", "first");
+    }
 
-		public void setString(String string) {
-			data.setString(string);
-		}
+    @Test
+    public void renderForEditTest() {
+        IModel<StringHolderEditWrapper> model = Model.of(new StringHolderEditWrapper(new StringHolder("first", "second")));
+        Component c = new AutoDisplay<StringHolderEditWrapper>("id", model, StringHolderEditWrapper.class);
+        tester.startComponentInPage(c);
+        tester.assertLabel("id:border:border_body:view:1:fragmentContainer:label", "OtherString");
+        tester.assertLabel("id:border:border_body:view:1:fragmentContainer:value", "second");
+        tester.assertLabel("id:border:border_body:view:2:fragmentContainer:label", "String");
+        tester.assertLabel("id:border:border_body:view:2:fragmentContainer:value", "first");
+    }
 
-		@Lister
-		@Order(1)
-		public String getOtherString() {
-			return data.getOtherString();
-		}
 
-		public void setOtherString(String otherString) {
-			data.setOtherString(otherString);
-		}
-	}
-	
-	
-	private static class StringHolder implements Serializable {
-		
-		private String string;
-		private String otherString;
+    static class StringHolderDisplayWrapper implements Serializable {
 
-		public StringHolder(String string, String otherString) {
-			this.string = string;
-			this.otherString = otherString;
-		}
+        private static final long serialVersionUID = -2827254203725518250L;
+        private StringHolder data;
 
-		public String getString() {
-			return string;
-		}
+        public StringHolderDisplayWrapper(StringHolder data) {
+            this.data = data;
+        }
 
-		public void setString(String string) {
-			this.string = string;
-		}
+        @Order(2)
+        public String getString() {
+            return data.getString();
+        }
 
-		public String getOtherString() {
-			return otherString;
-		}
+        public void setString(String string) {
+            data.setString(string);
+        }
 
-		public void setOtherString(String otherString) {
-			this.otherString = otherString;
-		}
-		
-	}
-	
-	static class StringHolderEditWrapper implements Serializable {
-		
-		private StringHolder data;
-		
-		public StringHolderEditWrapper(StringHolder data) {
-			super();
-			this.data = data;
-		}
+        @Order(1)
+        public String getOtherString() {
+            return data.getOtherString();
+        }
 
-		@Editor
-		@Order(2)
-		@Lister
-		public String getString() {
-			return data.getString();
-		}
+        public void setOtherString(String otherString) {
+            data.setOtherString(otherString);
+        }
+    }
 
-		public void setString(String string) {
-			data.setString(string);
-		}
 
-		@Editor
-		@Order(1)
-		@Lister
-		public String getOtherString() {
-			return data.getOtherString();
-		}
+    private static class StringHolder implements Serializable {
 
-		public void setOtherString(String otherString) {
-			data.setOtherString(otherString);
-		}
-	}
+        private String string;
+        private String otherString;
+
+        public StringHolder(String string, String otherString) {
+            this.string = string;
+            this.otherString = otherString;
+        }
+
+        public String getString() {
+            return string;
+        }
+
+        public void setString(String string) {
+            this.string = string;
+        }
+
+        public String getOtherString() {
+            return otherString;
+        }
+
+        public void setOtherString(String otherString) {
+            this.otherString = otherString;
+        }
+
+    }
+
+    static class StringHolderEditWrapper implements Serializable {
+
+        private StringHolder data;
+
+        public StringHolderEditWrapper(StringHolder data) {
+            super();
+            this.data = data;
+        }
+
+        @Editor
+        @Order(2)
+        public String getString() {
+            return data.getString();
+        }
+
+        public void setString(String string) {
+            data.setString(string);
+        }
+
+        @Editor
+        @Order(1)
+        public String getOtherString() {
+            return data.getOtherString();
+        }
+
+        public void setOtherString(String otherString) {
+            data.setOtherString(otherString);
+        }
+    }
 }

@@ -1,11 +1,7 @@
 package net.unbewaff.petclinic.editowner;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.util.Collections;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
@@ -14,153 +10,148 @@ import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
-import net.unbewaff.wicketcrudr.annotations.Lister;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapperFactory;
-import net.unbewaff.wicketcrudr.tools.wrappinglist.WrappingList;
+
+import org.apache.log4j.Logger;
 
 public class OwnerEditWrapper implements Serializable {
-	
-	private static final long serialVersionUID = -1310738561110224139L;
-	private Owner owner;
-	private static final transient Logger logger = Logger.getLogger(OwnerEditWrapper.class);
-	
-	public OwnerEditWrapper(Owner owner) {
-		this.owner = owner;
-	}
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getId()
-	 */
-	public Integer getId() {
-		return owner.getId();
-	}
+    private static final long serialVersionUID = -1310738561110224139L;
+    private Owner owner;
+    private static final transient Logger logger = Logger.getLogger(OwnerEditWrapper.class);
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getFirstName()
-	 */
-	@Editor
-	@Lister
-	@Order(1)
-	public String getFirstName() {
-		return owner.getFirstName();
-	}
+    public OwnerEditWrapper(Owner owner) {
+        this.owner = owner;
+    }
 
-	/**
-	 * @param firstName
-	 * @see net.unbewaff.petclinic.entities.Owner#setFirstName(java.lang.String)
-	 */
-	public void setFirstName(String firstName) {
-		owner.setFirstName(firstName);
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getId()
+     */
+    public Integer getId() {
+        return owner.getId();
+    }
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getLastName()
-	 */
-	@Editor
-	@Lister
-	@Order(2)
-	public String getLastName() {
-		return owner.getLastName();
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getFirstName()
+     */
+    @Editor
+    @Order(1)
+    public String getFirstName() {
+        return owner.getFirstName();
+    }
 
-	/**
-	 * @param lastName
-	 * @see net.unbewaff.petclinic.entities.Owner#setLastName(java.lang.String)
-	 */
-	public void setLastName(String lastName) {
-		owner.setLastName(lastName);
-	}
+    /**
+     * @param firstName
+     * @see net.unbewaff.petclinic.entities.Owner#setFirstName(java.lang.String)
+     */
+    public void setFirstName(String firstName) {
+        owner.setFirstName(firstName);
+    }
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getAddress()
-	 */
-	@Editor
-	@Lister
-	@Order(3)
-	public String getAddress() {
-		return owner.getAddress();
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getLastName()
+     */
+    @Editor
+    @Order(2)
+    public String getLastName() {
+        return owner.getLastName();
+    }
 
-	/**
-	 * @param address
-	 * @see net.unbewaff.petclinic.entities.Owner#setAddress(java.lang.String)
-	 */
-	public void setAddress(String address) {
-		owner.setAddress(address);
-	}
+    /**
+     * @param lastName
+     * @see net.unbewaff.petclinic.entities.Owner#setLastName(java.lang.String)
+     */
+    public void setLastName(String lastName) {
+        owner.setLastName(lastName);
+    }
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getCity()
-	 */
-	@Editor
-	@Lister
-	@Order(4)
-	public String getCity() {
-		return owner.getCity();
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getAddress()
+     */
+    @Editor
+    @Order(3)
+    public String getAddress() {
+        return owner.getAddress();
+    }
 
-	/**
-	 * @param city
-	 * @see net.unbewaff.petclinic.entities.Owner#setCity(java.lang.String)
-	 */
-	public void setCity(String city) {
-		owner.setCity(city);
-	}
+    /**
+     * @param address
+     * @see net.unbewaff.petclinic.entities.Owner#setAddress(java.lang.String)
+     */
+    public void setAddress(String address) {
+        owner.setAddress(address);
+    }
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getPhone()
-	 */
-	@Editor
-	@Lister
-	@Order(5)
-	public String getPhone() {
-		return owner.getPhone();
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getCity()
+     */
+    @Editor
+    @Order(4)
+    public String getCity() {
+        return owner.getCity();
+    }
 
-	/**
-	 * @param phone
-	 * @see net.unbewaff.petclinic.entities.Owner#setPhone(java.lang.String)
-	 */
-	public void setPhone(String phone) {
-		owner.setPhone(phone);
-	}
+    /**
+     * @param city
+     * @see net.unbewaff.petclinic.entities.Owner#setCity(java.lang.String)
+     */
+    public void setCity(String city) {
+        owner.setCity(city);
+    }
 
-	/**
-	 * @return
-	 * @see net.unbewaff.petclinic.entities.Owner#getPets()
-	 */
-	@Lister
-	@Editor(editAs=EditorType.PALETTE)
-	@InnerPrototype(type=PetWrapper.class)
-	@Order(6)
-	public List<PetWrapper> getPets() {
-		return new AWrappingList<PetWrapper, Pet>() {
-			@Override
-			protected List<Pet> getBaseList() {
-				return owner.getPets();
-			}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getPhone()
+     */
+    @Editor
+    @Order(5)
+    public String getPhone() {
+        return owner.getPhone();
+    }
 
-			@Override
-			protected IWrapperFactory<PetWrapper, Pet> getWrapperFactory() {
-				return new IWrapperFactory<PetWrapper, Pet>() {
+    /**
+     * @param phone
+     * @see net.unbewaff.petclinic.entities.Owner#setPhone(java.lang.String)
+     */
+    public void setPhone(String phone) {
+        owner.setPhone(phone);
+    }
 
-					@Override
-					public PetWrapper newWrapper(Pet target) {
-						return new PetWrapper(target);
-					}
-				};
-			}
-		};
-	}
+    /**
+     * @return
+     * @see net.unbewaff.petclinic.entities.Owner#getPets()
+     */
+    @Editor(editAs=EditorType.PALETTE)
+    @InnerPrototype(type=PetWrapper.class)
+    @Order(6)
+    public List<PetWrapper> getPets() {
+        return new AWrappingList<PetWrapper, Pet>() {
+            @Override
+            protected List<Pet> getBaseList() {
+                return owner.getPets();
+            }
 
-	public String toString() {
-		return getLastName() + " " + getFirstName();
-	}
+            @Override
+            protected IWrapperFactory<PetWrapper, Pet> getWrapperFactory() {
+                return new IWrapperFactory<PetWrapper, Pet>() {
+
+                    @Override
+                    public PetWrapper newWrapper(Pet target) {
+                        return new PetWrapper(target);
+                    }
+                };
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        return getLastName() + " " + getFirstName();
+    }
 }

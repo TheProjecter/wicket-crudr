@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Lister;
-import net.unbewaff.wicketcrudr.annotations.Lister.InPlaceEditor;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
@@ -54,17 +52,14 @@ public class ColumnFactory implements Serializable {
 
     public static <T extends Serializable> IColumn<T> getColumn(Method m, String property, Class<T> clazz, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
         String cleanProperty = PropertyCleaner.getCleanPropertyName(property);
-        Lister lister = m.getAnnotation(Lister.class);
         Editor editor = m.getAnnotation(Editor.class);
         DisplayType displayType = m.getAnnotation(DisplayType.class);
         InnerPrototype innerPrototype = m.getAnnotation(InnerPrototype.class);
         StringResource resourceKey = m.getAnnotation(StringResource.class);
-        return getColumn(lister, editor, displayType, innerPrototype, resourceKey, cleanProperty, clazz, m.getReturnType(), listProvider, labelResourcePrefix, cssClass);
+        return getColumn(editor, displayType, innerPrototype, resourceKey, cleanProperty, clazz, m.getReturnType(), listProvider, labelResourcePrefix, cssClass);
     }
 
     /**
-     * @param <T>
-     * @param l The Lister Annotation
      * @param e The Editor Annotation
      * @param d The DisplayType Annotation
      * @param innerType The Generic Type of a list
@@ -75,19 +70,15 @@ public class ColumnFactory implements Serializable {
      * @param listProvider A listprovider
      * @param labelResourcePrefix The LabelResourcePrefix Annotation
      * @param cssClass TODO
+     * @param <T>
      * @return a Column to display and maybe edit the data from the annotated method or field
      */
-    public static <T extends Serializable> IColumn<T> getColumn(Lister l, Editor e, DisplayType d, InnerPrototype innerType, StringResource r, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
+    public static <T extends Serializable> IColumn<T> getColumn(Editor e, DisplayType d, InnerPrototype innerType, StringResource r, String property, Class<T> clazz, Class<?> returnType, ICrudrListProvider<T> listProvider, LabelResourcePrefix labelResourcePrefix, String cssClass) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(labelResourcePrefix, clazz.getSimpleName(), property);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property, d);
-        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(l, innerType, labelModelProvider, returnType, d);
-        InPlaceEditor editInPlace = l != null ? l.editInPlace() : InPlaceEditor.NONE;
-        if (!InPlaceEditor.NONE.equals(editInPlace) && e == null) {
-            logger.error("Properties that enable inline editing must provide an Editor Annotation. " + clazz.getName() + "." + property + " doeasn't. Assuming editInPlace as false.");
-            editInPlace = InPlaceEditor.NONE;
-        }
-        if (!InPlaceEditor.NONE.equals(editInPlace)) {
+        ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(innerType, labelModelProvider, returnType, d);
+        if (false) { //TODO reimplement
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), returnType, property, r);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(labelProvider, editorProvider, containerProvider, listProvider, property);
