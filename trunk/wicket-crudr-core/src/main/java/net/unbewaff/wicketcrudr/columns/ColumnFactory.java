@@ -15,6 +15,8 @@ import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
+import net.unbewaff.wicketcrudr.datablocks.IterableProperty;
 import net.unbewaff.wicketcrudr.datablocks.Property;
 import net.unbewaff.wicketcrudr.datablocks.PrototypeData;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
@@ -22,6 +24,7 @@ import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
+import net.unbewaff.wicketcrudr.providers.label.IterableLabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
 import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
@@ -107,7 +110,7 @@ public class ColumnFactory implements Serializable {
 
     @SuppressWarnings("unchecked")
     public static <T extends Serializable> List<IColumn<T>> getColumns(Class<T> clazz){
-        PrototypeData prototype = new PrototypeData(clazz);
+        IPrototypeData prototype = new PrototypeData(clazz);
         List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (Property p : prototype.getProperties()) {
@@ -122,10 +125,11 @@ public class ColumnFactory implements Serializable {
         IModel<String> displayModel = new StringResourceModel(labelResourcePrefix + propertyName, Model.of(""), propertyName);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property);
         ILabelProvider<T> labelProvider = null;
-        if (property.isIterable()) {
-            String prefix = ""; //TODO Prefix of the inner Type
-            //            ILabelModelProvider labelModelProvider2 = LabelModelProviderFactory.getLabelModelProvider(prefix, innerType);
-            //           labelProvider = new IterableLabelProvider(labelModelProvider, labelModelProvider2, innerType);
+        if (property instanceof IterableProperty) {
+            IterableProperty iterableProperty = (IterableProperty) property;
+            String prefix = iterableProperty.getStringResourcePrefix();
+            ILabelModelProvider labelModelProvider2 = LabelModelProviderFactory.getLabelModelProvider(prefix, iterableProperty.getInnerPrototype());
+            labelProvider = new IterableLabelProvider(labelModelProvider, labelModelProvider2, iterableProperty);
         } else {
             labelProvider = new SimpleLabelProvider<T>(labelModelProvider);
         }

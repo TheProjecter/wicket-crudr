@@ -4,14 +4,13 @@
 package net.unbewaff.wicketcrudr.providers.labelmodel;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
-import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.member.StringResource;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 /**
@@ -27,13 +26,13 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
     private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
     private String resourcePrefix;
-    private InnerPrototype innerType;
+    private IPrototypeData innerType;
 
     /**
      * @param resourcePrefix
      * @param propertyProvider
      */
-    public StringResourceModelProvider(String resourcePrefix, InnerPrototype innerType) {
+    public StringResourceModelProvider(String resourcePrefix, IPrototypeData innerType) {
         if (innerType == null) {
             throw new IllegalArgumentException("InnerType may not be null");
         }
@@ -48,49 +47,43 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
     @Override
     public IModel<?> newLabelModel(IModel<T> model) {
 
+        IModel<String> toStringModel = new ToStringModel(model);
+        IModel<String> realResourceModel = toStringModel;
+        if (innerType.getResourceKeyProperty() != null) {
+            realResourceModel = new PropertyModel<String>(model, innerType.getResourceKeyProperty().getProperty());
+        }
         ResourceModel resourceModel = new ResourceModel(resourcePrefix + ".null");
         if (model != null  && model.getObject() != null) {
-            Method propertyProvider = findResourceProvider(this.innerType);
-            try {
-                String resource = (String)propertyProvider.invoke(model.getObject(), (Object[]) null);
-                resourceModel = new ResourceModel(resourcePrefix + "." + resource, propertyProvider.invoke(model.getObject(), new Object[]{}).toString());
-            } catch (IllegalArgumentException e) {
-                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-                        + " of class " + model.getObject().getClass() + ".\nMethod-signatures may not "
-                        + "contain any parameters.", e);
-            } catch (IllegalAccessException e) {
-                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-                        + " of class " + model.getObject().getClass(), e);
-            } catch (InvocationTargetException e) {
-                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-                        + " of class " + model.getObject().getClass(), e);
-            }
+            String resource = realResourceModel.getObject();
+            resourceModel = new ResourceModel(resourcePrefix + "." + resource, toStringModel.getObject());
         }
         return resourceModel;
     }
 
-    /**
-     * @param innerType
-     * @return
-     */
-    private Method findResourceProvider(InnerPrototype innerType) {
-        Method resourceProvider = null;
-        Class<?> type = innerType.type();
-        for (Method m: type.getMethods()) {
-            if (m.getAnnotation(StringResource.class) != null) {
-                logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
-                resourceProvider = m;
-            }
+
+    private class ToStringModel implements IModel<String> {
+
+        private static final long serialVersionUID = -2426469060493949020L;
+        private IModel<?> o;
+
+        public ToStringModel(IModel<?> o) {
+            this.o = o;
         }
-        if (resourceProvider == null) {
-            try {
-                resourceProvider = type.getMethod("toString", (Class<?>[])null);
-            } catch (SecurityException e) {
-                logger.error("toString() method of " + type + " can't be accessed.", e);
-            } catch (NoSuchMethodException e) {
-                logger.error("toString() method of " + type + " can't be found.", e);
-            }
+
+        @Override
+        public void detach() {
+            // Do nothing
         }
-        return resourceProvider;
+
+        @Override
+        public String getObject() {
+            return o.getObject().toString();
+        }
+
+        @Override
+        public void setObject(String object) {
+            o = Model.of(object);
+        }
+
     }
 }

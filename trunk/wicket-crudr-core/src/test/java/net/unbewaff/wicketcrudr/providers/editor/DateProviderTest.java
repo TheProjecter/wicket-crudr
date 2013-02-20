@@ -80,8 +80,10 @@ public class DateProviderTest {
     }
 
 
+    @SuppressWarnings("unused")
     private class DateHolder implements Serializable {
 
+        private static final long serialVersionUID = 2478215800345033596L;
         private Date data;
         private Integer id = 1;
 

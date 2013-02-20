@@ -57,7 +57,7 @@ public class VetWrapper implements Serializable, IWrapper<Veterinarian> {
         vet.setLastName(lastName);
     }
 
-    @InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class)
+    @InnerPrototype(resourcePrefix="Speciality", value=SpecialitiesWrapper.class)
     public List<SpecialitiesWrapper> getSpecialities() {
         List<SpecialitiesWrapper> list = new ArrayList<SpecialitiesWrapper>();
         for (Specialities speciality : vet.getSpecialities()) {

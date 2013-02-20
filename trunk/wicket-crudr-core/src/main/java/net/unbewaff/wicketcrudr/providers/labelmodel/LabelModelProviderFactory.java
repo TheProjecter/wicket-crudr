@@ -3,17 +3,10 @@
  */
 package net.unbewaff.wicketcrudr.providers.labelmodel;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.member.Ignore;
-import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.type.Prototype;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
+import net.unbewaff.wicketcrudr.datablocks.IterableProperty;
 import net.unbewaff.wicketcrudr.datablocks.Property;
-import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 
 import org.apache.log4j.Logger;
 
@@ -36,12 +29,12 @@ public class LabelModelProviderFactory {
      * @param d The DisplayType Annotation defining the Metadata
      * @return
      */
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String cleanProperty, DisplayType d) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(IterableProperty property) {
         ILabelModelProvider<T> provider;
-        if (d != null && d.value().equals(DisplayType.Display.RESOURCE)) {
-            provider = new StringResourcePropertyModelProvider<T>(cleanProperty, d.resourcePrefix());
+        if (property.isUseStringResource()) {
+            provider = new StringResourcePropertyModelProvider<T>(property.getProperty(), property.getStringResourcePrefix());
         } else {
-            provider = new PropertyModelProvider<T>(cleanProperty);
+            provider = new PropertyModelProvider<T>(property.getProperty());
         }
         return provider;
     }
@@ -58,22 +51,11 @@ public class LabelModelProviderFactory {
         return provider;
     }
 
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, InnerPrototype innerType) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, IPrototypeData innerType) {
         ILabelModelProvider<T> labelModelProvider;
-        List<Method> methods = new ArrayList<Method>();
-        for (Method m :innerType.type().getMethods()) {
-            String name = m.getName();
-            if (m.getDeclaringClass().isAnnotationPresent(Prototype.class)) {
-                if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is"))) {
-                    methods.add(m);
-                }
-            }
-        }
 
-        Collections.sort(methods, new OrderIndexComparator());
-
-        if (methods.size() > 0) {
-            labelModelProvider = new ConcatenatedLabelModelProvider<T>(methods, " ");
+        if (innerType.getProperties().size() > 0) {
+            labelModelProvider = new ConcatenatedLabelModelProvider<T>(innerType.getProperties(), " ");
         } else {
             labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);
         }

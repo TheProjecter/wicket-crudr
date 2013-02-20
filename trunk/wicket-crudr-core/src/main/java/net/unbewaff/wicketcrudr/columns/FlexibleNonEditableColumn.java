@@ -1,6 +1,7 @@
 package net.unbewaff.wicketcrudr.columns;
 
 import net.unbewaff.wicketcrudr.components.ILabelFacade;
+import net.unbewaff.wicketcrudr.datablocks.IMultipleStyledColumn;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -44,44 +45,44 @@ public class FlexibleNonEditableColumn<T> extends AbstractColumn<T> implements I
         return labelProvider;
     }
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
-	 */
-	@Override
-	public boolean isSortable() {
-		return false;
-	}
+    /* (non-Javadoc)
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
+     */
+    @Override
+    public boolean isSortable() {
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getCssClass()
-	 */
-	@Override
-	public String getCssClass() {
-		return getCssClassForBody();
-	}
+    /* (non-Javadoc)
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getCssClass()
+     */
+    @Override
+    public String getCssClass() {
+        return getCssClassForBody();
+    }
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForHeader()
-	 */
-	@Override
-	public String getCssClassForHeader() {
-		return "ui-widget-header" + cssClass;
-	}
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForHeader()
+     */
+    @Override
+    public String getCssClassForHeader() {
+        return "ui-widget-header" + cssClass;
+    }
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForBody()
-	 */
-	@Override
-	public String getCssClassForBody() {
-		return "ui-widget-content" + cssClass;
-	}
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForBody()
+     */
+    @Override
+    public String getCssClassForBody() {
+        return "ui-widget-content" + cssClass;
+    }
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForFooter()
-	 */
-	@Override
-	public String getCssClassForFooter() {
-		return "ui-widget-content" + cssClass;
-	}
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForFooter()
+     */
+    @Override
+    public String getCssClassForFooter() {
+        return "ui-widget-content" + cssClass;
+    }
 
 }

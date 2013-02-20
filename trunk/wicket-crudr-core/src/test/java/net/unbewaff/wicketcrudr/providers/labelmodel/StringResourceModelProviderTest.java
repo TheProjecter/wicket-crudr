@@ -10,6 +10,7 @@ import java.io.Serializable;
 import net.unbewaff.WicketApplication;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
@@ -37,7 +38,7 @@ public class StringResourceModelProviderTest {
         Mockery mockery = new Mockery();
         final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
         mockery.checking(new Expectations() {{
-            allowing(innerType).type(); will(returnValue(WithResourceKeyWrapper.class));
+            allowing(innerType).value(); will(returnValue(WithResourceKeyWrapper.class));
         }});
         StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("", innerType);
         ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
@@ -51,7 +52,7 @@ public class StringResourceModelProviderTest {
         Mockery mockery = new Mockery();
         final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
         mockery.checking(new Expectations() {{
-            allowing(innerType).type(); will(returnValue(WithResourceKeyWrapper.class));
+            allowing(innerType).value(); will(returnValue(WithResourceKeyWrapper.class));
         }});
         StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("prefix", innerType);
         ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
@@ -64,10 +65,12 @@ public class StringResourceModelProviderTest {
         WicketTester tester = new WicketTester(new WicketApplication());
         Mockery mockery = new Mockery();
         final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
+        final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
         mockery.checking(new Expectations() {{
-            allowing(innerType).type(); will(returnValue(TestType.class));
+            allowing(innerType).value(); will(returnValue(TestType.class));
+            allowing(prototype).getResourceKeyProperty(); will(returnValue(null));
         }});
-        StringResourceModelProvider<TestType> provider = new StringResourceModelProvider<TestType>("", innerType);
+        StringResourceModelProvider<TestType> provider = new StringResourceModelProvider<TestType>("", prototype);
         ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<TestType>(new TestType()));
         Label label = (Label)tester.startComponent(new Label("test", result));
         assertEquals("I am the string representation.", label.getDefaultModelObject());

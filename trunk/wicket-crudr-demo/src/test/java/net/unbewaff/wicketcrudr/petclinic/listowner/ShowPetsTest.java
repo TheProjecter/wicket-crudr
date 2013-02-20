@@ -133,7 +133,7 @@ public class ShowPetsTest {
             this.o = o;
         }
 
-        @InnerPrototype(type=PetWrapper.class)
+        @InnerPrototype(value=PetWrapper.class)
         public List<PetWrapper> getPets() {
 
             return new AWrappingList<PetWrapper, Pet>() {
