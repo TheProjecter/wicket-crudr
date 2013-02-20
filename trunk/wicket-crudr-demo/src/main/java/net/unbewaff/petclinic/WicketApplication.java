@@ -13,33 +13,31 @@ import org.apache.wicket.request.Response;
  * @see net.unbewaff.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
-	@Override
-	public Class<? extends WebPage> getHomePage() {
-		return HomePage.class;
-	}
+    /**
+     * @see org.apache.wicket.Application#getHomePage()
+     */
+    @Override
+    public Class<? extends WebPage> getHomePage() {
+        return HomePage.class;
+    }
 
-	/**
-	 * @see org.apache.wicket.Application#init()
-	 */
-	@Override
-	public void init() {
-		super.init();
-		getResourceSettings().setResourcePollFrequency(null);
-		getMarkupSettings().setStripWicketTags(true);
-		// add your configuration here
-	}
+    /**
+     * @see org.apache.wicket.Application#init()
+     */
+    @Override
+    public void init() {
+        super.init();
+        getResourceSettings().setResourcePollFrequency(null);
+        getMarkupSettings().setStripWicketTags(true);
+    }
 
-	/**
-	 * @see org.apache.wicket.Application#newSession(org.apache.wicket.request.Request,
-	 *      org.apache.wicket.request.Response)
-	 */
-	@Override
-	public Session newSession(Request request, Response response) {
-		return new WebSession(request);
-	}
-	
-	
+    /**
+     * @see org.apache.wicket.Application#newSession(org.apache.wicket.request.Request,
+     *      org.apache.wicket.request.Response)
+     */
+    @Override
+    public Session newSession(Request request, Response response) {
+        return new WebSession(request);
+    }
+
 }

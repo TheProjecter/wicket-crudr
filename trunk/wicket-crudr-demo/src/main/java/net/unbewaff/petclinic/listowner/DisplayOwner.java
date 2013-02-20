@@ -85,6 +85,7 @@ public class DisplayOwner extends WebPage implements Serializable {
      * @author Nicktarix (David Hendrix)
      *
      */
+    @Prototype
     public static class OwnerWrapper implements Serializable {
 
         private static final long serialVersionUID = -5188229327429353036L;

@@ -6,28 +6,26 @@ package net.unbewaff.wicketcrudr.columns;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
-import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
-import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
+import net.unbewaff.wicketcrudr.datablocks.Property;
+import net.unbewaff.wicketcrudr.datablocks.PrototypeData;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
 import net.unbewaff.wicketcrudr.providers.label.ILabelProvider;
 import net.unbewaff.wicketcrudr.providers.label.LabelProviderFactory;
+import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider;
 import net.unbewaff.wicketcrudr.providers.labelmodel.LabelModelProviderFactory;
-import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 import net.unbewaff.wicketcrudr.tools.PropertyCleaner;
 
 import org.apache.log4j.Logger;
@@ -107,27 +105,31 @@ public class ColumnFactory implements Serializable {
 
 
 
+    @SuppressWarnings("unchecked")
     public static <T extends Serializable> List<IColumn<T>> getColumns(Class<T> clazz){
+        PrototypeData prototype = new PrototypeData(clazz);
         List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
-        List<Method> methods = new ArrayList<Method>();
-        for (Method m :clazz.getMethods()) {
-            String name = m.getName();
-            if (m.getDeclaringClass().isAnnotationPresent(Prototype.class)) {
-                if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is"))) {
-                    methods.add(m);
-                }
-            }
-        }
-        Collections.sort(methods, new OrderIndexComparator());
 
-        Css css = clazz.getAnnotation(Css.class);
-        String cssClass = css != null ? css.value() : "";
-
-        for (Method m: methods) {
-            columns.add(getColumn(m, m.getName(), clazz, null, clazz.getAnnotation(LabelResourcePrefix.class), cssClass));
+        for (Property p : prototype.getProperties()) {
+            columns.add((IColumn<T>) getColumn(p, prototype.getLabelResourcePrefix(), prototype.getCss()));
         }
 
         return columns;
+    }
+
+    public static <T extends Serializable> IColumn<T>  getColumn(Property property, String labelResourcePrefix, String css) {
+        String propertyName = property.getProperty();
+        IModel<String> displayModel = new StringResourceModel(labelResourcePrefix + propertyName, Model.of(""), propertyName);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property);
+        ILabelProvider<T> labelProvider = null;
+        if (property.isIterable()) {
+            String prefix = ""; //TODO Prefix of the inner Type
+            //            ILabelModelProvider labelModelProvider2 = LabelModelProviderFactory.getLabelModelProvider(prefix, innerType);
+            //           labelProvider = new IterableLabelProvider(labelModelProvider, labelModelProvider2, innerType);
+        } else {
+            labelProvider = new SimpleLabelProvider<T>(labelModelProvider);
+        }
+        return new FlexibleNonEditableColumn<T>(displayModel, labelProvider, css);
     }
 }
 

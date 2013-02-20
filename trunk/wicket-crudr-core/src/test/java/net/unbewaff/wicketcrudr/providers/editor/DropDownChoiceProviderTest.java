@@ -12,7 +12,6 @@ import java.util.List;
 
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
@@ -74,12 +73,13 @@ public class DropDownChoiceProviderTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void primitiveToStringRendering() {
         final Editor e = mockery.mock(Editor.class);
         final DisplayType d = mockery.mock(DisplayType.class);
         mockery.checking(new Expectations() {{
             exactly(1).of(d).value(); will(returnValue(Display.DEFAULT));
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
+            exactly(1).of(e).editAs(); will(returnValue(Editor.EditorType.DROPDOWNCHOICE));
         }});
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", null);
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
@@ -110,6 +110,7 @@ public class DropDownChoiceProviderTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void stringResourceRendering() {
         final Editor e = mockery.mock(Editor.class);
         final DisplayType d = mockery.mock(DisplayType.class);
@@ -117,7 +118,7 @@ public class DropDownChoiceProviderTest {
         mockery.checking(new Expectations() {{
             exactly(1).of(d).value(); will(returnValue(Display.RESOURCE));
             exactly(5).of(r).value(); will(returnValue("ddctest"));
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
+            exactly(1).of(e).editAs(); will(returnValue(Editor.EditorType.DROPDOWNCHOICE));
         }});
         IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", r);
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
@@ -150,6 +151,7 @@ public class DropDownChoiceProviderTest {
 
     private class StringHolder implements Serializable, ICrudrDataProvider<StringHolder>{
 
+        private static final long serialVersionUID = -7573591466251022526L;
         private String data;
         private Integer id = counter++;
 
@@ -158,6 +160,7 @@ public class DropDownChoiceProviderTest {
             return id;
         }
 
+        @SuppressWarnings("unused")
         public void setId(Integer id) {
             this.id = id;
         }

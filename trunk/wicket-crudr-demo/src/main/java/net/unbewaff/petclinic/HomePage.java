@@ -8,10 +8,10 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class HomePage extends WebPage {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public HomePage(final PageParameters parameters) {
-    	add(new BookmarkablePageLink<ListVetsPage>("listVets", ListVetsPage.class));
-		add(new BookmarkablePageLink<DisplayOwner>("showOwner", DisplayOwner.class));
+        add(new BookmarkablePageLink<ListVetsPage>("listVets", ListVetsPage.class));
+        add(new BookmarkablePageLink<DisplayOwner>("showOwner", DisplayOwner.class));
     }
 }

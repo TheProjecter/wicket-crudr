@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
-import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.IWrapper;
 
 public class PetWrapper implements Serializable, IWrapper<Pet> {
@@ -21,7 +21,7 @@ public class PetWrapper implements Serializable, IWrapper<Pet> {
      * @see net.unbewaff.petclinic.entities.Pet#getName()
      */
     @Order(1)
-    @ResourceKey
+    @StringResource
     public String getHumanReadableId() {
         return pet.getName() + " (" + pet.getType().getName() + ")";
     }

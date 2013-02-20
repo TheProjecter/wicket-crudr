@@ -17,7 +17,7 @@ import org.apache.wicket.util.convert.IConverter;
  *
  * @param <T>
  */
-class SimpleLabelProvider<T> implements ILabelProvider<T> {
+public class SimpleLabelProvider<T> implements ILabelProvider<T> {
 
     private static final long serialVersionUID = -7292107981087842284L;
 
@@ -30,6 +30,7 @@ class SimpleLabelProvider<T> implements ILabelProvider<T> {
         this.labelModelProvider = labelModelProvider;
     }
 
+    @Override
     public Component newLabel(final ILabelFacade parent, String componentId, IModel<T> model) {
         Label label = new Label(componentId, newLabelModel(model)) {
 
@@ -44,7 +45,7 @@ class SimpleLabelProvider<T> implements ILabelProvider<T> {
             @Override
             public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
                 Object modelObject = getDefaultModelObject();
-                if ((modelObject == null) || "".equals(modelObject)) {
+                if (modelObject == null || "".equals(modelObject)) {
                     replaceComponentTagBody(markupStream, openTag, parent.defaultNullLabel());
                 } else {
                     super.onComponentTagBody(markupStream, openTag);
