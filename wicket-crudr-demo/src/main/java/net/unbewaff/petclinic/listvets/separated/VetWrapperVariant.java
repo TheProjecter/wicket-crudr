@@ -30,7 +30,7 @@ public class VetWrapperVariant extends VetWrapper implements Serializable, ICrud
 
     @Override
     @StringResource("VetWrapper")
-    @InnerPrototype(resourcePrefix="Speciality", type=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
+    @InnerPrototype(resourcePrefix="Speciality", value=SpecialitiesWrapper.class, displayAs=DisplayType.CONCATENATED)
     public List<SpecialitiesWrapper> getSpecialities() {
         return super.getSpecialities();
     }

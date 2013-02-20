@@ -55,8 +55,7 @@ public class DataBlockFactory implements Serializable {
         Class<?> returnType = m.getReturnType();
         if (innerType == null) {
             if (Serializable.class.isAssignableFrom(returnType)) {
-                innerType = new DefaultInnerType(
-                        (Class<? extends Serializable>) returnType);
+                innerType = new DefaultInnerType((Class<? extends Serializable>) returnType);
             } else {
                 throw new IllegalArgumentException(
                         "Either the innerType must be defined or a Serializable returnType is expected. "

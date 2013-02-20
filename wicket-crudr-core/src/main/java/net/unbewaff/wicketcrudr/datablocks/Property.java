@@ -7,14 +7,13 @@ import java.util.Map;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 
-public final class Property implements Serializable {
+public class Property implements Serializable {
 
     private final String property;
     private final boolean readOnly;
     private final int order;
     private final boolean useStringResource;
     private final String stringResourcePrefix;
-    private final boolean iterable;
 
     public Property(String property, Method method, Map<String, Method> methods, Class<?> clazz) {
         this.property = property;
@@ -22,7 +21,6 @@ public final class Property implements Serializable {
         order = getOrder(method);
         useStringResource = method.isAnnotationPresent(StringResource.class);
         stringResourcePrefix = getStringResourcePerfix(method);
-        iterable = Iterable.class.isAssignableFrom(method.getReturnType());
     }
 
     /**
@@ -93,7 +91,7 @@ public final class Property implements Serializable {
      * @return the iterable
      */
     public boolean isIterable() {
-        return iterable;
+        return false;
     }
 
 }

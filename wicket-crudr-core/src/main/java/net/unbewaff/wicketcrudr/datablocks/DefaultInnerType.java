@@ -39,7 +39,7 @@ public class DefaultInnerType implements InnerPrototype {
 	 * @see net.unbewaff.wicketcrudr.annotations.InnerType#type()
 	 */
 	@Override
-	public Class<?> type() {
+	public Class<?> value() {
 		return clazz;
 	}
 

@@ -10,18 +10,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation defining the order of List and Edit elements for display
- * @author David Hendrix (Nicktarix)
+ * @author DavidH
  *
  */
-
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface Order {
-    /**
-     * Defines the order of display. With Java 7 you'll get inconsistent display sequences even between calls if you don't define this.
-     * @return
-     */
-    int value() default Integer.MAX_VALUE;
+public @interface ResourceKey {
+
 }

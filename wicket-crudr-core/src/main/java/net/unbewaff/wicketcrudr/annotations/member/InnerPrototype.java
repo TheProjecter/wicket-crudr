@@ -40,7 +40,7 @@ public @interface InnerPrototype {
 
 	String resourcePrefix() default "";
 
-	Class<?> type() default Object.class;
+	Class<?> value() default Object.class;
 
 	String separator() default ", ";
 

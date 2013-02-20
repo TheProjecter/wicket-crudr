@@ -128,7 +128,7 @@ public class OwnerEditWrapper implements Serializable {
      * @see net.unbewaff.petclinic.entities.Owner#getPets()
      */
     @Editor(editAs=EditorType.PALETTE)
-    @InnerPrototype(type=PetWrapper.class)
+    @InnerPrototype(value=PetWrapper.class)
     @Order(6)
     public List<PetWrapper> getPets() {
         return new AWrappingList<PetWrapper, Pet>() {

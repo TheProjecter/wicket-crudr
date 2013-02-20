@@ -154,7 +154,7 @@ public class OwnerWrapper implements Serializable {
      * @see net.unbewaff.petclinic.entities.Owner#getPets()
      */
     @Order(6)
-    @InnerPrototype(displayAs=DisplayType.CONCATENATED, separator="<br />", type=PetWrapper.class)
+    @InnerPrototype(displayAs=DisplayType.CONCATENATED, separator="<br />", value=PetWrapper.class)
     public List<PetWrapper> getPets() {
 
         return new AWrappingList<PetWrapper, Pet>() {

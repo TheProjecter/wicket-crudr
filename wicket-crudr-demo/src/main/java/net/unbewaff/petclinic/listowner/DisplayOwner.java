@@ -229,7 +229,7 @@ public class DisplayOwner extends WebPage implements Serializable {
          * @see net.unbewaff.petclinic.entities.Owner#getPets()
          */
         @Order(6)
-        @InnerPrototype(type=PetWrapper.class)
+        @InnerPrototype(value=PetWrapper.class)
         public List<PetWrapper> getPets() {
             logger.debug("Retrieving " + owner.getPets().size() + " pets for " + owner.getFirstName() + " " + owner.getLastName() + ".");
 

@@ -108,7 +108,7 @@ public class AutoDisplayUpdatingTests {
         }
 
         @Order(2)
-        @InnerPrototype(type=String.class, separator = "sep", displayAs=DisplayType.CONCATENATED)
+        @InnerPrototype(value=String.class, separator = "sep", displayAs=DisplayType.CONCATENATED)
         public List<String> getList() {
             return list;
         }
