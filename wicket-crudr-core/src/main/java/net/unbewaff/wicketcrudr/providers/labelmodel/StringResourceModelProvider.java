@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
-import net.unbewaff.wicketcrudr.annotations.member.ResourceKey;
+import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.model.IModel;
@@ -25,74 +25,72 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
 
 
-	private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
-	private String resourcePrefix;
-	private InnerPrototype innerType;
+    private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
+    private String resourcePrefix;
+    private InnerPrototype innerType;
 
     /**
      * @param resourcePrefix
      * @param propertyProvider
      */
     public StringResourceModelProvider(String resourcePrefix, InnerPrototype innerType) {
-    	if (innerType == null) {
-    		throw new IllegalArgumentException("InnerType may not be null");
-    	}
-    	this.innerType = innerType;
+        if (innerType == null) {
+            throw new IllegalArgumentException("InnerType may not be null");
+        }
+        this.innerType = innerType;
         this.resourcePrefix = resourcePrefix;
     }
 
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider#newLabelModel(org.apache.wicket.model.IModel)
-	 */
-	@Override
-	public IModel<?> newLabelModel(IModel<T> model) {
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.providers.labelmodel.ILabelModelProvider#newLabelModel(org.apache.wicket.model.IModel)
+     */
+    @Override
+    public IModel<?> newLabelModel(IModel<T> model) {
 
-		ResourceModel resourceModel = new ResourceModel(resourcePrefix + ".null");
-		if (model != null  && model.getObject() != null) {
-			Method propertyProvider = findResourceProvider(this.innerType);
-			try {
-				String resource = (String)propertyProvider.invoke(model.getObject(), (Object[]) null);
-				resourceModel = new ResourceModel(resourcePrefix + "." + resource, propertyProvider.invoke(model.getObject(), new Object[]{}).toString());
-			} catch (IllegalArgumentException e) {
-				logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-						+ " of class " + model.getObject().getClass() + ".\nMethod-signatures may not "
-						+ "contain any parameters.", e);
-			} catch (IllegalAccessException e) {
-				logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-						+ " of class " + model.getObject().getClass(), e);
-			} catch (InvocationTargetException e) {
-				logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
-						+ " of class " + model.getObject().getClass(), e);
-			}
-		}
-		return resourceModel;
-	}
+        ResourceModel resourceModel = new ResourceModel(resourcePrefix + ".null");
+        if (model != null  && model.getObject() != null) {
+            Method propertyProvider = findResourceProvider(this.innerType);
+            try {
+                String resource = (String)propertyProvider.invoke(model.getObject(), (Object[]) null);
+                resourceModel = new ResourceModel(resourcePrefix + "." + resource, propertyProvider.invoke(model.getObject(), new Object[]{}).toString());
+            } catch (IllegalArgumentException e) {
+                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
+                        + " of class " + model.getObject().getClass() + ".\nMethod-signatures may not "
+                        + "contain any parameters.", e);
+            } catch (IllegalAccessException e) {
+                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
+                        + " of class " + model.getObject().getClass(), e);
+            } catch (InvocationTargetException e) {
+                logger.error("Exception while invoking " + propertyProvider.getName() + " on " + model.getObject()
+                        + " of class " + model.getObject().getClass(), e);
+            }
+        }
+        return resourceModel;
+    }
 
-	/**
-	 * @param innerType
-	 * @return
-	 */
-	private Method findResourceProvider(InnerPrototype innerType) {
-		Method resourceProvider = null;
-		Class<?> type = innerType.type();
-		for (Method m: type.getMethods()) {
-			if (m.getAnnotation(ResourceKey.class) != null) {
-				logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
-				resourceProvider = m;
-			} else {
-				logger.debug(m.getName() + " - " + m.getAnnotation(ResourceKey.class) + " - " + m.isAccessible());
-			}
-		}
-		if (resourceProvider == null) {
-			try {
-				resourceProvider = type.getMethod("toString", (Class<?>[])null);
-			} catch (SecurityException e) {
-				logger.error("toString() method of " + type + " can't be accessed.", e);
-			} catch (NoSuchMethodException e) {
-				logger.error("toString() method of " + type + " can't be found.", e);
-			}
-		}
-		return resourceProvider;
-	}
+    /**
+     * @param innerType
+     * @return
+     */
+    private Method findResourceProvider(InnerPrototype innerType) {
+        Method resourceProvider = null;
+        Class<?> type = innerType.type();
+        for (Method m: type.getMethods()) {
+            if (m.getAnnotation(StringResource.class) != null) {
+                logger.debug("Using " + type.getName() + "." + m.getName() + " as resourceProvider for " + type + ".");
+                resourceProvider = m;
+            }
+        }
+        if (resourceProvider == null) {
+            try {
+                resourceProvider = type.getMethod("toString", (Class<?>[])null);
+            } catch (SecurityException e) {
+                logger.error("toString() method of " + type + " can't be accessed.", e);
+            } catch (NoSuchMethodException e) {
+                logger.error("toString() method of " + type + " can't be found.", e);
+            }
+        }
+        return resourceProvider;
+    }
 }

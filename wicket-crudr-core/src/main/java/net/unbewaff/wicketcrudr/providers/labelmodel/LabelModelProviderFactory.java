@@ -12,6 +12,7 @@ import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
+import net.unbewaff.wicketcrudr.datablocks.Property;
 import net.unbewaff.wicketcrudr.tools.OrderIndexComparator;
 
 import org.apache.log4j.Logger;
@@ -41,6 +42,18 @@ public class LabelModelProviderFactory {
             provider = new StringResourcePropertyModelProvider<T>(cleanProperty, d.resourcePrefix());
         } else {
             provider = new PropertyModelProvider<T>(cleanProperty);
+        }
+        return provider;
+    }
+
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(Property property) {
+        ILabelModelProvider<T> provider;
+        if (property.isUseStringResource()) {
+            logger.debug("Property " + property.getProperty() + " uses " + property.getStringResourcePrefix() + ".");
+            provider = new StringResourcePropertyModelProvider<T>(property.getProperty(), property.getStringResourcePrefix());
+        } else {
+            logger.debug("Property " + property.getProperty() + " uses a plain PropertyModel.");
+            provider = new PropertyModelProvider<T>(property.getProperty());
         }
         return provider;
     }
