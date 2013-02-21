@@ -30,7 +30,7 @@ public final class PrototypeData implements Serializable, IPrototypeData {
     private final List<Property> properties = new ArrayList<Property>();
     private final String labelResourcePrefix;
     private final String css;
-    private final Property resourceKeyProperty;
+    private final IProperty resourceKeyProperty;
 
     public PrototypeData(Class<?> clazz) {
         if (!clazz.isAnnotationPresent(Prototype.class)) {
@@ -43,7 +43,7 @@ public final class PrototypeData implements Serializable, IPrototypeData {
 
         Map<String, Method> methods = scanMethods(clazz);
 
-        Property resourceKey = null;
+        IProperty resourceKey = null;
         for (Entry<String, Method> entry : methods.entrySet()) {
             if (!entry.getKey().startsWith("s")) {
                 Property property = createProperty(methods, entry.getKey(), clazz);
@@ -152,7 +152,7 @@ public final class PrototypeData implements Serializable, IPrototypeData {
      * @see net.unbewaff.wicketcrudr.datablocks.IPrototypeData#getResourceKeyProperty()
      */
     @Override
-    public Property getResourceKeyProperty() {
+    public IProperty getResourceKeyProperty() {
         return resourceKeyProperty;
     }
 

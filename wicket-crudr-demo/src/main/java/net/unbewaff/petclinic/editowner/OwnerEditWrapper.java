@@ -7,7 +7,7 @@ import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
+import net.unbewaff.wicketcrudr.annotations.EditorType;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;

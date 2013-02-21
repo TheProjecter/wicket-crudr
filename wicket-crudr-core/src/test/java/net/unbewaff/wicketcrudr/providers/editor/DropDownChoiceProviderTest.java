@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display;
-import net.unbewaff.wicketcrudr.annotations.member.StringResource;
+import net.unbewaff.wicketcrudr.annotations.EditorType;
 import net.unbewaff.wicketcrudr.components.ICrudrDataProvider;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.providers.editorpanel.DropDownChoicePanel;
 import net.unbewaff.wicketcrudr.providers.editorpanel.DropDownChoicePanelProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
@@ -75,13 +73,12 @@ public class DropDownChoiceProviderTest {
     @Test
     @SuppressWarnings("unchecked")
     public void primitiveToStringRendering() {
-        final Editor e = mockery.mock(Editor.class);
-        final DisplayType d = mockery.mock(DisplayType.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(d).value(); will(returnValue(Display.DEFAULT));
-            exactly(1).of(e).editAs(); will(returnValue(Editor.EditorType.DROPDOWNCHOICE));
+            allowing(property).getProperty(); will(returnValue("string"));
+            allowing(property).getEditorType(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", null);
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, property);
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);
@@ -111,16 +108,13 @@ public class DropDownChoiceProviderTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void stringResourceRendering() {
-        final Editor e = mockery.mock(Editor.class);
-        final DisplayType d = mockery.mock(DisplayType.class);
-        final StringResource r = mockery.mock(StringResource.class);
+    public void testStringResourceRendering() {
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(d).value(); will(returnValue(Display.RESOURCE));
-            exactly(5).of(r).value(); will(returnValue("ddctest"));
-            exactly(1).of(e).editAs(); will(returnValue(Editor.EditorType.DROPDOWNCHOICE));
+            allowing(property).getProperty(); will(returnValue("Data"));
+            allowing(property).getEditorType(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
-        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), StringHolder.class, "data", r);
+        IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider("ddctest", property);
         DropDownChoice<StringHolder> ddc = (DropDownChoice<StringHolder>) editorProvider.newEditor(panel, "editor", Model.of(list.get(1)), null);
         component.add(ddc);
         tester.startComponentInPage(panel);

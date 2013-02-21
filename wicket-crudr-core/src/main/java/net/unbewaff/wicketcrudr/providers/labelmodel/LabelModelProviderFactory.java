@@ -4,9 +4,9 @@
 package net.unbewaff.wicketcrudr.providers.labelmodel;
 
 
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 import net.unbewaff.wicketcrudr.datablocks.IterableProperty;
-import net.unbewaff.wicketcrudr.datablocks.Property;
 
 import org.apache.log4j.Logger;
 
@@ -39,7 +39,7 @@ public class LabelModelProviderFactory {
         return provider;
     }
 
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(Property property) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(IProperty property) {
         ILabelModelProvider<T> provider;
         if (property.isUseStringResource()) {
             logger.debug("Property " + property.getProperty() + " uses " + property.getStringResourcePrefix() + ".");
@@ -54,7 +54,7 @@ public class LabelModelProviderFactory {
     public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, IPrototypeData innerType) {
         ILabelModelProvider<T> labelModelProvider;
 
-        if (innerType.getProperties().size() > 0) {
+        if (innerType != null && innerType.getProperties().size() > 0) {
             labelModelProvider = new ConcatenatedLabelModelProvider<T>(innerType.getProperties(), " ");
         } else {
             labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);

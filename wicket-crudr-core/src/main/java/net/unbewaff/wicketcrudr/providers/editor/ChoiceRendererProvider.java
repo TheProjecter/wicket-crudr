@@ -5,7 +5,6 @@ package net.unbewaff.wicketcrudr.providers.editor;
 
 import java.io.Serializable;
 
-import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -19,14 +18,14 @@ import org.apache.wicket.model.StringResourceModel;
  */
 public class ChoiceRendererProvider<T> {
 
-    private StringResource stringResource;
     private String property;
+    private String stringResourcePrefix;
 
     /**
      * @param resourcePrefix
      */
-    public ChoiceRendererProvider(StringResource resourcePrefix, String property) {
-        this.stringResource = resourcePrefix;
+    public ChoiceRendererProvider(String resourcePrefix, String property) {
+        this.stringResourcePrefix = resourcePrefix;
         this.property = property;
     }
 
@@ -45,11 +44,11 @@ public class ChoiceRendererProvider<T> {
             public Object getDisplayValue(T object) {
                 StringResourceModel stringResourceModel;
                 if (object instanceof Serializable && parent != null) {
-                    stringResourceModel = new StringResourceModel(stringResource.value() + ".${" + property + "}", parent, new Model((Serializable)object));
+                    stringResourceModel = new StringResourceModel(stringResourcePrefix + ".${" + property + "}", parent, new Model((Serializable)object));
                 } else {
                     PropertyModel<String> propertyModel = new PropertyModel<String>(object, property);
 
-                    stringResourceModel = new StringResourceModel(stringResource.value() + "." + propertyModel.getObject(), Model.of(""));
+                    stringResourceModel = new StringResourceModel(stringResourcePrefix + "." + propertyModel.getObject(), Model.of(""));
                 }
                 return stringResourceModel.getString();
             }

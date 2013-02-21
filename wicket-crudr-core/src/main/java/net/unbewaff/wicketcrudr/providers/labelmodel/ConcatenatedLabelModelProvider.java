@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.datablocks.Property;
 
 import org.apache.wicket.model.IModel;
@@ -44,7 +45,7 @@ public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>
 
 
         public ConcatenatedLabelModel(List<Property> properties, String separator, IModel<T> target) {
-            for (Property property: properties) {
+            for (IProperty property: properties) {
                 models.add(new PropertyModel<T>(target, property.getProperty()));
             }
             this.separator = separator;

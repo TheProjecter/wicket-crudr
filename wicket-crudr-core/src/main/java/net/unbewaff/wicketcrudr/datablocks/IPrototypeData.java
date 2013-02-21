@@ -22,6 +22,6 @@ public interface IPrototypeData {
     /**
      * @return the resourceKeyProperty
      */
-    public abstract Property getResourceKeyProperty();
+    public abstract IProperty getResourceKeyProperty();
 
 }

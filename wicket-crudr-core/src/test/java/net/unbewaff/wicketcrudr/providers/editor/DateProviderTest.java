@@ -13,8 +13,9 @@ import java.util.Locale;
 
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
+import net.unbewaff.wicketcrudr.annotations.EditorType;
 import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
 
@@ -58,17 +59,18 @@ public class DateProviderTest {
     public void testBasicFunctionality() {
         final DisplayType d = mockery.mock(DisplayType.class);
         final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(2).of(e).editAs(); will(returnValue(EditorType.DATE));
-            exactly(1).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
+            allowing(property).getEditorType(); will(returnValue(EditorType.DATE));
+            allowing(property).getProperty(); will(returnValue("string"));
         }});
-        ISurroundingContainerProvider provider = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider provider = SurroundingContainerProviderFactory.getContainerProvider(property);
         String componentId = panel.getComponentId();
         logger.debug("Component Id of panel: " + componentId);
         WebMarkupContainer component = provider.newSurroundingContainer(componentId, null);
         component.setVisible(true);
         panel.add(component);
-        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, d.value(), DateHolder.class, "data", null);
+        IEditorProvider<DateHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, property);
         FormComponent<DateHolder> dtf = editorProvider.newEditor(panel, "editor", Model.of(dh), null);
         component.add(dtf);
         tester.startComponentInPage(panel);
