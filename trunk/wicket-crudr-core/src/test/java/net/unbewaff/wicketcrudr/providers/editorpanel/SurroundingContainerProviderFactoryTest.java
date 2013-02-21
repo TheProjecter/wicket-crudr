@@ -4,8 +4,8 @@
 package net.unbewaff.wicketcrudr.providers.editorpanel;
 
 import static org.junit.Assert.assertTrue;
-import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
+import net.unbewaff.wicketcrudr.annotations.EditorType;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 
 import org.apache.log4j.Logger;
 import org.jmock.Expectations;
@@ -24,11 +24,11 @@ public class SurroundingContainerProviderFactoryTest {
 
     @Test
     public void testForTextFieldAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
+            allowing(property).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof TextFieldPanelProvider);
         mockery.assertIsSatisfied();
     }
@@ -36,76 +36,76 @@ public class SurroundingContainerProviderFactoryTest {
 
     @Test(expected=UnsupportedOperationException.class)
     public void testForAjaxLinkAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.AJAXLINK));
+            allowing(property).getEditorType(); will(returnValue(EditorType.AJAXLINK));
         }});
-        SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForCheckBoxAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.CHECKBOX));
+            allowing(property).getEditorType(); will(returnValue(EditorType.CHECKBOX));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof CheckBoxPanelProvider);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForDateAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.DATE));
+            allowing(property).getEditorType(); will(returnValue(EditorType.DATE));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof TextFieldPanelProvider);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForDropDownChoiceAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.DROPDOWNCHOICE));
+            allowing(property).getEditorType(); will(returnValue(EditorType.DROPDOWNCHOICE));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof DropDownChoicePanelProvider);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForPaletteAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.PALETTE));
+            allowing(property).getEditorType(); will(returnValue(EditorType.PALETTE));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof PalettePanelProvider);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForTextAreaAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.TEXTAREA));
+            allowing(property).getEditorType(); will(returnValue(EditorType.TEXTAREA));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof TextAreaPanelProvider);
         mockery.assertIsSatisfied();
     }
 
     @Test
     public void testForPasswordAnnotation() {
-        final Editor e = mockery.mock(Editor.class);
+        final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            exactly(1).of(e).editAs(); will(returnValue(EditorType.PASSWORD));
+            allowing(property).getEditorType(); will(returnValue(EditorType.PASSWORD));
         }});
-        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(e);
+        ISurroundingContainerProvider scp = SurroundingContainerProviderFactory.getContainerProvider(property);
         assertTrue(scp instanceof PasswordPanelProvider);
         mockery.assertIsSatisfied();
     }

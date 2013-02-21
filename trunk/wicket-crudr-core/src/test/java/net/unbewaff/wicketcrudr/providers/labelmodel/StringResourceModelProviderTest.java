@@ -10,6 +10,7 @@ import java.io.Serializable;
 import net.unbewaff.WicketApplication;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -36,11 +37,13 @@ public class StringResourceModelProviderTest {
     public void testWithIdWithoutResource() {
         WicketTester tester = new WicketTester();
         Mockery mockery = new Mockery();
-        final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
+        final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
+        final IProperty resourceKeyProperty = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            allowing(innerType).value(); will(returnValue(WithResourceKeyWrapper.class));
+            allowing(prototype).getResourceKeyProperty(); will(returnValue(resourceKeyProperty));
+            allowing(resourceKeyProperty).getProperty(); will(returnValue("Id"));
         }});
-        StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("", innerType);
+        StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("", prototype);
         ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
         Label label = (Label)tester.startComponent(new Label("test", result));
         assertEquals("I am the Id.", label.getDefaultModelObject());
@@ -50,11 +53,14 @@ public class StringResourceModelProviderTest {
     public void testWithIdWithResource() {
         WicketTester tester = new WicketTester(new WicketApplication());
         Mockery mockery = new Mockery();
-        final InnerPrototype innerType = mockery.mock(InnerPrototype.class);
+        final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
+        final IProperty resourceKeyProperty = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{
-            allowing(innerType).value(); will(returnValue(WithResourceKeyWrapper.class));
+            allowing(prototype).getResourceKeyProperty(); will(returnValue(resourceKeyProperty));
+            allowing(resourceKeyProperty).getProperty(); will(returnValue("Id"));
         }});
-        StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("prefix", innerType);
+
+        StringResourceModelProvider<WithResourceKeyWrapper> provider = new StringResourceModelProvider<WithResourceKeyWrapper>("prefix", prototype);
         ResourceModel result = (ResourceModel) provider.newLabelModel(new Model<WithResourceKeyWrapper>(new WithResourceKeyWrapper()));
         Label label = (Label)tester.startComponent(new Label("test", result));
         assertEquals("I am the Id resource.", label.getDefaultModelObject());

@@ -6,19 +6,19 @@ package net.unbewaff.wicketcrudr.columns;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.annotations.type.Prototypes;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
+import net.unbewaff.wicketcrudr.datablocks.PrototypeData;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
@@ -55,12 +55,14 @@ public class ColumnFactoryTest {
         @Test
         public void testDefaultLister() throws SecurityException, NoSuchMethodException {
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-            Method method = StringHolder.class.getMethod("getData");
-            Editor e = method.getAnnotation(Editor.class);
-            DisplayType dt = method.getAnnotation(DisplayType.class);
-            StringResource sr = method.getAnnotation(StringResource.class);
-            LabelResourcePrefix lrp = StringHolder.class.getAnnotation(LabelResourcePrefix.class);
-            IColumn<StringHolder> column = ColumnFactory.getColumn(e, dt, null, sr, "Data", StringHolder.class, null, getListProvider(), lrp, "");
+            IPrototypeData prototype = new PrototypeData(StringHolder.class);
+            IProperty property = null;
+            for (IProperty p: prototype.getProperties()) {
+                if ("Data".equals(p.getProperty())) {
+                    property = p;
+                }
+            }
+            IColumn<StringHolder> column = ColumnFactory.getColumn(prototype, property, getListProvider());
             assertTrue(column instanceof FlexibleNonEditableColumn);
             FlexibleNonEditableColumn<StringHolder> pc = (FlexibleNonEditableColumn<ColumnFactoryTest.StringHolder>)column;
             assertTrue(pc.getDisplayModel() instanceof StringResourceModel);
@@ -94,12 +96,14 @@ public class ColumnFactoryTest {
         @Test
         public void testCustomHeader() throws SecurityException, NoSuchMethodException {
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-            Method method = StringHolder.class.getMethod("getData2");
-            Editor e = method.getAnnotation(Editor.class);
-            DisplayType dt = method.getAnnotation(DisplayType.class);
-            StringResource sr = method.getAnnotation(StringResource.class);
-            LabelResourcePrefix lrp = StringHolder.class.getAnnotation(LabelResourcePrefix.class);
-            IColumn<StringHolder> column = ColumnFactory.getColumn(e, dt, null, sr, "Data2", StringHolder.class, null, getListProvider(), lrp, "");
+            IPrototypeData prototype = new PrototypeData(StringHolder.class);
+            IProperty property = null;
+            for (IProperty p: prototype.getProperties()) {
+                if ("Data2".equals(p.getProperty())) {
+                    property = p;
+                }
+            }
+            IColumn<StringHolder> column = ColumnFactory.getColumn(prototype, property, getListProvider());
             assertTrue(column instanceof FlexibleNonEditableColumn);
             cols.add(column);
             DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);

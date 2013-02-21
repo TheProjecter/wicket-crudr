@@ -12,12 +12,12 @@ import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
-import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.Editor.EditorType;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.EditorType;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
+import net.unbewaff.wicketcrudr.datablocks.IProperty;
+import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 import net.unbewaff.wicketcrudr.providers.editor.EditorProviderFactory;
 import net.unbewaff.wicketcrudr.providers.editor.IEditorProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
@@ -68,17 +68,23 @@ public class FlexibleEditableColumnTest {
         @Test
         public void testDisplay() {
 
-            final DisplayType d = mockery.mock(DisplayType.class);
-            final Editor e = mockery.mock(Editor.class);
+            final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
+            final IProperty dataProp = mockery.mock(IProperty.class, "dataProp");
+            final IProperty odd = mockery.mock(IProperty.class, "odd");
+            final List<IProperty> list = new ArrayList<IProperty>();
+            list.add(dataProp);
+            list.add(odd);
             mockery.checking(new Expectations() {{
-                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
-                exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
+                allowing(prototype).getProperties(); will(returnValue(list));
+                allowing(dataProp).getProperty(); will(returnValue("Data"));
+                allowing(odd).getProperty(); will(returnValue("Odd"));
+                allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
-            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
-            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", prototype);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, dataProp);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(dataProp);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
             cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
 
@@ -100,17 +106,23 @@ public class FlexibleEditableColumnTest {
 
         @Test
         public void testDisplayEditor() {
-            final Editor e = mockery.mock(Editor.class);
-            final DisplayType d = mockery.mock(DisplayType.class);
+            final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
+            final IProperty dataProp = mockery.mock(IProperty.class, "dataProp");
+            final IProperty odd = mockery.mock(IProperty.class, "odd");
+            final List<IProperty> list = new ArrayList<IProperty>();
+            list.add(dataProp);
+            list.add(odd);
             mockery.checking(new Expectations() {{
-                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.DEFAULT));
-                exactly(2).of(e).editAs(); will(returnValue(EditorType.TEXTFIELD));
+                allowing(prototype).getProperties(); will(returnValue(list));
+                allowing(dataProp).getProperty(); will(returnValue("Data"));
+                allowing(odd).getProperty(); will(returnValue("Odd"));
+                allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
-            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, String.class, "data", null);
-            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", prototype);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, dataProp);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(dataProp);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
             cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("data"), conf));
 
@@ -133,17 +145,23 @@ public class FlexibleEditableColumnTest {
         @Test
         public void testCheckboxDisplay() {
 
-            final DisplayType d = mockery.mock(DisplayType.class);
-            final Editor e = mockery.mock(Editor.class);
+            final IPrototypeData prototype = mockery.mock(IPrototypeData.class);
+            final IProperty dataProp = mockery.mock(IProperty.class, "dataProp");
+            final IProperty odd = mockery.mock(IProperty.class, "odd");
+            final List<IProperty> list = new ArrayList<IProperty>();
+            list.add(dataProp);
+            list.add(odd);
             mockery.checking(new Expectations() {{
-                exactly(2).of(d).value(); will(returnValue(DisplayType.Display.CHECKBOX));
-                exactly(2).of(e).editAs(); will(returnValue(EditorType.CHECKBOX));
+                allowing(prototype).getProperties(); will(returnValue(list));
+                allowing(dataProp).getProperty(); will(returnValue("Data"));
+                allowing(odd).getProperty(); will(returnValue("Odd"));
+                allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
-            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", d);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider, String.class, d);
-            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(e, net.unbewaff.wicketcrudr.annotations.member.DisplayType.Display.DEFAULT, Boolean.class, "data", null);
-            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(e);
+            ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", prototype);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider);
+            IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, odd);
+            ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(odd);
             ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
             cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
 
