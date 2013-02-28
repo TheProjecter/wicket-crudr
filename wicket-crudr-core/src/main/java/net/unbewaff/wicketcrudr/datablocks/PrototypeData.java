@@ -102,13 +102,17 @@ public final class PrototypeData implements Serializable, IPrototypeData {
      */
     private Map<String, Method> scanMethods(Class<?> clazz) {
         Map<String, Method> methods = new HashMap<String, Method>();
-        for (Method m : clazz.getMethods()) {
-            String name = m.getName();
-            if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is") || name.startsWith("set"))) {
-                methods.put(name, m);
-            }
-        }
-        return methods;
+        Class<?> currentClass = clazz;
+        do {
+			for (Method m : currentClass.getDeclaredMethods()) {
+				String name = m.getName();
+				if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is") || name.startsWith("set"))) {
+					methods.put(name, m);
+				}
+			}
+			currentClass = currentClass.getSuperclass();
+		} while (currentClass.isAnnotationPresent(Prototype.class));
+		return methods;
     }
 
     /**
@@ -155,5 +159,18 @@ public final class PrototypeData implements Serializable, IPrototypeData {
     public IProperty getResourceKeyProperty() {
         return resourceKeyProperty;
     }
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("PrototypeData [properties=")
+				.append(properties != null ? properties.subList(0,
+						Math.min(properties.size(), maxLen)) : null)
+				.append(", labelResourcePrefix=").append(labelResourcePrefix)
+				.append(", css=").append(css).append(", resourceKeyProperty=")
+				.append(resourceKeyProperty).append("]");
+		return builder.toString();
+	}
 
 }

@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.unbewaff.TempPanel;
+import net.unbewaff.wicketcrudr.annotations.member.Ignore;
 import net.unbewaff.wicketcrudr.annotations.member.StringResource;
 import net.unbewaff.wicketcrudr.annotations.type.LabelResourcePrefix;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
@@ -137,6 +138,7 @@ public class ColumnFactoryTest {
                 return data;
             }
 
+            @Ignore
             public void setData(String data) {
                 this.data = data;
             }

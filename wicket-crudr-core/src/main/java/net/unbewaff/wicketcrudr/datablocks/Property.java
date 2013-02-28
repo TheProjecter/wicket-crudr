@@ -141,4 +141,13 @@ public class Property implements Serializable, IProperty {
         return type;
     }
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Property [property=").append(property)
+				.append(", readOnly=").append(readOnly).append(", editorType=")
+				.append(editorType).append("]");
+		return builder.toString();
+	}
+
 }

@@ -7,6 +7,7 @@ import org.apache.wicket.model.IModel;
 
 public class ListOnTheParentModel<T> implements IModel<T> {
 
+	private static final long serialVersionUID = -1391270744968642168L;
 	private Component parent;
 	private int index;
 
