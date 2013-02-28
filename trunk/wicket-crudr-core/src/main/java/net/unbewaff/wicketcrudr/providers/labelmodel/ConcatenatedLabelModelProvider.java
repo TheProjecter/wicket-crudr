@@ -26,7 +26,7 @@ public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>
      * @param separator TODO
      * 
      */
-    public ConcatenatedLabelModelProvider(List<Property> methods, String separator) {
+    public ConcatenatedLabelModelProvider(List<Property> properties, String separator) {
         this.properties = properties;
         this.separator = separator;
 

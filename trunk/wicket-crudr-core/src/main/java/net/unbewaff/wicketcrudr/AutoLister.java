@@ -9,10 +9,14 @@ import java.util.List;
 import net.unbewaff.wicketcrudr.annotations.type.Css;
 import net.unbewaff.wicketcrudr.columns.ColumnFactory;
 import net.unbewaff.wicketcrudr.components.StyledHeadersToolbar;
+import net.unbewaff.wicketcrudr.interfaces.IFactory;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
@@ -29,6 +33,7 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 	private final int rowsPerPage;
 	private String tableCssClass = "ui-widget";
 	private final List<IColumn<T>> columns;
+	private boolean isFactory = false;
 
 	/**
 	 * @param id
@@ -42,6 +47,7 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 			tableCssClass = tableCssClass + " " + css.value();
 		}
 		columns = ColumnFactory.getColumns(clazz);
+		isFactory = IFactory.class.isAssignableFrom(clazz);
 	}
 
 	/* (non-Javadoc)
@@ -56,6 +62,19 @@ public class AutoLister<T extends Serializable> extends Panel implements Seriali
 		StyledHeadersToolbar headerToolbar = new StyledHeadersToolbar(dataTable, null);
 		dataTable.addTopToolbar(headerToolbar);
 		add(dataTable);
+		Link<Void> link = new AjaxFallbackLink<Void>("add") {
+
+			private static final long serialVersionUID = -119990055206955389L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				
+				
+			}
+			
+		};
+		link.setVisible(isFactory);
+		add(link);
 		super.onInitialize();
 	}
 }
