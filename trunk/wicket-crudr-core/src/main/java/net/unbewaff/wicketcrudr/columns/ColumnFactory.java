@@ -54,8 +54,8 @@ public class ColumnFactory implements Serializable {
     public static <T extends Serializable> IColumn<T> getColumn(IPrototypeData prototype, IProperty property, ICrudrListProvider<T> listProvider) {
         IColumn<T> col = null;
         IModel<String> displayModel = getHeaderModel(prototype.getLabelResourcePrefix(), property.getProperty());
-        //TODO prototype is wrong here
-        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property.getProperty(), prototype);
+        //ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property.getProperty(), prototype);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(property, labelModelProvider);
         if (!property.isReadOnly()) {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(property.getStringResourcePrefix(), property);
@@ -74,7 +74,7 @@ public class ColumnFactory implements Serializable {
      * @return
      */
     private static IModel<String> getHeaderModel(String labelResourcePrefix, String cleanProperty) {
-        String display= labelResourcePrefix + "." + cleanProperty;
+        String display= labelResourcePrefix + cleanProperty;
         return new StringResourceModel(display, Model.of(""), cleanProperty);
     }
 

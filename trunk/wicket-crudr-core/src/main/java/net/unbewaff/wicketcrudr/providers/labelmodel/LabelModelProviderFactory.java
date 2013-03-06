@@ -51,13 +51,13 @@ public class LabelModelProviderFactory {
         return provider;
     }
 
-    public static <T> ILabelModelProvider<T> getLabelModelProvider(String resourcePrefix, IPrototypeData innerType) {
+    public static <T> ILabelModelProvider<T> getLabelModelProvider(String property, IPrototypeData innerType) {
         ILabelModelProvider<T> labelModelProvider;
 
-        if (innerType != null && innerType.getProperties().size() > 0) {
-            labelModelProvider = new ConcatenatedLabelModelProvider<T>(innerType.getProperties(), " ");
+        if (innerType instanceof IterableProperty && ((IterableProperty) innerType).getInnerPrototype().getProperties().size() > 0) {
+            labelModelProvider = new ConcatenatedLabelModelProvider<T>(((IterableProperty)innerType).getInnerPrototype().getProperties(), " ");
         } else {
-            labelModelProvider = new StringResourceModelProvider<T>(resourcePrefix, innerType);
+            labelModelProvider = new StringResourceModelProvider<T>(property, innerType);
         }
 
         return labelModelProvider;

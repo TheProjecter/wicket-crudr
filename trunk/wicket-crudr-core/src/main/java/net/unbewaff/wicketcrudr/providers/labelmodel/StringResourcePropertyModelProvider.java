@@ -4,6 +4,7 @@
 package net.unbewaff.wicketcrudr.providers.labelmodel;
 
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 /**
@@ -12,8 +13,8 @@ import org.apache.wicket.model.StringResourceModel;
  */
 class StringResourcePropertyModelProvider<T> implements ILabelModelProvider<T> {
 
-	private static final long serialVersionUID = -500181023178179347L;
-	private final String propertyExpression;
+    private static final long serialVersionUID = -500181023178179347L;
+    private final String propertyExpression;
     private final String resourceKey;
 
     /**
@@ -27,7 +28,8 @@ class StringResourcePropertyModelProvider<T> implements ILabelModelProvider<T> {
 
     @Override
     public IModel<?> newLabelModel(IModel<T> model) {
-        return new StringResourceModel(resourceKey + ".${" + propertyExpression + "}", model);
+        PropertyModel<String> propertyModel = new PropertyModel<String>(model, propertyExpression);
+        return new StringResourceModel(resourceKey + ".${" + propertyExpression + "}", model, propertyModel.getObject());
     }
 
 }

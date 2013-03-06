@@ -148,6 +148,7 @@ public class ColumnFactoryTest {
                 return data;
             }
 
+            @Ignore
             public void setData2(String data) {
                 this.data = data;
             }

@@ -79,6 +79,7 @@ public class FlexibleEditableColumnTest {
                 allowing(dataProp).getProperty(); will(returnValue("Data"));
                 allowing(odd).getProperty(); will(returnValue("Odd"));
                 allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
+                allowing(prototype).getResourceKeyProperty(); will(returnValue(null));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", prototype);
@@ -117,6 +118,7 @@ public class FlexibleEditableColumnTest {
                 allowing(dataProp).getProperty(); will(returnValue("Data"));
                 allowing(odd).getProperty(); will(returnValue("Odd"));
                 allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
+                allowing(prototype).getResourceKeyProperty(); will(returnValue(null));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("data", prototype);
@@ -156,6 +158,8 @@ public class FlexibleEditableColumnTest {
                 allowing(dataProp).getProperty(); will(returnValue("Data"));
                 allowing(odd).getProperty(); will(returnValue("Odd"));
                 allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
+                allowing(odd).getEditorType(); will(returnValue(EditorType.CHECKBOX));
+                allowing(prototype).getResourceKeyProperty(); will(returnValue(null));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", prototype);
