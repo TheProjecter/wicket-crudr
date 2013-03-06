@@ -14,7 +14,6 @@ import java.util.Locale;
 import net.unbewaff.TempPanel;
 import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.EditorType;
-import net.unbewaff.wicketcrudr.annotations.member.DisplayType;
 import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.providers.editorpanel.ISurroundingContainerProvider;
 import net.unbewaff.wicketcrudr.providers.editorpanel.SurroundingContainerProviderFactory;
@@ -57,7 +56,6 @@ public class DateProviderTest {
 
     @Test
     public void testBasicFunctionality() {
-        final DisplayType d = mockery.mock(DisplayType.class);
         final Editor e = mockery.mock(Editor.class);
         final IProperty property = mockery.mock(IProperty.class);
         mockery.checking(new Expectations() {{

@@ -156,17 +156,17 @@ public class FlexibleEditableColumnTest {
             mockery.checking(new Expectations() {{
                 allowing(prototype).getProperties(); will(returnValue(list));
                 allowing(dataProp).getProperty(); will(returnValue("Data"));
-                allowing(odd).getProperty(); will(returnValue("Odd"));
+                allowing(odd).getProperty(); will(returnValue("OddLength"));
                 allowing(dataProp).getEditorType(); will(returnValue(EditorType.TEXTFIELD));
                 allowing(odd).getEditorType(); will(returnValue(EditorType.CHECKBOX));
                 allowing(prototype).getResourceKeyProperty(); will(returnValue(null));
             }});
             List<IColumn<StringHolder>> cols = new ArrayList<IColumn<StringHolder>>();
             ILabelModelProvider<StringHolder> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider("oddLength", prototype);
-            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(null, labelModelProvider);
+            ILabelProvider<StringHolder> labelProvider = LabelProviderFactory.getLabelProvider(odd, labelModelProvider);
             IEditorProvider<StringHolder> editorProvider = EditorProviderFactory.getEditorProvider(null, odd);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(odd);
-            ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "data");
+            ContainerConfiguration<StringHolder> conf = new ContainerConfiguration<StringHolder>(labelProvider, editorProvider, containerProvider, getListProvider(), "oddLength");
             cols.add(new FlexibleEditableColumn<StringHolder>(Model.of("oddLength"), conf));
 
             DataTable<StringHolder> table = new DataTable<StringHolder>("table", cols, new ListDataProvider<StringHolder>(data), 5);
@@ -180,18 +180,15 @@ public class FlexibleEditableColumnTest {
             tester.assertInvisible("test:table:body:rows:1:cells:1:cell:editor");
             tester.assertInvisible("test:table:body:rows:2:cells:1:cell:editor");
             tester.assertInvisible("test:table:body:rows:3:cells:1:cell:editor");
-            tester.assertComponent("test:table:body:rows:1:cells:1:cell:label:editor", CheckBox.class);
-            tester.assertComponent("test:table:body:rows:2:cells:1:cell:label:editor", CheckBox.class);
-            tester.assertComponent("test:table:body:rows:3:cells:1:cell:label:editor", CheckBox.class);
-            CheckBox cb1 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:label:editor");
+            assertTrue(CheckBox.class.isAssignableFrom(tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:editor:editor", false).getClass()));
+            assertTrue(CheckBox.class.isAssignableFrom(tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:editor:editor", false).getClass()));
+            assertTrue(CheckBox.class.isAssignableFrom(tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:editor:editor", false).getClass()));
+            CheckBox cb1 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:1:cells:1:cell:editor:editor", false);
             assertTrue(cb1.getModelObject());
-            CheckBox cb2 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:label:editor");
+            CheckBox cb2 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:2:cells:1:cell:editor:editor", false);
             assertFalse(cb2.getModelObject());
-            CheckBox cb3 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:label:editor");
+            CheckBox cb3 = (CheckBox)tester.getComponentFromLastRenderedPage("test:table:body:rows:3:cells:1:cell:editor:editor", false);
             assertFalse(cb3.getModelObject());
-            tester.assertDisabled("test:table:body:rows:1:cells:1:cell:label:editor");
-            tester.assertDisabled("test:table:body:rows:2:cells:1:cell:label:editor");
-            tester.assertDisabled("test:table:body:rows:3:cells:1:cell:label:editor");
             mockery.assertIsSatisfied();
         }
 
@@ -209,7 +206,7 @@ public class FlexibleEditableColumnTest {
         }
 
         @Prototype
-        private static class StringHolder implements Serializable {
+        public static class StringHolder implements Serializable {
 
             private static final long serialVersionUID = 8070868717307881900L;
             private String data;
