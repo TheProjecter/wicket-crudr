@@ -25,19 +25,19 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
 
     private static final transient Logger logger = Logger.getLogger(StringResourceModelProvider.class);
-    private String resourcePrefix;
+    private String property;
     private IPrototypeData innerType;
 
     /**
-     * @param resourcePrefix
+     * @param property
      * @param propertyProvider
      */
-    public StringResourceModelProvider(String resourcePrefix, IPrototypeData innerType) {
+    public StringResourceModelProvider(String property, IPrototypeData innerType) {
         if (innerType == null) {
             throw new IllegalArgumentException("InnerType may not be null");
         }
         this.innerType = innerType;
-        this.resourcePrefix = resourcePrefix;
+        this.property = property;
     }
 
 
@@ -47,15 +47,14 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
     @Override
     public IModel<?> newLabelModel(IModel<T> model) {
 
-        IModel<String> toStringModel = new ToStringModel(model);
-        IModel<String> realResourceModel = toStringModel;
+        IModel<?> realResourceModel = new PropertyModel<Object>(model, property);
         if (innerType.getResourceKeyProperty() != null) {
-            realResourceModel = new PropertyModel<String>(model, innerType.getResourceKeyProperty().getProperty());
+            realResourceModel = new PropertyModel<Object>(model, innerType.getResourceKeyProperty().getProperty());
         }
-        ResourceModel resourceModel = new ResourceModel(resourcePrefix + ".null");
+        ResourceModel resourceModel = new ResourceModel(property + ".null");
         if (model != null  && model.getObject() != null) {
-            String resource = realResourceModel.getObject();
-            resourceModel = new ResourceModel(resourcePrefix + "." + resource, toStringModel.getObject());
+            Object resource = realResourceModel.getObject();
+            resourceModel = new ResourceModel(property + "." + resource.toString(), resource.toString());
         }
         return resourceModel;
     }
@@ -77,7 +76,11 @@ class StringResourceModelProvider<T> implements Serializable, ILabelModelProvide
 
         @Override
         public String getObject() {
-            return o.getObject().toString();
+            Object inner = o.getObject();
+            while (inner instanceof IModel) {
+                inner = ((IModel)inner).getObject();
+            }
+            return inner.toString();
         }
 
         @Override

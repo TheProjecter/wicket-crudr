@@ -56,7 +56,8 @@ public class DataBlockFactory implements Serializable {
         String propertyName = property.getProperty();
         IDataBlock<T> dataBlock = null;
         IModel<String> displayModel = getHeaderModel(lrp, propertyName);
-        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(propertyName, null);
+        //ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(propertyName, null);
+        ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(property, labelModelProvider);
         if (!property.isReadOnly()) { //TODO reimplement
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(property.getStringResourcePrefix(), property);
