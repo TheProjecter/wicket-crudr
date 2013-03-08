@@ -27,13 +27,17 @@ public class CheckBoxProvider implements IEditorProvider<Boolean> {
             @Override
             protected void onModelChanged() {
                 super.onModelChanged();
-                parent.onModelChanged();
+                if (parent != null) {
+                    parent.onModelChanged();
+                }
             }
 
             @Override
             protected void onModelChanging() {
                 super.onModelChanging();
-                parent.onModelChanging();
+                if (parent != null) {
+                    parent.onModelChanging();
+                }
             }
         };
     }

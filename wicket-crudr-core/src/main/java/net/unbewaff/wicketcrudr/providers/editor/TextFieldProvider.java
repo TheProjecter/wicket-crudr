@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.components.ICrudrListProvider;
 import net.unbewaff.wicketcrudr.components.IEditorFacade;
+import net.unbewaff.wicketcrudr.providers.label.SimpleLabelProvider;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
@@ -24,6 +25,7 @@ class TextFieldProvider<T extends Serializable> implements IEditorProvider<T> {
 
     private static final long serialVersionUID = -7231019074574082991L;
 
+    @Override
     public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, ICrudrListProvider<T> listProvider) {
         return new TextField<T>(componentId, model) {
             private static final long serialVersionUID = 1L;
@@ -37,13 +39,17 @@ class TextFieldProvider<T extends Serializable> implements IEditorProvider<T> {
             @Override
             protected void onModelChanged() {
                 super.onModelChanged();
-                parent.onModelChanged();
+                if (parent != null) {
+                    parent.onModelChanged();
+                }
             }
 
             @Override
             protected void onModelChanging() {
                 super.onModelChanging();
-                parent.onModelChanging();
+                if (parent != null) {
+                    parent.onModelChanging();
+                }
             }
         };
     }

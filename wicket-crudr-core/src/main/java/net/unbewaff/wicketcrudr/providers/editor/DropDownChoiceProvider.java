@@ -46,15 +46,20 @@ public class DropDownChoiceProvider<V extends ICrudrListProvider<V> & Serializab
             @Override
             protected void onModelChanged() {
                 super.onModelChanged();
-                parent.onModelChanged();
+                if (parent != null) {
+                    parent.onModelChanged();
+                }
             }
 
             @Override
             protected void onModelChanging() {
                 super.onModelChanging();
-                parent.onModelChanging();
+                if (parent != null) {
+                    parent.onModelChanging();
+                }
             }
         };
+
         Component parentComponent = null;
         if (parent instanceof Component) {
             parentComponent = (Component)parent;
