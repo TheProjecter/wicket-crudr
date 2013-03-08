@@ -6,8 +6,6 @@ import java.util.List;
 import net.unbewaff.petclinic.entities.Owner;
 import net.unbewaff.petclinic.entities.Pet;
 import net.unbewaff.petclinic.wrappers.PetWrapper;
-import net.unbewaff.wicketcrudr.annotations.Editor;
-import net.unbewaff.wicketcrudr.annotations.EditorType;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
 import net.unbewaff.wicketcrudr.tools.wrappinglist.AWrappingList;
@@ -37,7 +35,6 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getFirstName()
      */
-    @Editor
     @Order(1)
     public String getFirstName() {
         return owner.getFirstName();
@@ -55,7 +52,6 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getLastName()
      */
-    @Editor
     @Order(2)
     public String getLastName() {
         return owner.getLastName();
@@ -73,7 +69,6 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getAddress()
      */
-    @Editor
     @Order(3)
     public String getAddress() {
         return owner.getAddress();
@@ -91,7 +86,6 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getCity()
      */
-    @Editor
     @Order(4)
     public String getCity() {
         return owner.getCity();
@@ -109,7 +103,6 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getPhone()
      */
-    @Editor
     @Order(5)
     public String getPhone() {
         return owner.getPhone();
@@ -127,9 +120,8 @@ public class OwnerEditWrapper implements Serializable {
      * @return
      * @see net.unbewaff.petclinic.entities.Owner#getPets()
      */
-    @Editor(editAs=EditorType.PALETTE)
-    @InnerPrototype(value=PetWrapper.class)
     @Order(6)
+    @InnerPrototype(value=PetWrapper.class)
     public List<PetWrapper> getPets() {
         return new AWrappingList<PetWrapper, Pet>() {
             @Override

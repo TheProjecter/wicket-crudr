@@ -6,7 +6,6 @@ package net.unbewaff.wicketcrudr.components;
 import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.AutoDisplay;
-import net.unbewaff.wicketcrudr.annotations.Editor;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
 
 import org.apache.wicket.Component;
@@ -112,7 +111,6 @@ public class AutoDisplayTest {
             this.data = data;
         }
 
-        @Editor
         @Order(2)
         public String getString() {
             return data.getString();
@@ -122,7 +120,6 @@ public class AutoDisplayTest {
             data.setString(string);
         }
 
-        @Editor
         @Order(1)
         public String getOtherString() {
             return data.getOtherString();

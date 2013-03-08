@@ -41,7 +41,7 @@ public enum EditorType implements Serializable {
      * For editing Passwords
      */
     PASSWORD,
-    /*
+    /**
      * For numerical Values
      */
     NUMBER
