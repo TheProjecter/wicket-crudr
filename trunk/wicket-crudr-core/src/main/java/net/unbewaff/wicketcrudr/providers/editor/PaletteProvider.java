@@ -25,14 +25,14 @@ public class PaletteProvider<T extends Serializable> implements IEditorProvider<
 
 
     /**
-	 * @param renderer
-	 */
-	public PaletteProvider(ChoiceRendererProvider<T> renderer) {
-		this.rendererProvider = renderer;
-	}
+     * @param renderer
+     */
+    public PaletteProvider(ChoiceRendererProvider<T> renderer) {
+        this.rendererProvider = renderer;
+    }
 
 
-	@Override
+    @Override
     @SuppressWarnings("unchecked")
     public FormComponent<T> newEditor(final IEditorFacade parent, String componentId, IModel<T> model, ICrudrListProvider<T> listProvider) {
         PalettePanel<T> palettePanel = (PalettePanel<T>)parent;
@@ -40,12 +40,12 @@ public class PaletteProvider<T extends Serializable> implements IEditorProvider<
         Component parentComponent;
         Palette<T> palette = new Palette<T>(componentId, palettePanel);
         if (rendererProvider != null) {
-        	if (parent instanceof Component) {
-        		parentComponent = (Component) parent;
-        	} else {
-        		parentComponent = palette;
-        	}
-			palettePanel.setChoiceRenderer(rendererProvider.getRenderer(parentComponent));
+            if (parent != null && parent instanceof Component) {
+                parentComponent = (Component) parent;
+            } else {
+                parentComponent = palette;
+            }
+            palettePanel.setChoiceRenderer(rendererProvider.getRenderer(parentComponent));
         }
         palettePanel.setDefaultModel(model);
         return palette;
