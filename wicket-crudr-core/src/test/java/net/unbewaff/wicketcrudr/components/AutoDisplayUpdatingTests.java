@@ -13,6 +13,7 @@ import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -86,6 +87,7 @@ public class AutoDisplayUpdatingTests {
         System.out.println(ajaxresponse);
     }
 
+    @Prototype
     private class DataContainer implements Serializable {
 
         String data;

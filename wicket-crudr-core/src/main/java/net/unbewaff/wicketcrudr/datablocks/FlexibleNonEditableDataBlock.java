@@ -24,19 +24,21 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
     }
 
     @Override
-	public Component getLabel(String componentId, IModel<T> model) {
-    	return new Label(componentId, labelProvider);
+    public Component getLabel(String componentId, IModel<T> rowModel) {
+        return new Label(componentId, labelProvider);
     }
 
     @Override
-	public Component getValue(String componentId, IModel<T> rowModel) {
+    public Component getValue(String componentId, IModel<T> rowModel) {
         return valueProvider.newLabel(this, componentId, rowModel);
     }
 
+    @Override
     public <C> IConverter<C> getConverter(Class<C> type) {
         return null;
     }
 
+    @Override
     public String defaultNullLabel() {
         return null;
     }
@@ -45,36 +47,41 @@ public class FlexibleNonEditableDataBlock<T extends Serializable> implements Ser
         return valueProvider;
     }
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
-	 */
-	public boolean isSortable() {
-		return false;
-	}
+    /* (non-Javadoc)
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
+     */
+    public boolean isSortable() {
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getCssClass()
-	 */
-	public String getCssClass() {
-		return getCssClassForBody();
-	}
+    /* (non-Javadoc)
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getCssClass()
+     */
+    public String getCssClass() {
+        return getCssClassForBody();
+    }
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForHeader()
-	 */
-	public String getCssClassForHeader() {
-		return "ui-widget-header";
-	}
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForHeader()
+     */
+    public String getCssClassForHeader() {
+        return "ui-widget-header";
+    }
 
-	/* (non-Javadoc)
-	 * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForBody()
-	 */
-	public String getCssClassForBody() {
-		return "ui-widget-content";
-	}
+    /* (non-Javadoc)
+     * @see net.unbewaff.wicketcrudr.columns.IMultipleStyledColumn#getCssClassForBody()
+     */
+    public String getCssClassForBody() {
+        return "ui-widget-content";
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Component getEditor(String componentId, IModel<T> rowModel) {
+        return getValue(componentId, rowModel);
+    }
 }
