@@ -18,7 +18,7 @@ import org.apache.wicket.model.IModel;
 public interface ILabelProvider<T> extends Serializable, ILabelModelProvider<T> {
 
     /**
-     * Create the display component for displaying certain Model objects in BrixxLists. The easiest implementation
+     * Create the display component for displaying certain Model objects in Wicket-Crudr. The easiest implementation
      * would be a simple Label but this can be extended according to any needs.
      * It is highly recommended to return components implementing the following methods as shown
      * {@code

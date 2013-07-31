@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.AutoDisplay;
 import net.unbewaff.wicketcrudr.annotations.member.Order;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
@@ -45,6 +46,7 @@ public class AutoDisplayTest {
     }
 
 
+    @Prototype
     static class StringHolderDisplayWrapper implements Serializable {
 
         private static final long serialVersionUID = -2827254203725518250L;
@@ -102,6 +104,7 @@ public class AutoDisplayTest {
 
     }
 
+    @Prototype
     static class StringHolderEditWrapper implements Serializable {
 
         private StringHolder data;

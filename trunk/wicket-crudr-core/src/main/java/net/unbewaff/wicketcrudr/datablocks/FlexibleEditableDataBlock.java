@@ -6,17 +6,19 @@ package net.unbewaff.wicketcrudr.datablocks;
 import java.io.Serializable;
 
 import net.unbewaff.wicketcrudr.components.ContainerConfiguration;
+import net.unbewaff.wicketcrudr.components.ILabelFacade;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 /**
  * @author David Hendrix (Nicktarix)
  *
  */
-class FlexibleEditableDataBlock<T extends Serializable> implements Serializable, IDataBlock<T> {
+class FlexibleEditableDataBlock<T extends Serializable> implements Serializable, IDataBlock<T>, ILabelFacade {
 
     private static final long serialVersionUID = -5616560586558642852L;
     private final ContainerConfiguration<T> configuration;
@@ -34,11 +36,12 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
      */
     @Override
     public Component getValue(String componentId, IModel<T> rowModel) {
+        Component value = configuration.getLabelProvider().newLabel(this, componentId, rowModel);
         FormComponent<T> editor = configuration.getEditorProvider().newEditor(null, componentId, rowModel, null);
         if (editor instanceof FormComponent) {
             editor.setLabel(labelModel);
         }
-        return editor;
+        return value;
     }
 
 
@@ -46,7 +49,7 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
      * @see net.unbewaff.wicketcrudr.datablocks.IDataBlock#getHeader(java.lang.String, org.apache.wicket.model.IModel)
      */
     @Override
-    public Component getLabel(String componentId, IModel<T> model) {
+    public Component getLabel(String componentId, IModel<T> rowModel) {
         return new Label(componentId, labelModel);
     }
 
@@ -55,4 +58,22 @@ class FlexibleEditableDataBlock<T extends Serializable> implements Serializable,
         return name;
     }
 
+    @Override
+    public Component getEditor(String componentId, IModel<T> rowModel) {
+        FormComponent<T> editor = configuration.getEditorProvider().newEditor(null, componentId, rowModel, null);
+        if (editor instanceof FormComponent) {
+            editor.setLabel(labelModel);
+        }
+        return editor;
+    }
+
+    @Override
+    public <C> IConverter<C> getConverter(Class<C> type) {
+        return null;
+    }
+
+    @Override
+    public String defaultNullLabel() {
+        return "";
+    }
 }

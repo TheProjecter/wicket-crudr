@@ -59,12 +59,12 @@ public class DataBlockFactory implements Serializable {
         //ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(propertyName, null);
         ILabelModelProvider<T> labelModelProvider = LabelModelProviderFactory.getLabelModelProvider(property);
         ILabelProvider<T> labelProvider = LabelProviderFactory.getLabelProvider(property, labelModelProvider);
-        if (!property.isReadOnly()) { //TODO reimplement
+        if (!property.isReadOnly()) {
             IEditorProvider<T> editorProvider = EditorProviderFactory.getEditorProvider(property.getStringResourcePrefix(), property);
             ISurroundingContainerProvider containerProvider = SurroundingContainerProviderFactory.getContainerProvider(property);
             ContainerConfiguration<T> conf = new ContainerConfiguration<T>(
                     labelProvider, editorProvider, containerProvider, listProvider, propertyName);
-            dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf,propertyName);
+            dataBlock = new FlexibleEditableDataBlock<T>(displayModel, conf, propertyName);
         } else {
             dataBlock = new FlexibleNonEditableDataBlock<T>(displayModel,labelProvider, propertyName);
         }

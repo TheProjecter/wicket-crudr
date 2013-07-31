@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 
 /**
  * @author DavidH
@@ -16,6 +17,7 @@ import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
  */
 public class IterableProperty extends Property implements Serializable {
 
+    private static final long serialVersionUID = -2384742374238089291L;
     private final IPrototypeData prototype;
     private final String stringResourcePrefix;
     private final DisplayType displayType;
@@ -24,7 +26,12 @@ public class IterableProperty extends Property implements Serializable {
     public IterableProperty(String property, Method method, Map<String, Method> methods, Class<?> clazz, InnerPrototype innerPrototype) {
         super(property, method, methods, clazz);
         Class<?> value = innerPrototype.value();
-        this.prototype = new PrototypeData(value);
+        if (value.isAnnotationPresent(Prototype.class)) {
+            this.prototype = new PrototypeData(value);
+        } else {
+            //TODO figure out
+            this.prototype = null;
+        }
         stringResourcePrefix = innerPrototype.resourcePrefix();
         displayType = innerPrototype.displayAs();
         separator = innerPrototype.separator();
