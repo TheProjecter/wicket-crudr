@@ -7,7 +7,7 @@ public interface IPrototypeData {
     /**
      * @return an immutable copy of the Properties present in the Prototype
      */
-    public abstract List<Property> getProperties();
+    public abstract List<IProperty> getProperties();
 
     /**
      * @return the labelResourcePrefix defined in the Prototype

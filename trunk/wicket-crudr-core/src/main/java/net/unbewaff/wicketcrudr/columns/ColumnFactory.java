@@ -100,8 +100,8 @@ public class ColumnFactory implements Serializable {
         if (property instanceof IterableProperty) {
             IterableProperty iterableProperty = (IterableProperty) property;
             String prefix = iterableProperty.getStringResourcePrefix();
-            ILabelModelProvider labelModelProvider2 = LabelModelProviderFactory.getLabelModelProvider(prefix, iterableProperty.getInnerPrototype());
-            labelProvider = new IterableLabelProvider(labelModelProvider, labelModelProvider2, iterableProperty);
+            ILabelModelProvider<T> internalLabelModelProvider = LabelModelProviderFactory.getLabelModelProvider(prefix, iterableProperty.getInnerPrototype());
+            labelProvider = new IterableLabelProvider(labelModelProvider, internalLabelModelProvider, iterableProperty);
         } else {
             labelProvider = new SimpleLabelProvider<T>(labelModelProvider);
         }

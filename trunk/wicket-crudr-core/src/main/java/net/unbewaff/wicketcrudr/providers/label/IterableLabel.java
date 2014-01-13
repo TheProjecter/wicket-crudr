@@ -80,25 +80,21 @@ public class IterableLabel<T extends List<V>, V extends Serializable> extends Pa
 
     @Override
     protected void onBeforeRender() {
-        // TODO Auto-generated method stub
         super.onBeforeRender();
     }
 
     @Override
     protected void onRender() {
-        // TODO Auto-generated method stub
         super.onRender();
     }
 
     @Override
     protected void onModelChanged() {
-        // TODO Auto-generated method stub
         super.onModelChanged();
     }
 
     @Override
     protected void onModelChanging() {
-        // TODO Auto-generated method stub
         super.onModelChanging();
     }
 

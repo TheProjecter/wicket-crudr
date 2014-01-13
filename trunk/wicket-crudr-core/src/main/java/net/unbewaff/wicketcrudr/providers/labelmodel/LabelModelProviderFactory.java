@@ -7,6 +7,7 @@ package net.unbewaff.wicketcrudr.providers.labelmodel;
 import net.unbewaff.wicketcrudr.datablocks.IProperty;
 import net.unbewaff.wicketcrudr.datablocks.IPrototypeData;
 import net.unbewaff.wicketcrudr.datablocks.IterableProperty;
+import net.unbewaff.wicketcrudr.providers.label.IterableLabelProvider;
 
 import org.apache.log4j.Logger;
 
