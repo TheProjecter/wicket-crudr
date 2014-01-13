@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype;
 import net.unbewaff.wicketcrudr.annotations.member.InnerPrototype.DisplayType;
+import net.unbewaff.wicketcrudr.annotations.member.StringProvider;
 import net.unbewaff.wicketcrudr.annotations.type.Prototype;
 
 /**
@@ -29,13 +30,29 @@ public class IterableProperty extends Property implements Serializable {
         if (value.isAnnotationPresent(Prototype.class)) {
             this.prototype = new PrototypeData(value);
         } else {
-            //TODO figure out
-            this.prototype = null;
+            IPrototypeData temp = null;
+            for (Method m: value.getMethods()) {
+                if (temp == null && m.isAnnotationPresent(StringProvider.class)) {
+                    temp = new SingleValuePrototypeData(value, m);
+                }
+            }
+            if (temp == null) {
+                try {
+                    temp = new SingleValuePrototypeData(value, value.getMethod("toString"));
+                } catch (SecurityException e) {
+                    //should never happen toString() is defined public in object
+                } catch (NoSuchMethodException e) {
+                    //should never happen toString() is defined in object                }
+                }
+            }
+
+            this.prototype = temp;
         }
         stringResourcePrefix = innerPrototype.resourcePrefix();
         displayType = innerPrototype.displayAs();
         separator = innerPrototype.separator();
     }
+
 
     @Override
     public boolean isIterable() {

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.unbewaff.wicketcrudr.datablocks.IProperty;
-import net.unbewaff.wicketcrudr.datablocks.Property;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -19,14 +18,14 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>, Serializable {
 
-    private List<Property> properties;
+    private List<IProperty> properties;
     private String separator;
 
     /**
      * @param separator TODO
      * 
      */
-    public ConcatenatedLabelModelProvider(List<Property> properties, String separator) {
+    public ConcatenatedLabelModelProvider(List<IProperty> properties, String separator) {
         this.properties = properties;
         this.separator = separator;
 
@@ -44,7 +43,7 @@ public class ConcatenatedLabelModelProvider<T> implements ILabelModelProvider<T>
         private IModel<T> target;
 
 
-        public ConcatenatedLabelModel(List<Property> properties, String separator, IModel<T> target) {
+        public ConcatenatedLabelModel(List<IProperty> properties, String separator, IModel<T> target) {
             for (IProperty property: properties) {
                 models.add(new PropertyModel<T>(target, property.getProperty()));
             }

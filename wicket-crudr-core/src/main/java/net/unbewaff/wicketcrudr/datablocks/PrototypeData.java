@@ -27,7 +27,8 @@ import net.unbewaff.wicketcrudr.tools.PropertyCleaner;
  */
 public final class PrototypeData implements Serializable, IPrototypeData {
 
-    private final List<Property> properties = new ArrayList<Property>();
+    private static final long serialVersionUID = -5424894181097200308L;
+    private final List<IProperty> properties = new ArrayList<IProperty>();
     private final String labelResourcePrefix;
     private final String css;
     private final IProperty resourceKeyProperty;
@@ -56,10 +57,10 @@ public final class PrototypeData implements Serializable, IPrototypeData {
 
         resourceKeyProperty = resourceKey;
 
-        Collections.sort(properties, new Comparator<Property>() {
+        Collections.sort(properties, new Comparator<IProperty>() {
 
             @Override
-            public int compare(Property o1, Property o2) {
+            public int compare(IProperty o1, IProperty o2) {
                 return o1.getOrder() - o2.getOrder();
             }
         });
@@ -104,15 +105,15 @@ public final class PrototypeData implements Serializable, IPrototypeData {
         Map<String, Method> methods = new HashMap<String, Method>();
         Class<?> currentClass = clazz;
         do {
-			for (Method m : currentClass.getDeclaredMethods()) {
-				String name = m.getName();
-				if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is") || name.startsWith("set"))) {
-					methods.put(name, m);
-				}
-			}
-			currentClass = currentClass.getSuperclass();
-		} while (currentClass.isAnnotationPresent(Prototype.class));
-		return methods;
+            for (Method m : currentClass.getDeclaredMethods()) {
+                String name = m.getName();
+                if (!m.isAnnotationPresent(Ignore.class) && (name.startsWith("get") || name.startsWith("is") || name.startsWith("set"))) {
+                    methods.put(name, m);
+                }
+            }
+            currentClass = currentClass.getSuperclass();
+        } while (currentClass.isAnnotationPresent(Prototype.class));
+        return methods;
     }
 
     /**
@@ -132,7 +133,7 @@ public final class PrototypeData implements Serializable, IPrototypeData {
      * @see net.unbewaff.wicketcrudr.datablocks.IPrototypeData#getProperties()
      */
     @Override
-    public List<Property> getProperties() {
+    public List<IProperty> getProperties() {
         return Collections.unmodifiableList(properties);
     }
 
@@ -160,17 +161,17 @@ public final class PrototypeData implements Serializable, IPrototypeData {
         return resourceKeyProperty;
     }
 
-	@Override
-	public String toString() {
-		final int maxLen = 10;
-		StringBuilder builder = new StringBuilder();
-		builder.append("PrototypeData [properties=")
-				.append(properties != null ? properties.subList(0,
-						Math.min(properties.size(), maxLen)) : null)
-				.append(", labelResourcePrefix=").append(labelResourcePrefix)
-				.append(", css=").append(css).append(", resourceKeyProperty=")
-				.append(resourceKeyProperty).append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        final int maxLen = 10;
+        StringBuilder builder = new StringBuilder();
+        builder.append("PrototypeData [properties=")
+        .append(properties != null ? properties.subList(0,
+                Math.min(properties.size(), maxLen)) : null)
+                .append(", labelResourcePrefix=").append(labelResourcePrefix)
+                .append(", css=").append(css).append(", resourceKeyProperty=")
+                .append(resourceKeyProperty).append("]");
+        return builder.toString();
+    }
 
 }

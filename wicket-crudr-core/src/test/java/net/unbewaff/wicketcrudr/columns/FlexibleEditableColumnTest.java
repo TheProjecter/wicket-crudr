@@ -173,7 +173,7 @@ public class FlexibleEditableColumnTest {
             TempPanel panel = new TempPanel("test");
             panel.add(table);
             tester.startComponentInPage(panel);
-            tester.debugComponentTrees();
+            //tester.debugComponentTrees();
             tester.assertVisible("test:table:body:rows:1:cells:1:cell:label");
             tester.assertVisible("test:table:body:rows:2:cells:1:cell:label");
             tester.assertVisible("test:table:body:rows:3:cells:1:cell:label");
